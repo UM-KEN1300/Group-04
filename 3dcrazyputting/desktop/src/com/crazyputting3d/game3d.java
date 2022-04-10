@@ -206,6 +206,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                  */
                 VictoryScreen VScreen = new VictoryScreen();
                 VScreen.run(numShotsTaken);
+                sound.victory();
                 Gdx.app.exit();
             }
 
@@ -392,10 +393,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         float intersection = rad*2;
         ballBuilder = new ModelBuilder();
         ball = ballBuilder.createSphere(intersection,intersection,intersection,30,30,new Material(ColorAttribute.createDiffuse(Color.WHITE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        ballInstance = new ModelInstance(ball, x, z+rad+0.03f, y);
+        ballInstance = new ModelInstance(ball, x, z+rad+(float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, y);
 
         if(arrowFlag&&game) {
-            Model ballArrow = modelBuilder.createArrow(x, h(x, y) + rad + 0.03f, y, (float) (ballArrowX), h(ballArrowX, ballArrowY) + rad + 0.03f, (float) ballArrowY, 0.1f, 0.6f, 5,
+            Model ballArrow = modelBuilder.createArrow(x, h(x, y) + rad + (float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, y, (float) (ballArrowX), h(ballArrowX, ballArrowY) + rad + (float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, (float) ballArrowY, 0.1f, 0.6f, 5,
                     GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
             bArrowInstance = new ModelInstance(ballArrow);
             modelBatch.render(bArrowInstance, environment);
@@ -451,7 +452,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     }
     public Color collorheight(float h){
         float r=(150*h+30f)/255;
-        float g=(150*h+128f)/255;
+        float g=(150*h+125f)/255;
         return new Color(r,g,0,1f);
     }
     //The method which is responsible for rendering and creating the trees given an array for all the
@@ -650,7 +651,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             double velocityX = ballArrowX-ballX;
             double velocityY = ballArrowY-ballY;
             double length = Math.sqrt(velocityX*velocityX+velocityY*velocityY);
-            System.out.println(length);
             speedX = velocity*velocityX/length;
             speedY = velocity*velocityY/length;
             engine.setVelocities(speedX,speedY);

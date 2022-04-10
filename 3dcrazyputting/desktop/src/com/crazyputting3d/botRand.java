@@ -68,7 +68,7 @@ public class botRand {
             setRandSpeed();
             speedX = speed*directionX/length;
             speedY = speed*directionY/length;
-            if((speedX>0&&holeX<0)||(speedX<0&&holeX>0)||(speedY>0&&holeY<0)||(speedY<0&&holeY>0)) { continue; }
+            //if((speedX>0&&holeX<0)||(speedX<0&&holeX>0)||(speedY>0&&holeY<0)||(speedY<0&&holeY>0)) { continue; }
             count++;
             engine.setVelocities(speedX, speedY);
             if(engine.isInHole()) {

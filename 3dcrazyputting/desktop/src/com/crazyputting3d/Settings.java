@@ -3,6 +3,7 @@ package com.crazyputting3d;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import java.awt.event.*;
 
@@ -32,6 +33,9 @@ public class Settings {
         frame.setResizable(false);
         frame.setLocation(320, 150);
         frame.setSize(200,500);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
         ie = new inputEditor();
 
@@ -90,7 +94,6 @@ public class Settings {
             }
         });
 
-        
         frame.add(fieldHoleXt);
         frame.add(fieldHoleYt);
         frame.add(fieldHoleX0);

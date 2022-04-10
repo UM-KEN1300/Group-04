@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class physicsEngine {
-    public final double h = 0.0001; // we decide on step size
+    public static double h = 0.0001; // we decide on step size
     public double k = h;
     private double x0; // given in input file
     private double y0;
@@ -178,7 +178,6 @@ public class physicsEngine {
     public boolean isFinish(double x, double y) {
         if (Math.sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt)) < r) {
             flag = true;
-            //System.out.println("Ball is in hole!");
             return true;
         } else {
             return false;
@@ -260,7 +259,21 @@ public class physicsEngine {
      * start() used to return the ball to initial position once it hits the water
      * param current vector state
      * returns initial vector state if in water, or current vector state otherwise.
+     * @param <Calculable>
+     * @param <EquationSolver>
+     * 
+     * @throws IOException
      */
+    public static <Calculable, EquationSolver> void main(String[] args) throws IOException {
+        //for (int i = 0; i < 1000; i++) {
+            StateVector vector = new StateVector(0, 0, 1, 0);
+            physicsEngine engine = new physicsEngine();
+            vector = engine.start(vector);
+            double error = Math.abs((vector.getX() / 0.5096839959) - 1);
+            System.out.println(h + "," + error);
+            //h = h + 0.0001;
+        //}
+    }
 
     public StateVector start(StateVector v) {
         x0 = v.getX();
@@ -277,7 +290,7 @@ public class physicsEngine {
         ball_coordinates_x[counter] = x0;
         ball_coordinates_y[counter] = y0;
         counter++;
-        //System.out.println(newV);
+        System.out.println(newV);
         return newV;
     }
 
@@ -290,20 +303,52 @@ public class physicsEngine {
         double ay1 = acelerationY(x0, y0, vx0, vy0, m);
         double vx1 = vx0 + ax1 * h / 2;
         double vy1 = vy0 + ay1 * h / 2;
-        double ax2 = acelerationX(x0, y0, vx1, vy1, m);
-        double ay2 = acelerationY(x0, y0, vx1, vy1, m);
+        double x1 = x0 + vx0 * h/2;
+        double y1 = y0 + vx0 * h/2;
+        if(terminates(vx0, vy0, vx1, vy1, m)){
+            a.setX(x1);
+            a.setY(y1);
+            a.setVX(vx1);
+            a.setVY(vy1);
+            return a;
+        }
+
+        double ax2 = acelerationX(x1, y1, vx1, vy1, m);
+        double ay2 = acelerationY(x1, y1, vx1, vy1, m);
         double vx2 = vx0 + ax2 * h / 2;
         double vy2 = vy0 + ay2 * h / 2;
-        double ax3 = acelerationX(x0, y0, vx2, vy2, m);
-        double ay3 = acelerationY(x0, y0, vx2, vy2, m);
+        double x2 = x0 + vx1 * h/2;
+        double y2 = y0 + vx1 * h/2;
+        if(terminates(vx0, vy0, vx2, vy2, m)){
+            a.setX(x2);
+            a.setY(y2);
+            a.setVX(vx2);
+            a.setVY(vy2);
+            return a;
+        }
+
+        double ax3 = acelerationX(x2, y2, vx2, vy2, m);
+        double ay3 = acelerationY(x2, y2, vx2, vy2, m);
         double vx3 = vx0 + ax3 * h;
         double vy3 = vy0 + ay3 * h;
-        double ax4 = acelerationX(x0, y0, vx3, vy3, m);
-        double ay4 = acelerationY(x0, y0, vx3, vy3, m);
+        double x3 = x0 + vx2 * h;
+        double y3 = y0 + vx2 * h;
+        if(terminates(vx0, vy0, vx3, vy3, m)){
+            a.setX(x3);
+            a.setY(y3);
+            a.setVX(vx3);
+            a.setVY(vy3);
+            return a;
+        }
+
+        double ax4 = acelerationX(x3, y3, vx3, vy3, m);
+        double ay4 = acelerationY(x3, y3, vx3, vy3, m);
+        
         a.setX(x0 + h * 1.0 / 6.0 * (vx0 + 2 * vx1 + 2 * vx2 + vx3));
         a.setY(y0 + h * 1.0 / 6.0 * (vy0 + 2 * vy1 + 2 * vy2 + vy3));
         a.setVX(vx0 + h * 1.0 / 6.0 * (ax1 + 2 * ax2 + 2 * ax3 + ax4));
         a.setVY(vy0 + h * 1.0 / 6.0 * (ay1 + 2 * ay2 + 2 * ay3 + ay4));
+
         return a;
     }
 
@@ -312,52 +357,66 @@ public class physicsEngine {
         double y0 = a.getY();
         double vx0 = a.getVX();
         double vy0 = a.getVY();
+        double ax0 = acelerationX(x0, y0, vx0, vy0, m);
+        double ay0 = acelerationY(x0, y0, vx0, vy0, m);
+        double x1 = x0 + vx0 * h;
+        double y1 = y0 + vy0 * h;
+        double vx1 = vx0 + (1.0 / 5.0 * ax0) * k;
+        double vy1 = vy0 + (1.0 / 5.0 * ay0) * k;
+        if(terminates(vx0, vy0, vx1, vy1, m)){
+            a.setX(x1);
+            a.setY(y1);
+            a.setVX(vx1);
+            a.setVY(vy1);
+            return a;
+        }
+        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
+        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
+        double x2 = x0 + vx1 * h;
+        double y2 = y0 + vy1 * h;
 
-        double ax1 = acelerationX(x0, y0, vx0, vy0, m);
-        double ay1 = acelerationY(x0, y0, vx0, vy0, m);
-        double vx1 = vx0 + (1.0 / 5.0 * ax1) * k;
-        double vy1 = vy0 + (1.0 / 5.0 * ay1) * k;
+        double vx2 = vx0 + (3.0 / 40.0 * ax0) * k + (9.0 / 40.0 * ax1) * k;
+        double vy2 = vy0 + (3.0 / 40.0 * ay0) * k + (9.0 / 40.0 * ay1) * k;
+        double ax2 = acelerationX(x2, y2, vx2, vy2, m);
+        double ay2 = acelerationY(x2, y2, vx2, vy2, m);
+        double x3 = x0 + vx2 * h;
+        double y3 = y0 + vy2 * h;
 
-        double ax2 = acelerationX(x0, y0, vx1, vy1, m);
-        double ay2 = acelerationY(x0, y0, vx1, vy1, m);
-        double vx2 = vx0 + (3.0 / 40.0 * ax1) * k + (9.0 / 40.0 * ax2) * k;
-        double vy2 = vy0 + (3.0 / 40.0 * ay1) * k + (9.0 / 40.0 * ay2) * k;
+        double vx3 = vx0 + (44.0 / 45.0 * ax0) * k - (56.0 / 15.0 * ax1) * k + (32.0 / 9.0 * ax2) * k;
+        double vy3 = vy0 + (44.0 / 45.0 * ay0) * k - (56.0 / 15.0 * ay1) * k + (32.0 / 9.0 * ay2) * k;
+        double ax3 = acelerationX(x3, y3, vx3, vy3, m);
+        double ay3 = acelerationY(x3, y3, vx3, vy3, m);
+        double x4 = x0 + vx3 * h;
+        double y4 = y0 + vy3 * h;
 
-        double ax3 = acelerationX(x0, y0, vx2, vy2, m);
-        double ay3 = acelerationY(x0, y0, vx2, vy2, m);
-        double vx3 = vx0 + (44.0 / 45.0 * ax1) * k - (56.0 / 15.0 * ax2) * k + (32.0 / 9.0 * ax3) * k;
-        double vy3 = vy0 + (44.0 / 45.0 * ay1) * k - (56.0 / 15.0 * ay2) * k + (32.0 / 9.0 * ay3) * k;
+        double vx4 = vx0 + (19372.0 / 6561.0 * ax0) * k - (25360.0 / 2187.0 * ax1 * k + (64448.0 / 6561.0 * ax2) * k
+                - (212.0 / 729.0 * ax3) * k);
+        double vy4 = vy0 + (19372.0 / 6561.0 * ay0) * k - (25360.0 / 2187.0 * ay1) * k + (64448.0 / 6561.0 * ay2) * k
+                - (212.0 / 729.0 * ay3 * k);
+        double ax4 = acelerationX(x4, y4, vx4, vy4, m);
+        double ay4 = acelerationY(x4, y4, vx4, vy4, m);
+        double x5 = x0 + vx4 * h;
+        double y5 = y0 + vy4 * h;
 
-        double ax4 = acelerationX(x0, y0, vx3, vy3, m);
-        double ay4 = acelerationY(x0, y0, vx3, vy3, m);
-        double vx4 = vx0 + (19372.0 / 6561.0 * ax1) * k - (25360.0 / 2187.0 * ax2) * k + (64448.0 / 6561.0 * ax3) * k
-                - (212.0 / 729.0 * ax4) * k;
-        double vy4 = vy0 + (19372.0 / 6561.0 * ay1) * k - (25360.0 / 2187.0 * ay2) * k + (64448.0 / 6561.0 * ay3) * k
-                - (212.0 / 729.0 * ay4) * k;
+        double vx5 = vx0 + (9017.0 / 3168.0 * ax0) * k - (355.0 / 33.0 * ax1) * k + (46732.0 / 5247.0 * ax2) * k
+                + (64448.0 / 6561.0 * ax3) * k - (5103.0 / 18656.0 * ax4) * k;
+        double vy5 = vy0 + (9017.0 / 3168.0 * ay0) * k - (355.0 / 33.0 * ay1) * k + (46732.0 / 5247.0 * ay2) * k
+                + (64448.0 / 6561.0 * ay3) * k - (5103.0 / 18656.0 * ay4) * k;
+        double ax5 = acelerationX(x5, y5, vx4, vy4, m);
+        double ay5 = acelerationY(x5, y5, vx4, vy4, m);
 
-        double ax5 = acelerationX(x0, y0, vx4, vy4, m);
-        double ay5 = acelerationY(x0, y0, vx4, vy4, m);
-        double vx5 = vx0 + (9017.0 / 3168.0 * ax1) * k - (355.0 / 33.0 * ax2) * k + (46732.0 / 5247.0 * ax3) * k
-                + (64448.0 / 6561.0 * ax4) * k - (5103.0 / 18656.0 * ax5) * k;
-        double vy5 = vy0 + (9017.0 / 3168.0 * ay1) * k - (355.0 / 33.0 * ay2) * k + (46732.0 / 5247.0 * ay3) * k
-                + (64448.0 / 6561.0 * ay4) * k - (5103.0 / 18656.0 * ay5) * k;
-
-        double ax6 = acelerationX(x0, y0, vx4, vy4, m);
-        double ay6 = acelerationY(x0, y0, vx4, vy4, m);
-        double vx6 = vx0 + (35.0 / 384.0 * ax1) * k + (500.0 / 1113.0 * ax3) * k + (125.0 / 192.0 * ax4) * k
-                - (2187.0 / 6784.0 * ax5) * k + (11.0 / 84.0 * ax6) * k;
-        // double vy6 = vy0 + (35.0 / 384.0 * ay1) * k + (500.0 / 1113.0 * ay3) * k +
-        // (125.0 / 192.0 * ay4) * k
-        // - (2187.0 / 6784.0 * ay5) * k + (11.0 / 84.0 * ay6) * k;
-
+        double vx6 = vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
+                - (2187.0 / 6784.0 * ax4) * k + (11.0 / 84.0 * ax5) * k;
         a.setX(x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
                 - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k);
         a.setY(y0 + (35.0 / 384.0 * vy0) * k + (500.0 / 1113.0 * vy2) * k + (125.0 / 192.0 * vy3) * k
                 - (2187.0 / 6784.0 * vy4) * k + (11.0 / 84.0 * vy5) * k);
-        a.setVX(vx0 + (500.0 / 1113.0 * ax3) * k + (125.0 / 192.0 * ax4) * k - (2187.0 / 6784.0 * ax5) * k
-                + (11.0 / 84.0 * ax6) * k);
-        a.setVY(vy0 + (500.0 / 1113.0 * ay3) * k + (125.0 / 192.0 * ay4) * k - (2187.0 / 6784.0 * ay5) * k
-                + (11.0 / 84.0 * ay6) * k);
+        a.setVX(vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
+                - (2187.0 / 6784.0 * ax4) * k
+                + (11.0 / 84.0 * ax5) * k);
+        a.setVY(vy0 + (35.0 / 384.0 * ay0) * k + (500.0 / 1113.0 * ay2) * k + (125.0 / 192.0 * ay3) * k
+                - (2187.0 / 6784.0 * ay4) * k
+                + (11.0 / 84.0 * ay5) * k);
 
         double exact_next = x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
                 - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k;
@@ -365,7 +424,7 @@ public class physicsEngine {
                 + 1902912.0 * vx5 + 534240.0 * vx6) / 21369600.0;
         double s = Math.abs(exact_next - average_next);
         double optimal_t = Math.pow((k * 0.000001) / ((2 * s)), 1.0 / 5.0);
-        k = k * optimal_t;
+        k = optimal_t*k;
         return a;
     }
 
@@ -376,13 +435,22 @@ public class physicsEngine {
         double vy0 = a.getVY();
         double ax0 = acelerationX(x0, y0, vx0, vy0, m);
         double ay0 = acelerationY(x0, y0, vx0, vy0, m);
+        double x1 = x0 + vx0*h;
+        double y1 = y0 + vy0*h;
         double vx1 = vx0 + ax0 * h;
         double vy1 = vy0 + ay0 * h;
-        double ax1 = acelerationX(x0, y0, vx1, vy1, m);
-        double ay1 = acelerationY(x0, y0, vx1, vy1, m);
-        a.setX(x0 + h * 1.0 / 2.0 * (vx0 + vx1));
-        a.setY(y0 + h * 1.0 / 2.0 * (vy0 + vy1));
-        a.setVX(vx0 + h * 1.0 / 2.0 * (ax0 + ax1));
+        if(terminates(vx0, vy0, vx1, vy1, m)){
+            a.setX(x1);
+            a.setY(y1);
+            a.setVX(vx1);
+            a.setVY(vy1);
+            return a;
+        }
+        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
+        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
+        a.setX(x0 + h * (1.0 / 2.0) * (vx0 + vx1));
+        a.setY(y0 + h * (1.0 / 2.0) * (vy0 + vy1));
+        a.setVX(vx0 + h * (1.0 / 2.0) * (ax0 + ax1));
         a.setVY(vy0 + h * 1.0 / 2.0 * (ay0 + ay1));
         return a;
     }
@@ -425,7 +493,7 @@ public class physicsEngine {
             double vx = v.getVX();
             double vy = v.getVY();
             int velocity = (int) Math.sqrt(vx * vx + vy * vy);
-            if (speedCounter % ((0.001 / h) * (velocity + 1)) == 0) {
+            if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
                 ball_coordinates_x[counter] = x;
                 ball_coordinates_y[counter] = y;
                 counter++;
@@ -440,71 +508,75 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            double staticFriction = Math.sqrt(Math.pow(hxderivated(x, y), 2) + Math.pow(hyderivated(x, y), 2));
-            if ((vx < 0.1 && vx > -0.1) && (vy < 0.1 && vy > -0.1) && ms > staticFriction) {
-                //System.out.println("stopped");
+            /*double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
+            if ((vx <  h && vx > -h ) && (vy < h  && vy > -h ) && ms > staticFriction) {
+                System.out.println("STOPPED");
                 ball_coordinates_x[counter] = x;
                 ball_coordinates_y[counter] = y;
                 counter++;
                 return v;
-            } else {
-                if (isInWater(v.getX(), v.getY())) {
-                    //System.out.println("water");
+            }*/
+            if (isInWater(v.getX(), v.getY())) {
+                ball_coordinates_x[counter] = x;
+                ball_coordinates_y[counter] = y;
+                counter++;
+                return null;
+            }
+            v = EulersMethod(v, m);
+            double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
+            if(terminates(vx, vy, v.getVX(), v.getVY(),m)){
+                v.setX(x+v.getVX()*h);
+                v.setY(y+v.getVY()*h);
+                if(ms > staticFriction){
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
                     counter++;
-                    return null;
+                    return v;
                 }
-                v = EulersMethod(v, m);
-                if (isInTree(v.getX(), v.getY())) {
-                    
-                    ball_coordinates_x[counter] = x;
-                    ball_coordinates_y[counter] = y;
-                    counter++;
-                    v.setVX(0.01);
-                    v.setVY(0.01);
-                    v.setX(x);
-                    v.setY(y);
-                    v = EulersMethod(v, m);
-                    if (isInTree(v.getX(), v.getY())) {
-                        v.setVX(0.01);
-                        v.setVY(0.01);
-                        v.setX(x);
-                        v.setY(y);
-                        return v;
-                    }
-                    v.setVX(0.01);
-                    v.setVY(0.01);
-                    v.setX(x);
-                    v.setY(y);
-                }
+            }
+            if (isInTree(v.getX(), v.getY())) {
 
-                if (!isInTerrain(v.getX(), v.getY())) {
-                    ball_coordinates_x[counter] = x;
-                    ball_coordinates_y[counter] = y;
-                    counter++;
-                    v.setVX(0.01);
-                    v.setVY(0.01);
-                    v.setX(x);
-                    v.setY(y);
-                    v = EulersMethod(v, m);
-                    if (!isInTerrain(v.getX(), v.getY())) {
-                        v.setVX(0.01);
-                        v.setVY(0.01);
-                        v.setX(x);
-                        v.setY(y);
-                        return v;
-                    }
-                    v.setVX(0.01);
-                    v.setVY(0.01);
-                    v.setX(x);
-                    v.setY(y);
-                } else {
+                ball_coordinates_x[counter] = x;
+                ball_coordinates_y[counter] = y;
+                counter++;
+                v.setVX(0);
+                v.setVY(0);
+                v.setX(x);
+                v.setY(y);
+                return v;
+            }
 
-                }
+            if (!isInTerrain(v.getX(), v.getY())) {
+                ball_coordinates_x[counter] = x;
+                ball_coordinates_y[counter] = y;
+                counter++;
+                v.setVX(0);
+                v.setVY(0);
+                v.setX(x);
+                v.setY(y);
+                return v;
+            }
 
+        }
+    }
+    public boolean terminates(double vx,double vy, double newVX, double newVY,double m){
+        if(vx>=0&&newVX<=0){
+            if(vy>=0&&newVY<=0){
+                return true;
+            }
+            else if(vy<=0&&newVY>=0){
+                return true;
             }
         }
+        else if(vx<=0&&newVX>=0){
+            if(vy>=0&&newVY<=0){
+                return true;
+            }
+            else if(vy<=0&&newVY>=0){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

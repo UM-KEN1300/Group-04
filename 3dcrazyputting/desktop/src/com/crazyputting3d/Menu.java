@@ -69,8 +69,6 @@ public class Menu {
         title.setText("Crazy Putting 3D!");
 
 
-
-
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

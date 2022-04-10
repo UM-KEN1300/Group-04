@@ -668,7 +668,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             /*
                 When SPACE is pressed, the stick is rendered for the animation
              */
-            renderStick((float) ballX, (float) ballY,ballZ);
+            renderStick((float) ballX, (float) ballY, ballZ);
         }
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot){
             /*

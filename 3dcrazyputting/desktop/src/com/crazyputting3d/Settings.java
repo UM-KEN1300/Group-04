@@ -11,17 +11,23 @@ import java.awt.event.*;
 public class Settings {
 
     private JFrame frame;
-    private JTextField fieldHoleX;
-    private JTextField fieldHoleY;
+    private JTextField fieldHoleXt;
+    private JTextField fieldHoleYt;
+    private JTextField fieldHoleX0;
+    private JTextField fieldHoleY0;
     private JButton jb1;
-    private String contentX;
-    private String contentY;
+    private String contentXt;
+    private String contentYt;
+    private String contentX0;
+    private String contentY0;
     private JLabel lb1;
     private JLabel lb2;
+    private JLabel lb3;
+    private JLabel lb4;
     private inputEditor ie;
 
     public void run(){
-        frame = new JFrame("Victory!");
+        frame = new JFrame("Settings");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocation(320, 150);
@@ -29,14 +35,19 @@ public class Settings {
 
         ie = new inputEditor();
 
-        fieldHoleX = new JTextField();
-        fieldHoleX.setBounds(0,20,200,30);
-        fieldHoleY = new JTextField();
-        fieldHoleY.setBounds(0,70,200,30);
+        fieldHoleXt = new JTextField();
+        fieldHoleXt.setBounds(0,20,200,30);
+        fieldHoleYt = new JTextField();
+        fieldHoleYt.setBounds(0,70,200,30);
+
+        fieldHoleX0 = new JTextField();
+        fieldHoleX0.setBounds(0,120,200,30);
+        fieldHoleY0 = new JTextField();
+        fieldHoleY0.setBounds(0,170,200,30);
 
         jb1 = new JButton("Apply");
         jb1.setSize(70, 30);
-        jb1.setLocation(55, 100);
+        jb1.setLocation(55, 200);
 
         lb1 = new JLabel("X Position of the hole: ");
         lb1.setSize(200,10);
@@ -46,25 +57,49 @@ public class Settings {
         lb2.setSize(200,10);
         lb2.setLocation(0,55);
 
+        lb3 = new JLabel("X Position of the ball: ");
+        lb3.setSize(200,10);
+        lb3.setLocation(0,105);
+
+        lb4 = new JLabel("Y Position of the ball: ");
+        lb4.setSize(200,10);
+        lb4.setLocation(0,155);
+
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentX = fieldHoleX.getText();
-                contentY = fieldHoleY.getText();
+                contentXt = fieldHoleXt.getText();
+                contentYt = fieldHoleYt.getText();
 
-                fieldHoleX.setText("");
-                fieldHoleY.setText("");
+                contentX0 = fieldHoleX0.getText();
+                contentY0 = fieldHoleY0.getText();
 
-                ie.editXtYt(Double.parseDouble(contentX), Double.parseDouble(contentY));
+                fieldHoleXt.setText("");
+                fieldHoleYt.setText("");
+
+                fieldHoleX0.setText("");
+                fieldHoleY0.setText("");
+
+                if(contentXt!=null&&contentYt!=null) {
+                    ie.editXtYt(Double.parseDouble(contentXt), Double.parseDouble(contentYt));
+                }
+
+                if(contentX0!=null&&contentY0!=null) {
+                    ie.editX0Y0(Double.parseDouble(contentX0), Double.parseDouble(contentY0));
+                }
             }
         });
 
         
-        frame.add(fieldHoleX);
-        frame.add(fieldHoleY);
+        frame.add(fieldHoleXt);
+        frame.add(fieldHoleYt);
+        frame.add(fieldHoleX0);
+        frame.add(fieldHoleY0);
         frame.add(jb1);
         frame.add(lb1);
         frame.add(lb2);
+        frame.add(lb3);
+        frame.add(lb4);
 
         frame.setLayout(null);
         frame.setVisible(true);

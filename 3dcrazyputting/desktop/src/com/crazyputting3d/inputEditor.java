@@ -44,6 +44,21 @@ public class inputEditor {
         }
     }
 
+    public void editX0Y0(double newx0, double newy0) {
+        try {
+            getInformation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        x0 = newx0;
+        y0 = newy0;
+        try {
+            writeCSV();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeCSV() throws IOException{
         try (PrintWriter writer = new PrintWriter(new File("assets\\input.txt"))) {
             StringBuilder sb = new StringBuilder();

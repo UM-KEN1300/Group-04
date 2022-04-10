@@ -3,7 +3,6 @@ package com.crazyputting3d;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import org.lwjgl.system.CallbackI.J;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +27,11 @@ public class Menu {
     private JButton jb2;  
     private JButton jb3; 
     private JButton jb4; 
+    private JButton jb5; 
     private ImageIcon img; 
+    private JLabel title;
+    private boolean settingsFlag=true;
+    Settings settings = new Settings();
 
     /**
     * run() creates frame and buttons and adds Action Listeners. 
@@ -36,26 +39,37 @@ public class Menu {
     */
 
     public void run(){
-
+        //Screen size is 315x560
         frame = new JFrame("CRAZY PUTTING - Group 04");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setLocation(320, 150);
+        frame.setLocation(620, 220);
         img = new ImageIcon("assets\\title6.jpeg");
         background = new JLabel("",img,JLabel.CENTER);
-        background.setBounds(0,0,1000,700);
+        background.setBounds(0,0,1280,720);
         jb1 = new JButton("Game");
         jb1.setSize(90, 50);
-        jb1.setLocation(280, 60);
+        jb1.setLocation(280, 80);
         jb2 = new JButton("Simulator");
         jb2.setSize(90, 50);
-        jb2.setLocation(280, 120);
+        jb2.setLocation(280, 140);
         jb4 = new JButton("Bot");
         jb4.setSize(90, 50);
-        jb4.setLocation(280, 180);
+        jb4.setLocation(280, 200);
         jb3 = new JButton("Quit");
         jb3.setSize(90, 50);
-        jb3.setLocation(280, 240);
+        jb3.setLocation(0, 315);
+        jb5 = new JButton("Settings");
+        jb5.setSize(90,50);
+        jb5.setLocation(0, 0);
+
+        title = new JLabel();
+        title.setLocation(280,0);
+        title.setSize(100,100);
+        title.setText("Crazy Putting 3D!");
+
+
+
 
         jb1.addActionListener(new ActionListener() {
             @Override
@@ -100,11 +114,26 @@ public class Menu {
             }
         });
 
+        jb5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(settingsFlag) {
+                    settings.run();
+                    settingsFlag=false;
+                } else if(!settingsFlag) {
+                    settings.remove();
+                    settingsFlag = true;
+                }
+            }
+        });
+
 
         background.add(jb1);
         background.add(jb2);
         background.add(jb3);
         background.add(jb4);
+        background.add(jb5);
+        background.add(title);
         frame.add(background); 
         frame.pack();
         frame.setVisible(true);

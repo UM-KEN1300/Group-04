@@ -1,7 +1,6 @@
 package com.crazyputting3d;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class botRand {

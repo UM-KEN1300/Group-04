@@ -96,6 +96,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean soundOn;
     private physicsEngine engine;
     private boolean game;
+    private boolean bot;
     private double renderSpeed=0.0167;
     private Search search2;
     private double [] speedsX;
@@ -104,15 +105,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean stopgame = true;
     private double[] radius;
 
-    private botRand bot;
+    private botRand randombot;
     private double[] botTraject;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation.
      */
-    public game3d(boolean game){
+    public game3d(boolean game, boolean bot){
         this.game = game;
+        this.bot = bot;
     }
 
     public void create() {
@@ -120,11 +122,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         *   The create() method is runned once and only once when the game3d class is run.
         *   If the 'game' variable is false, the input for velocities is given from the input file.
         */
-        if(!game){
+        if(!game && !bot){
             try {
-                bot = new botRand();
-                bot.trajectory();
-                botTraject = bot.getTrajectory();
                 search2 = new Search("input2.txt");
                 speedsX = search2.get_v0x();
                 speedsY = search2.get_v0y();
@@ -133,6 +132,13 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 e.printStackTrace();
             }
         }
+
+        if(!game && bot){
+            randombot = new botRand();
+            randombot.trajectory();
+            botTraject = randombot.getTrajectory();
+        }
+        
         /**
          * Create sound object and threads. Run getValues and setTerrainCoords method and create
          * an physicsEngine object.
@@ -664,15 +670,31 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
              */
             renderStick((float) ballX, (float) ballY,ballZ);
         }
-        if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game){
+        if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot){
             /*
                 When SPACE is pressed and the game is in simulator mode, visualise the next
                 move of the input file.
              */
-            //if(count<speedsX.length){
-                engine.setVelocities(botTraject[0],botTraject[1]);
-            //    count++;
-            //}
+            if(count<speedsX.length){
+                engine.setVelocities(speedsX[count],speedsY[count]);
+                count++;
+            }
+            numShotsTaken++;
+            playFlag = true;
+            arrowFlag = false;
+            ballcoordsX = engine.get_ball_coordinatesX();
+            ballcoordsY = engine.get_ball_coordinatesY();
+            index=-1;
+            treeHitted = true;
+            isInWater = false;
+        }
+
+        if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&bot){
+            /*
+                When SPACE is pressed and the game is in Bot mode, visualise the next
+                move of the bot.
+             */
+            engine.setVelocities(botTraject[0],botTraject[1]);
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

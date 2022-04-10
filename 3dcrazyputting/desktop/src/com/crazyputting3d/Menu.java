@@ -3,6 +3,8 @@ package com.crazyputting3d;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
+import org.lwjgl.system.CallbackI.J;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -25,6 +27,7 @@ public class Menu {
     private JButton jb1;  
     private JButton jb2;  
     private JButton jb3; 
+    private JButton jb4; 
     private ImageIcon img; 
 
     /**
@@ -47,9 +50,12 @@ public class Menu {
         jb2 = new JButton("Simulator");
         jb2.setSize(90, 50);
         jb2.setLocation(280, 120);
+        jb4 = new JButton("Bot");
+        jb4.setSize(90, 50);
+        jb4.setLocation(280, 180);
         jb3 = new JButton("Quit");
         jb3.setSize(90, 50);
-        jb3.setLocation(280, 180);
+        jb3.setLocation(280, 240);
 
         jb1.addActionListener(new ActionListener() {
             @Override
@@ -59,7 +65,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(true), config);
+                new Lwjgl3Application(new game3d(true,false), config);
             }
         });
 
@@ -71,7 +77,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false), config);
+                new Lwjgl3Application(new game3d(false,false), config);
             }
         });
 
@@ -82,9 +88,23 @@ public class Menu {
             }
         });
 
+        jb4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { 
+                frame.dispose();
+                Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                config.setForegroundFPS(60);
+                config.setTitle("Crazy Putting!");
+                config.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(false,true), config);
+            }
+        });
+
+
         background.add(jb1);
         background.add(jb2);
         background.add(jb3);
+        background.add(jb4);
         frame.add(background); 
         frame.pack();
         frame.setVisible(true);

@@ -13,20 +13,9 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import org.lwjgl.opengl.GL20;
-
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -64,7 +53,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private ModelInstance stickInstanceBot;
     private float timeSeconds2 = 0f;
     private int angle = 30;
-    private double scale = 0;
     private ArrayList<Double> coords = new ArrayList<>();
     private PerspectiveCamera camera;
     private FirstPersonCameraController controller;
@@ -114,7 +102,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double [] speedsY;
     private int count;
     private boolean stopgame = true;
-    double[] radius;
+    private double[] radius;
+
+    private botRand bot;
+    private double[] botTraject;
+
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation.
@@ -130,6 +122,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         */
         if(!game){
             try {
+                bot = new botRand();
+                bot.trajectory();
+                botTraject = bot.getTrajectory();
                 search2 = new Search("input2.txt");
                 speedsX = search2.get_v0x();
                 speedsY = search2.get_v0y();
@@ -185,8 +180,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     //The render() method is fired 60 times per second and is used to update locations and logic variables
     public void render() {
         update();
+
         //Get the time (in seconds) which will be stored in a variable
         timeSeconds +=Gdx.graphics.getDeltaTime();
+
         if(timeSeconds > renderSpeed && index<ballcoordsX.length-1 && playFlag == true){
             //If the ball is hit and rolling, this if statement will trigger and will animate the ball
             timeSeconds = 0;
@@ -220,19 +217,15 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             sound.tree_hit();
             treeHitted=false;
         }
-        if(index!=-1&&engine.isInWater(ballcoordsX[index], ballcoordsY[index])&&isInWater){
+
+        if(index!=-1&&engine.isInWater(ballcoordsX[index], ballcoordsY[index])&&isInWater==false){
             //If the ball falls in the water, trigger the appropriate sound
             sound.ball_water();
-            isInWater=false;
+            isInWater=true;
         }
         if((Math.abs(ballX-terrainX1)<0.05||Math.abs(ballX-terrainX2)<0.05||Math.abs(ballY-terrainZ1)<0.05||Math.abs(ballY-terrainZ2)<0.05)&&hitWall&&index>=2){
             sound.wall_hit();
             hitWall=false;
-        }
-        //Render the ball and the stick (if the game is played as the user)
-        renderBall((float) ballX, (float) ballY, ballZ, 0.05f);
-        if(game) {
-            renderStick1((float) ballX, (float) ballY, ballZ);
         }
 
         //Clear the screen for updating and update the camera
@@ -241,21 +234,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         camera.update();
         controller.update(Gdx.graphics.getDeltaTime());
         modelBatch.begin(camera);
-
-        //Render the text on the screen
-        batch.begin();
-        font.draw(batch, "FPS = " + Gdx.graphics.getFramesPerSecond(), 5,  camera.viewportHeight-5);
-        font.draw(batch, "Shots taken = " + numShotsTaken, 5,  camera.viewportHeight-25);
-        font.draw(batch, "Press 'SPACE' to shoot the ball", 5,  camera.viewportHeight-45);
-        font.draw(batch, "Press 'ESCAPE' to close the game", 5,  camera.viewportHeight-65);
-        font.draw(batch, "Press 'R'  to go back to the main menu", 5,  camera.viewportHeight-85);
-        if(game){
-        font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
-        font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
-        font.draw(batch, "Press 'UP-DOWN' to change selected speed: " + (float)velocity, 5,  camera.viewportHeight-145);
-        }
-        batch.end();
-
+        
         //Render the terrain
         for(int i=0; i<terrain3d.size(); i++) {
             modelBatch.render(terrain3d.get(i), environment);
@@ -277,6 +256,33 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         else
             renderWall2(terrainX1+terrainX2 + 7, terrainZ1);
         modelBatch.end();
+        //Render the ball and the stick (if the game is played as the user)
+        renderBall((float) ballX, (float) ballY, ballZ, 0.05f);
+        if(game) {
+            renderStick1((float) ballX, (float) ballY, ballZ);
+        }
+
+        //Render the text on the screen
+        batch.begin();
+        font.draw(batch, "FPS = " + Gdx.graphics.getFramesPerSecond(), 5,  camera.viewportHeight-5);
+        font.draw(batch, "Shots taken = " + numShotsTaken, 5,  camera.viewportHeight-25);
+        font.draw(batch, "Press 'SPACE' to shoot the ball", 5,  camera.viewportHeight-45);
+        font.draw(batch, "Press 'ESCAPE' to close the game", 5,  camera.viewportHeight-65);
+        font.draw(batch, "Press 'R'  to go back to the main menu", 5,  camera.viewportHeight-85);
+        if(game){
+        font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
+        font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
+        font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
+
+
+        font.getData().setScale(2, 2);
+        font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
+        font.draw(batch, "The X coordinate of the ball is: " + String.format("%.3f",ballX), 5, camera.viewportHeight-660);
+        font.draw(batch, "The Y coordinate of the ball is: " + String.format("%.3f",ballY), 5, camera.viewportHeight-690);
+        font.getData().setScale(1, 1);
+
+        }
+        batch.end();
     }
 
     //Animation of the ball when it is rolling
@@ -288,8 +294,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
     //Animation of the ball when it is falling and trigger the sound when it goes in the hole
     public void animateBallFalling() {
-        ballX = ballcoordsX[ballcoordsX.length-1]+0.01f;
-        ballY = ballcoordsY[ballcoordsX.length-1]+0.01f;
+        ballX = ballcoordsX[ballcoordsX.length-1];
+        ballY = ballcoordsY[ballcoordsX.length-1];
         ballZ = ballZ - 0.01f;
         if(stopgame) {
             sound.ball_inhole();
@@ -380,10 +386,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         float intersection = rad*2;
         ballBuilder = new ModelBuilder();
         ball = ballBuilder.createSphere(intersection,intersection,intersection,30,30,new Material(ColorAttribute.createDiffuse(Color.WHITE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        ballInstance = new ModelInstance(ball, x, z+rad, y);
+        ballInstance = new ModelInstance(ball, x, z+rad+0.03f, y);
 
         if(arrowFlag&&game) {
-            Model ballArrow = modelBuilder.createArrow(x, h(x, y) + rad, y, (float) (ballArrowX), h(ballArrowX, ballArrowY) + rad, (float) ballArrowY, 0.1f, 0.6f, 5,
+            Model ballArrow = modelBuilder.createArrow(x, h(x, y) + rad + 0.03f, y, (float) (ballArrowX), h(ballArrowX, ballArrowY) + rad + 0.03f, (float) ballArrowY, 0.1f, 0.6f, 5,
                     GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
             bArrowInstance = new ModelInstance(ballArrow);
             modelBatch.render(bArrowInstance, environment);
@@ -396,7 +402,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         float intersect = rad*2;
         holeBuilder = new ModelBuilder();
         hole = holeBuilder.createSphere(intersect,0.01f,intersect,30,30,new Material(ColorAttribute.createDiffuse(Color.BLACK)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        holeInstance = new ModelInstance(hole, x,h(x,y)+0.03f,y);
+        holeInstance = new ModelInstance(hole, x,h(x,y)+0.07f,y);
         modelBatch.render(holeInstance,environment);
     }
 
@@ -407,27 +413,29 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     */
     public void renderTerrain() {
         Color color = Color.GREEN;
-        for(float x=terrainX1; x<=terrainX2;x=x+0.05f) {
-            for(float z=terrainZ1; z<=terrainZ2; z=z+0.05f) {
+        for(float x=terrainX2; x>=terrainX1;x=x-0.1f) {
+            for(float z=terrainZ2; z>=terrainZ1; z=z-0.1f) {
 
                 for(int i=0; i<xvaluesSP.length-1; i++) {
                     if (x >= xvaluesSP[i] && x <= xvaluesSP[i+1] && z >= zvaluesSP[i] && z <= zvaluesSP[i+1]) {
                         color = Color.YELLOW;
                         break;
-                    } else if (h(x, z) < 0.000) {
-                        color = Color.NAVY;
-                        break;
-                    } else {
-                        color = Color.GREEN;
-                    }
+                    } 
                 }
+
+                if (h(x, z) < 0) {
+                    color = Color.NAVY;
+                } else {
+                    color = collorheight(h(x,z));
+                }
+
                 if(x!=terrainX1) {
-                    Model arrow1 = terrainBuilder.createArrow(x - 0.05f, h(x - 0.05f, z), z, x, h(x, z), z, 0.01f, 100f, 5,
+                    Model arrow1 = terrainBuilder.createArrow(x - 0.1f, h(x - 0.1f, z), z, x, h(x, z), z, 0.01f, 100f, 100,
                             GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(color)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     terrain3d.add(new ModelInstance(arrow1));
                 }
                 if(z!=terrainZ1) {
-                    Model arrow2 = terrainBuilder.createArrow(x, h(x, z), z, x, h(x, z - 0.05f), z - 0.05f, 0.01f, 100f, 5,
+                    Model arrow2 = terrainBuilder.createArrow(x, h(x, z), z, x, h(x, z - 0.01f), z - 0.1f, 0.01f, 100f, 100,
                             GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(color)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                     terrain3d.add(new ModelInstance(arrow2));
                 }
@@ -435,17 +443,21 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             }
         }
     }
-
+    public Color collorheight(float h){
+        float r=(150*h+30f)/255;
+        float g=(150*h+128f)/255;
+        return new Color(r,g,0,1f);
+    }
     //The method which is responsible for rendering and creating the trees given an array for all the
     public void renderTrees(double[] radius) {
         for(int i=0; i<xvaluesT.length; i++) {
-            Model treeBot = modelBuilder.createCylinder((float) radius[i], 1, (float) radius[i], 5,
+            Model treeBot = modelBuilder.createCylinder(2*(float) radius[i], 1, 2*(float) radius[i], 100,
                     new Material(ColorAttribute.createDiffuse(Color.BROWN)),
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-            Model treeTop = modelBuilder.createCone((float) radius[i]*4, (float)radius[i]*2, (float)radius[i]*4, 5, new Material(ColorAttribute.createDiffuse(Color.FOREST)),
+            Model treeTop = modelBuilder.createCone(2*(float) radius[i]*4, 2*(float)radius[i]*2, 2*(float)radius[i]*4, 5, new Material(ColorAttribute.createDiffuse(Color.FOREST)),
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
             trees3d.add(new ModelInstance(treeBot, (float) xvaluesT[i], (float)h(xvaluesT[i], (float)zvaluesT[i]) + 0.5f, (float)zvaluesT[i]));
-            trees3d.add(new ModelInstance(treeTop, (float)xvaluesT[i],(float)h(xvaluesT[i], (float)zvaluesT[i]) + 1f,(float) zvaluesT[i]));
+            trees3d.add(new ModelInstance(treeTop, (float)xvaluesT[i],(float)h(xvaluesT[i], (float)zvaluesT[i]) + 1f+2*(float)radius[i],(float) zvaluesT[i]));
         }
     }
 
@@ -485,7 +497,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         Texture wallTexture = new Texture("dkelogosmaller.png");
         wallTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         wallTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        Material material = new Material(TextureAttribute.createDiffuse(wallTexture));
 
         Texture wallTexture2 = new Texture("umlogo.png");
         wallTexture2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -528,13 +539,13 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         stickBuilderBot = new ModelBuilder();
         stickBot = stickBuilderBot.createBox(0.05f,0.05f,0.2f,new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-        stickInstanceBot = new ModelInstance(stickBot,x-0.2f, z+0.025f,y);
+        stickInstanceBot = new ModelInstance(stickBot,x-0.2f, z+0.045f,y);
 
         timeSeconds2 +=Gdx.graphics.getDeltaTime();
         if(timeSeconds2 > 0.0016) {
             timeSeconds2 = 0;
             stickInstance.transform.rotate(0, 0, 1, angle);
-            stickInstanceBot.transform.setToTranslation((float) (x - 0.05), z + 0.025f, y).rotate(0, 0, 1, angle);
+            stickInstanceBot.transform.setToTranslation((float) (x - 0.05), z + 0.045f, y).rotate(0, 0, 1, angle);
         }
 
         modelBatch.render(stickInstanceBot,environment);
@@ -552,7 +563,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             stickBuilderBot = new ModelBuilder();
             stickBot = stickBuilderBot.createBox(0.05f, 0.05f, 0.2f, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)),
                     VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-            stickInstanceBot = new ModelInstance(stickBot, x - 0.2f, z + 0.025f, y);
+            stickInstanceBot = new ModelInstance(stickBot, x - 0.2f, z + 0.045f, y);
             modelBatch.render(stickInstanceBot, environment);
             modelBatch.render(stickInstance);
         }
@@ -633,6 +644,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             double velocityX = ballArrowX-ballX;
             double velocityY = ballArrowY-ballY;
             double length = Math.sqrt(velocityX*velocityX+velocityY*velocityY);
+            System.out.println(length);
             speedX = velocity*velocityX/length;
             speedY = velocity*velocityY/length;
             engine.setVelocities(speedX,speedY);
@@ -643,7 +655,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             ballcoordsY = engine.get_ball_coordinatesY();
             index=-1;
             treeHitted = true;
-            isInWater = true;
+            isInWater = false;
             hitWall = true;
         }
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&game){
@@ -657,10 +669,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in simulator mode, visualise the next
                 move of the input file.
              */
-            if(count<speedsX.length){
-                engine.setVelocities(speedsX[count],speedsY[count]);
-                count++;
-            }
+            //if(count<speedsX.length){
+                engine.setVelocities(botTraject[0],botTraject[1]);
+            //    count++;
+            //}
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;
@@ -668,7 +680,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             ballcoordsY = engine.get_ball_coordinatesY();
             index=-1;
             treeHitted = true;
-            isInWater = true;
+            isInWater = false;
         }
 
         if(input.isKeyPressed(Input.Keys.R)) {

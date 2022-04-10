@@ -38,7 +38,7 @@ public class Menu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocation(320, 150);
-        img = new ImageIcon("C:\\Users\\grado\\Desktop\\3dcrazyputting\\assets\\title6.jpeg");
+        img = new ImageIcon("assets\\title6.jpeg");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,1000,700);
         jb1 = new JButton("Game");

@@ -1,8 +1,5 @@
 package com.crazyputting3d;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -53,7 +50,7 @@ public class VictoryScreen {
         frame.setResizable(false);
         frame.setLocation(320, 150);
 
-        img = new ImageIcon("C:\\Users\\grado\\Desktop\\3dcrazyputting\\assets\\victory.png");
+        img = new ImageIcon("assets\\victory.png");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,1000,700);
 

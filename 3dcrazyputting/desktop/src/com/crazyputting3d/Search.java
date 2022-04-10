@@ -3,7 +3,6 @@ package com.crazyputting3d;
 import java.io.*;
 import java.lang.String;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The Search class is used to read the Input file and make get_methods for each variable
@@ -41,7 +40,7 @@ public class Search {
 
     public void run() throws IOException{
 
-        FileReader read=new FileReader("C:\\Users\\grado\\Desktop\\3dcrazyputting\\assets\\"+filename);
+        FileReader read=new FileReader("assets\\"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 

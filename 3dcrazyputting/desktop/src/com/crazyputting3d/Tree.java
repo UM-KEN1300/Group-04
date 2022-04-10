@@ -54,7 +54,7 @@ public class Tree {
      */
 
     public boolean isInTree(double x, double y){
-        if(x>(xStart-radius)&&x<(xStart+radius)&&y>(yStart-radius)&&y<(yStart+radius)){
+        if(((x-xStart)*(x-xStart)+(y-yStart)*(y-yStart))<radius*radius){
             return true;
         }
         return false;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class physicsEngine {
-    public static double h = 0.0001; // we decide on step size
+    public static double h = 0.001; // we decide on step size
     public double k = h;
     private double x0; // given in input file
     private double y0;
@@ -90,7 +90,28 @@ public class physicsEngine {
         ball_coordinates_y = new Double[500000];
         counter = 0;
         StateVector newv = new StateVector(x0, y0, v0x, v0y);
-        start(newv);
+        start(newv, false);
+    }
+
+    public StateVector setVelocitiesForBot(double x, double y, double v0x, double v0y) {
+        StateVector newv = new StateVector(x, y, v0x, v0y);
+        return start(newv, true);
+    }
+
+    public double getXt(){
+        return xt;
+    }
+    public double getYt(){
+        return yt;
+    }
+    public double getrOfHole(){
+        return r;
+    }
+    public double getX0(){
+        return x0;
+    }
+    public double getY0(){
+        return y0;
     }
 
     /**
@@ -259,38 +280,43 @@ public class physicsEngine {
      * start() used to return the ball to initial position once it hits the water
      * param current vector state
      * returns initial vector state if in water, or current vector state otherwise.
+     * 
      * @param <Calculable>
      * @param <EquationSolver>
      * 
      * @throws IOException
      */
-    public static <Calculable, EquationSolver> void main(String[] args) throws IOException {
-        //for (int i = 0; i < 1000; i++) {
-            StateVector vector = new StateVector(0, 0, 1, 0);
-            physicsEngine engine = new physicsEngine();
-            vector = engine.start(vector);
-            double error = Math.abs((vector.getX() / 0.5096839959) - 1);
-            System.out.println(h + "," + error);
-            //h = h + 0.0001;
-        //}
+    public static void main(String[] args) throws IOException {
+        // for (i nt i = 0; i < 1000; i++) {
+        StateVector vector = new StateVector(0, 0, 1, 0);
+        physicsEngine engine = new physicsEngine();
+        vector = engine.start(vector, true);
+        double error = Math.abs((vector.getX() / 0.5096839959) - 1);
+        System.out.println(vector.getX() + "," + error);
+        // h = h + 0.0001;
+        // }
     }
 
-    public StateVector start(StateVector v) {
+    public StateVector start(StateVector v, boolean botPlays) {
         x0 = v.getX();
         y0 = v.getY();
-        StateVector newV = trajectory(v);
+        StateVector newV = trajectory(v, botPlays);
         if (newV == null) {
+            if (!botPlays) {
+                ball_coordinates_x[counter] = x0;
+                ball_coordinates_y[counter] = y0;
+                counter++;
+            }
+            return v;
+        }
+        if (!botPlays) {
+            x0 = newV.getX();
+            y0 = newV.getY();
             ball_coordinates_x[counter] = x0;
             ball_coordinates_y[counter] = y0;
             counter++;
-            return v;
         }
-        x0 = newV.getX();
-        y0 = newV.getY();
-        ball_coordinates_x[counter] = x0;
-        ball_coordinates_y[counter] = y0;
-        counter++;
-        System.out.println(newV);
+        //System.out.println(newV);
         return newV;
     }
 
@@ -303,23 +329,16 @@ public class physicsEngine {
         double ay1 = acelerationY(x0, y0, vx0, vy0, m);
         double vx1 = vx0 + ax1 * h / 2;
         double vy1 = vy0 + ay1 * h / 2;
-        double x1 = x0 + vx0 * h/2;
-        double y1 = y0 + vx0 * h/2;
-        if(terminates(vx0, vy0, vx1, vy1, m)){
-            a.setX(x1);
-            a.setY(y1);
-            a.setVX(vx1);
-            a.setVY(vy1);
-            return a;
-        }
+        double x1 = x0 + vx0 * h / 2;
+        double y1 = y0 + vx0 * h / 2;
 
         double ax2 = acelerationX(x1, y1, vx1, vy1, m);
         double ay2 = acelerationY(x1, y1, vx1, vy1, m);
         double vx2 = vx0 + ax2 * h / 2;
         double vy2 = vy0 + ay2 * h / 2;
-        double x2 = x0 + vx1 * h/2;
-        double y2 = y0 + vx1 * h/2;
-        if(terminates(vx0, vy0, vx2, vy2, m)){
+        double x2 = x0 + vx1 * h / 2;
+        double y2 = y0 + vx1 * h / 2;
+        if (terminates(vx0, vy0, m)) {
             a.setX(x2);
             a.setY(y2);
             a.setVX(vx2);
@@ -333,22 +352,44 @@ public class physicsEngine {
         double vy3 = vy0 + ay3 * h;
         double x3 = x0 + vx2 * h;
         double y3 = y0 + vx2 * h;
-        if(terminates(vx0, vy0, vx3, vy3, m)){
-            a.setX(x3);
-            a.setY(y3);
-            a.setVX(vx3);
-            a.setVY(vy3);
-            return a;
-        }
 
         double ax4 = acelerationX(x3, y3, vx3, vy3, m);
         double ay4 = acelerationY(x3, y3, vx3, vy3, m);
-        
+
         a.setX(x0 + h * 1.0 / 6.0 * (vx0 + 2 * vx1 + 2 * vx2 + vx3));
         a.setY(y0 + h * 1.0 / 6.0 * (vy0 + 2 * vy1 + 2 * vy2 + vy3));
         a.setVX(vx0 + h * 1.0 / 6.0 * (ax1 + 2 * ax2 + 2 * ax3 + ax4));
         a.setVY(vy0 + h * 1.0 / 6.0 * (ay1 + 2 * ay2 + 2 * ay3 + ay4));
 
+        return a;
+    }
+
+    public StateVector VerletsMethod(StateVector a, double m){
+        double x0 = a.getX();
+        double y0 = a.getY();
+        double vx0 = a.getVX();
+        double vy0 = a.getVY();
+        double ax0 = acelerationX(x0, y0, vx0, vy0, m);
+        double ay0 = acelerationY(x0, y0, vx0, vy0, m);
+        double x1  = x0 + vx0*h+1.0/2.0*ax0*h*h;
+        double y1  = y0 + vy0*h+1.0/2.0*ay0*h*h;
+        double vx1 = vx0+h*ax0;
+        double vy1 = vy0+h*ay0;
+        if (terminates(vx0, vy0, m)) {
+            a.setX(x1);
+            a.setY(y1);
+            a.setVX(vx1);
+            a.setVY(vy1);
+            return a;
+        }
+        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
+        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
+        double vx2 = vx0 + 1.0/2.0*(ax0+ax1)*h;
+        double vy2 = vy0 + 1.0/2.0*(ay0+ay1)*h;
+        a.setX(x1);
+        a.setY(y1);
+        a.setVX(vx2);
+        a.setVY(vy2);
         return a;
     }
 
@@ -363,7 +404,7 @@ public class physicsEngine {
         double y1 = y0 + vy0 * h;
         double vx1 = vx0 + (1.0 / 5.0 * ax0) * k;
         double vy1 = vy0 + (1.0 / 5.0 * ay0) * k;
-        if(terminates(vx0, vy0, vx1, vy1, m)){
+        if (terminates(vx0, vy0, m)) {
             a.setX(x1);
             a.setY(y1);
             a.setVX(vx1);
@@ -424,7 +465,7 @@ public class physicsEngine {
                 + 1902912.0 * vx5 + 534240.0 * vx6) / 21369600.0;
         double s = Math.abs(exact_next - average_next);
         double optimal_t = Math.pow((k * 0.000001) / ((2 * s)), 1.0 / 5.0);
-        k = optimal_t*k;
+        k = optimal_t * k;
         return a;
     }
 
@@ -435,11 +476,11 @@ public class physicsEngine {
         double vy0 = a.getVY();
         double ax0 = acelerationX(x0, y0, vx0, vy0, m);
         double ay0 = acelerationY(x0, y0, vx0, vy0, m);
-        double x1 = x0 + vx0*h;
-        double y1 = y0 + vy0*h;
+        double x1 = x0 + vx0 * h;
+        double y1 = y0 + vy0 * h;
         double vx1 = vx0 + ax0 * h;
         double vy1 = vy0 + ay0 * h;
-        if(terminates(vx0, vy0, vx1, vy1, m)){
+        if (terminates(vx0, vy0, m)) {
             a.setX(x1);
             a.setY(y1);
             a.setVX(vx1);
@@ -484,7 +525,7 @@ public class physicsEngine {
      * returns final vector.
      */
 
-    public StateVector trajectory(StateVector v) {
+    public StateVector trajectory(StateVector v, boolean botPlays) {
         while (true) {
             double m = 0;
             double ms = 0;
@@ -492,13 +533,15 @@ public class physicsEngine {
             double y = v.getY();
             double vx = v.getVX();
             double vy = v.getVY();
-            int velocity = (int) Math.sqrt(vx * vx + vy * vy);
-            if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
-                ball_coordinates_x[counter] = x;
-                ball_coordinates_y[counter] = y;
-                counter++;
+            if (!botPlays) {
+                int velocity = (int) Math.sqrt(vx * vx + vy * vy);
+                if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
+                    ball_coordinates_x[counter] = x;
+                    ball_coordinates_y[counter] = y;
+                    counter++;
+                }
+                speedCounter++;
             }
-            speedCounter++;
             if (isFinish(x, y)) {
                 return v;
             } else if (isInSandPit(x, y)) {
@@ -508,50 +551,49 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            /*double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
-            if ((vx <  h && vx > -h ) && (vy < h  && vy > -h ) && ms > staticFriction) {
-                System.out.println("STOPPED");
-                ball_coordinates_x[counter] = x;
-                ball_coordinates_y[counter] = y;
-                counter++;
-                return v;
-            }*/
             if (isInWater(v.getX(), v.getY())) {
-                ball_coordinates_x[counter] = x;
-                ball_coordinates_y[counter] = y;
-                counter++;
-                return null;
-            }
-            v = EulersMethod(v, m);
-            double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
-            if(terminates(vx, vy, v.getVX(), v.getVY(),m)){
-                v.setX(x+v.getVX()*h);
-                v.setY(y+v.getVY()*h);
-                if(ms > staticFriction){
+                if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
                     counter++;
+                }
+                return null;
+            }
+            v = RungeKutta2(v, m);
+            double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
+            if (terminates(vx, vy, m)) {
+                v.setX(x + v.getVX() * h);
+                v.setY(y + v.getVY() * h);
+                if (ms > staticFriction) {
+                    if (!botPlays) {
+                        ball_coordinates_x[counter] = x;
+                        ball_coordinates_y[counter] = y;
+                        counter++;
+                    }
                     return v;
                 }
             }
             if (isInTree(v.getX(), v.getY())) {
-
-                ball_coordinates_x[counter] = x;
-                ball_coordinates_y[counter] = y;
-                counter++;
-                v.setVX(0);
-                v.setVY(0);
+                if (!botPlays) {
+                    ball_coordinates_x[counter] = x;
+                    ball_coordinates_y[counter] = y;
+                    counter++;
+                }
+                v.setVX(h);
+                v.setVY(h);
                 v.setX(x);
                 v.setY(y);
                 return v;
             }
 
             if (!isInTerrain(v.getX(), v.getY())) {
-                ball_coordinates_x[counter] = x;
-                ball_coordinates_y[counter] = y;
-                counter++;
-                v.setVX(0);
-                v.setVY(0);
+                if (!botPlays) {
+                    ball_coordinates_x[counter] = x;
+                    ball_coordinates_y[counter] = y;
+                    counter++;
+                }
+                v.setVX(h);
+                v.setVY(h);
                 v.setX(x);
                 v.setY(y);
                 return v;
@@ -559,22 +601,10 @@ public class physicsEngine {
 
         }
     }
-    public boolean terminates(double vx,double vy, double newVX, double newVY,double m){
-        if(vx>=0&&newVX<=0){
-            if(vy>=0&&newVY<=0){
-                return true;
-            }
-            else if(vy<=0&&newVY>=0){
-                return true;
-            }
-        }
-        else if(vx<=0&&newVX>=0){
-            if(vy>=0&&newVY<=0){
-                return true;
-            }
-            else if(vy<=0&&newVY>=0){
-                return true;
-            }
+
+    public boolean terminates(double vx, double vy, double m) {
+        if ((vx < h && vx > -h ) && (vy < h && vy > -h )){
+            return true;
         }
         return false;
     }

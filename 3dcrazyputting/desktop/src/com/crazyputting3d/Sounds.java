@@ -4,7 +4,6 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 /**
  * The Sounds class is used for sound outputs during game play and simulations.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
@@ -15,7 +14,7 @@ import javax.sound.sampled.Clip;
 
 public class Sounds implements Runnable{
 
-    private String filePath = "assets\\";
+    private String filePath = "C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\";
 
     private File fileName0;
     private File fileName1;
@@ -95,13 +94,11 @@ public class Sounds implements Runnable{
                 try{
                     Clip clip_temp = AudioSystem.getClip();
                     AudioInputStream inputStream = AudioSystem.getAudioInputStream(fileName2);
-                    while(true) {
-                        clip_temp.open(inputStream);
-                        clip_temp.start();
-                        Thread.sleep(300);
-                    }
+                    clip_temp.open(inputStream);
+                    clip_temp.start();
+                    Thread.sleep(300);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         }).start();

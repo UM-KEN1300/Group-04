@@ -104,9 +104,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-
+    private HillClimbingBot botG;
     private botRand randombot;
-    private double[] botTraject;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
@@ -132,12 +131,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 e.printStackTrace();
             }
         }
-
-        if(!game && bot){
-            randombot = new botRand();
-            randombot.trajectory();
-            botTraject = randombot.getTrajectory();
-        }
         
         /**
          * Create sound object and threads. Run getValues and setTerrainCoords method and create
@@ -154,6 +147,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.botG = new HillClimbingBot(engine);
+        this.randombot = new botRand(engine);
 
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
@@ -284,11 +279,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         font.getData().setScale(2, 2);
         font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
+        }
+        font.getData().setScale(2, 2);
         font.draw(batch, "The X coordinate of the ball is: " + String.format("%.3f",ballX), 5, camera.viewportHeight-660);
         font.draw(batch, "The Y coordinate of the ball is: " + String.format("%.3f",ballY), 5, camera.viewportHeight-690);
         font.getData().setScale(1, 1);
-
-        }
         batch.end();
     }
 
@@ -694,7 +689,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            engine.setVelocities(botTraject[0],botTraject[1]);
+            //engine.setVelocities(botTraject[0],botTraject[1]);
+            randombot.makeMove();
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

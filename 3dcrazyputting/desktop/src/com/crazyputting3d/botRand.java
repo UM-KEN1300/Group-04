@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class botRand {
-    physicsEngine engine;
     private double speed;
     private double directionX;
     private double directionY;
@@ -13,19 +12,20 @@ public class botRand {
     private boolean flag;
     private double holeX;
     private double holeY;
+    private double ballX;
+    private double ballY;
+    private double radius;
     private int count;
+    private physicsEngine engine;
     final double length = 0.3;
-    
-    private Search search;
 
-    public botRand() {
-        try {
-            this.search = new Search("input.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.holeX = search.get_xt();
-        this.holeY = search.get_yt();
+    public botRand(physicsEngine engine) {
+        this.engine = engine;
+        this.holeX = engine.getXt();
+        this.holeY = engine.getYt();
+        this.ballX = engine.getX0();
+        this.ballY = engine.getY0();
+        this.radius = engine.getrOfHole();
         this.count=0;
         this.speed = 0;
         this.directionX=0;
@@ -36,10 +36,6 @@ public class botRand {
     public double h(double x, double y){
         cheat cheat = new cheat();
         return cheat.getHeightFunction(x, y);
-    }
-
-    public void testTrajectory() {
-        engine.setVelocities(2, 2);
     }
 
     public static double randomDouble(double min, double max) {
@@ -57,40 +53,41 @@ public class botRand {
         directionY = Math.sin(angle)*length;
     }
 
-    public void trajectory() {
+    public StateVector trajectory() {
+        double euklidianDistance = Double.MAX_VALUE;
+        double minVx = Double.MAX_VALUE;
+        double minVy = Double.MAX_VALUE;
+        StateVector min = new StateVector(ballX,ballY,minVx,minVy);
         while(flag) {
-            try {
-                engine = new physicsEngine();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             setRandDirection();
             setRandSpeed();
             speedX = speed*directionX/length;
             speedY = speed*directionY/length;
             //if((speedX>0&&holeX<0)||(speedX<0&&holeX>0)||(speedY>0&&holeY<0)||(speedY<0&&holeY>0)) { continue; }
             count++;
-            engine.setVelocities(speedX, speedY);
-            if(engine.isInHole()) {
+            StateVector temp = engine.setVelocitiesForBot(ballX, ballY, speedX, speedY);
+            double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-holeX, 2)+Math.pow(temp.getY()-holeY, 2));
+            if(tempEuclidianDistance<radius){
+                min.setVX(speedX);
+                min.setVY(speedY);
                 System.out.println("Hole in one! On try number: " + count);
                 System.out.println("Hole in one speedX: " + speedX);
                 System.out.println("Hole in one speedY: " + speedY);
                 flag=false;
-                break;
+                return min;
             }
-            System.out.println(count + ": Speed X: " + speedX + " Speed Y: " + speedY);
+            if(tempEuclidianDistance<euklidianDistance){
+                min = temp;
+                euklidianDistance = tempEuclidianDistance;
+            }
         }
+        return min;
     }
 
-    public double[] getTrajectory() {
-        double[] arr = new double[2];
-        arr[0] = speedX;
-        arr[1] = speedY;
-        return arr;
-    }
-
-    public static void main(String[] args) {
-        botRand bot = new botRand();
-        bot.trajectory();
+    public void makeMove(){
+        StateVector move = trajectory();
+        double vx = move.getVX();
+        double vy = move.getVY();
+        engine.setVelocities(vx, vy);
     }
 }

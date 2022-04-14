@@ -689,8 +689,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            //engine.setVelocities(botTraject[0],botTraject[1]);
-            randombot.makeMove();
+            botG.makeMove();
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

@@ -16,7 +16,7 @@ public class HillClimbingBot {
         this.y0 = engine.getY0();
     }
     public StateVector calculateMove(){
-        double angle = 0;// Math.acos(Math.abs(xt-x0)/Math.sqrt(Math.pow(x0-xt, 2)+Math.pow(y0-yt, 2)));
+        double angle = Math.acos(Math.abs(xt-x0)/Math.sqrt(Math.pow(x0-xt, 2)+Math.pow(y0-yt, 2)));
         double euklidianDistance = Double.MAX_VALUE;
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;
@@ -42,7 +42,11 @@ public class HillClimbingBot {
         return min;
     }
      public void makeMove(){
-         StateVector move = calculateMove();
+        long startTime = System.nanoTime();
+        StateVector move = calculateMove();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Run time of the random bot algorithm (ms): " + duration/1000000);
          double vx = move.getVX();
          double vy = move.getVY();
          engine.setVelocities(vx, vy);

@@ -1,7 +1,8 @@
 package com.crazyputting3d;
 
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javax.swing.DebugGraphics;
 
 public class botRand {
     private double speed;
@@ -15,7 +16,6 @@ public class botRand {
     private double ballX;
     private double ballY;
     private double radius;
-    private int count;
     private physicsEngine engine;
     final double length = 0.3;
 
@@ -26,7 +26,6 @@ public class botRand {
         this.ballX = engine.getX0();
         this.ballY = engine.getY0();
         this.radius = engine.getrOfHole();
-        this.count=0;
         this.speed = 0;
         this.directionX=0;
         this.directionY=0;
@@ -63,16 +62,11 @@ public class botRand {
             setRandSpeed();
             speedX = speed*directionX/length;
             speedY = speed*directionY/length;
-            //if((speedX>0&&holeX<0)||(speedX<0&&holeX>0)||(speedY>0&&holeY<0)||(speedY<0&&holeY>0)) { continue; }
-            count++;
             StateVector temp = engine.setVelocitiesForBot(ballX, ballY, speedX, speedY);
             double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-holeX, 2)+Math.pow(temp.getY()-holeY, 2));
             if(tempEuclidianDistance<radius){
                 min.setVX(speedX);
                 min.setVY(speedY);
-                System.out.println("Hole in one! On try number: " + count);
-                System.out.println("Hole in one speedX: " + speedX);
-                System.out.println("Hole in one speedY: " + speedY);
                 flag=false;
                 return min;
             }
@@ -85,7 +79,11 @@ public class botRand {
     }
 
     public void makeMove(){
+        long startTime = System.nanoTime();
         StateVector move = trajectory();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Run time of the random bot algorithm (ms): " + duration/1000000);
         double vx = move.getVX();
         double vy = move.getVY();
         engine.setVelocities(vx, vy);

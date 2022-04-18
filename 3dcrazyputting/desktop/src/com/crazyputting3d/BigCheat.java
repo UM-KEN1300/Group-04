@@ -17,7 +17,7 @@ public class BigCheat {
     protected static int i;
     public static void writeCSV() throws IOException {
         //Get the path file and create a Search object
-        try (PrintWriter writer = new PrintWriter(new File("desktop\\src\\com\\crazyputting3d\\cheat.java"))) {
+        try (PrintWriter writer = new PrintWriter(new File("A:\\GitHub\\Group-04\\3dcrazyputting\\desktop\\src\\com\\crazyputting3d\\cheat.java"))) {
             Search search = new Search("input.txt");
             //Create a stringbuilder and create the cheat.java file line by line
             StringBuilder sb = new StringBuilder();

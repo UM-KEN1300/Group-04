@@ -39,6 +39,8 @@ public class physicsEngine {
     public Double[] ball_coordinates_x = new Double[500000];
     public Double[] ball_coordinates_y = new Double[500000];
     private boolean flag = false;
+    private double slopex;
+    private double slopey;
 
     /**
      * Constructor initiates variables according to input file data. These include:
@@ -533,6 +535,7 @@ public class physicsEngine {
             double y = v.getY();
             double vx = v.getVX();
             double vy = v.getVY();
+
             if (!botPlays) {
                 int velocity = (int) Math.sqrt(vx * vx + vy * vy);
                 if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
@@ -560,6 +563,10 @@ public class physicsEngine {
                 return null;
             }
             v = RungeKutta2(v, m);
+            
+            slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g) + h;
+            slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g) + h;
+
             double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
             if (terminates(vx, vy, m)) {
                 v.setX(x + v.getVX() * h);
@@ -650,7 +657,7 @@ public class physicsEngine {
         }
         return temp_FINAL;
     }
-
+ 
     /**
      * isInHole() determines whether the ball is in the hole or not.
      * returns flag.
@@ -701,5 +708,13 @@ public class physicsEngine {
         boundXEnd = (float) (biggestX + offset);
         boundYStart = (float) (smallestY - offset);
         boundYEnd = (float) (biggestY + offset);
+    }
+
+    public double getSlopex() {
+        return slopex;
+    }
+
+    public double getSlopey() {
+        return slopey;
     }
 }

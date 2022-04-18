@@ -50,7 +50,7 @@ public class VictoryScreen {
         frame.setResizable(false);
         frame.setLocation(320, 150);
 
-        img = new ImageIcon("C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\victory.png");
+        img = new ImageIcon("A:\\GitHub\\Group-04\\3dcrazyputting\\assets\\victory.png");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,1000,700);
 

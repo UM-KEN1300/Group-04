@@ -1,5 +1,7 @@
 package com.crazyputting3d;
 
+import java.io.IOException;
+
 public class BasicBot {
     private physicsEngine engine;
     private double x0;
@@ -14,6 +16,8 @@ public class BasicBot {
     final double length = 0.3;
     private double speedX;
     private double speedY;
+    private double slopex;
+    private double slopey;
 
     public BasicBot(physicsEngine engine) {
         this.engine = engine;
@@ -27,24 +31,52 @@ public class BasicBot {
     }
 
     public StateVector play(){
-        double angle = Math.atan((yt - y0) / (xt - x0)) * 180 / Math.PI;
+        double angle = Math.atan2((yt - y0) , (xt - x0));
+
         directionX = Math.cos(angle)*length;
         directionY = Math.sin(angle)*length;
 
-        double minVx = Double.MAX_VALUE;
-        double minVy = Double.MAX_VALUE;
-
-        StateVector min = new StateVector(x0,y0,minVx,minVy);
         speedX = speed*directionX/length;
         speedY = speed*directionY/length;
 
-        System.out.println(speedX);
-        System.out.println(speedY);
-         
-        min.setVX(speedX);
-        min.setVY(speedY);
+        try {
+            physicsEngine enginetest;
+            enginetest = new physicsEngine();
+            enginetest.setVelocities(speedX, speedX);
+            slopex = enginetest.getSlopex();
+            slopey = enginetest.getSlopey();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        // speedX = speedX+slopex;
+        // speedY = speedY+slopey;
+
+        StateVector min = new StateVector(x0,y0,speedX,speedY);
+
+        System.out.println("slopex:"+slopex);
+        System.out.println("slopey:"+slopey);
 
         return min;
+    }
+
+    public double h(double x, double y) {
+        cheat cheat = new cheat();
+        return cheat.getHeightFunction(x, y);
+    }
+
+
+    public double hxderivated(double x, double y) {
+        double dx = 0.000000000001;
+        double derivative = (h(x + dx, y) - h(x, y)) / dx;
+        return derivative;
+    }
+
+    public double hyderivated(double x, double y) {
+        double dy = 0.000000000001;
+        double derivative = (h(x, y + dy) - h(x, y)) / dy;
+        return derivative;
     }
     
     public void makeMove(){

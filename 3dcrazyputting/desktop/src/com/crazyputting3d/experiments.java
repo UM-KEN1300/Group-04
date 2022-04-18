@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 
 public class experiments {
     public static void writeFunction() throws IOException {
-        try (PrintWriter writer = new PrintWriter(new File("assets\\experiment.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new File("A:\\GitHub\\Group-04\\3dcrazyputting\\assets\\experiment.txt"))) {
             StringBuilder sb = new StringBuilder();
             for(int i = 0; i < 2*10*(Math.pow(2,15)); i++){
                 float v0x = (float)(Math.random()*5);

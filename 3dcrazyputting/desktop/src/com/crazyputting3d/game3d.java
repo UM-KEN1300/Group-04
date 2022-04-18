@@ -106,6 +106,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double[] radius;
     private HillClimbingBot botG;
     private botRand randombot;
+    private BasicBot ruleBot;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
@@ -149,6 +150,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         }
         this.botG = new HillClimbingBot(engine);
         this.randombot = new botRand(engine);
+        this.ruleBot = new BasicBot(engine);
 
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
@@ -689,7 +691,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            botG.makeMove();
+            ruleBot.makeMove();
+
+
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

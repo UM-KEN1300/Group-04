@@ -564,6 +564,7 @@ public class physicsEngine {
             }
             v = RungeKutta2(v, m);
             
+            
             slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g) + h;
             slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g) + h;
 

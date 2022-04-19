@@ -60,7 +60,7 @@ public class inputEditor {
     }
 
     public void writeCSV() throws IOException{
-        try (PrintWriter writer = new PrintWriter(new File("A:\\GitHub\\Group-04\\3dcrazyputting\\assets\\input.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new File("C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\input.txt"))) {
             StringBuilder sb = new StringBuilder();
             sb.append("x0 = " + x0);
             sb.append('\n');

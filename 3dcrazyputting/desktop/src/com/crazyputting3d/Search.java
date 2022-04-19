@@ -40,7 +40,7 @@ public class Search {
 
     public void run() throws IOException{
 
-        FileReader read=new FileReader("A:\\GitHub\\Group-04\\3dcrazyputting\\assets\\"+filename);
+        FileReader read=new FileReader("C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 

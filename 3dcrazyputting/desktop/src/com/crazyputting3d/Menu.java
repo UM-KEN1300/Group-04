@@ -44,7 +44,7 @@ public class Menu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocation(620, 220);
-        img = new ImageIcon("A:\\GitHub\\Group-04\\3dcrazyputting\\assets\\title6.jpeg");
+        img = new ImageIcon("C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\title6.jpeg");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,1280,720);
         jb1 = new JButton("Game");
@@ -77,7 +77,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(true,false), config);
+                new Lwjgl3Application(new game3d(true,false,settings.getBotInt()), config);
             }
         });
 
@@ -89,7 +89,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,false), config);
+                new Lwjgl3Application(new game3d(false,false,settings.getBotInt()), config);
             }
         });
 
@@ -108,13 +108,14 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true), config);
+                new Lwjgl3Application(new game3d(false,true,settings.getBotInt()), config);
             }
         });
 
         jb5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println(settings.getBotInt());
                 if(settingsFlag) {
                     settings.run();
                     settingsFlag=false;
@@ -136,6 +137,7 @@ public class Menu {
         frame.pack();
         frame.setVisible(true);
     }
+
 
     public static void main(String[] args) {
         Menu start_up = new Menu(); 

@@ -85,7 +85,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private BitmapFont font;
     private SpriteBatch batch;
     private Sounds sound;
-    private double velocity;
+    private double velocity=0.1;
     private double speedY;
     private double speedX;
     private boolean treeHitted;
@@ -107,14 +107,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private HillClimbingBot botG;
     private botRand randombot;
     private BasicBot ruleBot;
+    private int botInt;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation.
      */
-    public game3d(boolean game, boolean bot){
+    public game3d(boolean game, boolean bot, int botInt){
         this.game = game;
         this.bot = bot;
+        this.botInt=botInt;
     }
 
     public void create() {
@@ -633,7 +635,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         }
         if(input.isKeyPressed(Input.Keys.DOWN)&&game) {
             //Decrease the velocity of the next shot when pressing the DOWN arrow
-            if(velocity>0.1) {
+            if(velocity>0.2) {
                 velocity -= 0.1;
             }
         }
@@ -691,8 +693,15 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            ruleBot.makeMove();
-
+            if(botInt==0) {
+                randombot.makeMove();
+            } else if(botInt==1) {
+                ruleBot.makeMove();
+            } else if(botInt==2) {
+                botG.makeMove();
+            } else if(botInt==3) {
+                System.out.println("We dont have newton raphson yet");
+            }
 
             numShotsTaken++;
             playFlag = true;

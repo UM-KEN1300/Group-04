@@ -8,8 +8,6 @@ public class BasicBot {
     private double y0;
     private double xt;
     private double yt;
-    private double radius;
-    private boolean flag;
     private double speed;
     private double directionX;
     private double directionY;
@@ -25,8 +23,6 @@ public class BasicBot {
         this.y0 = engine.getY0();
         this.xt = engine.getXt();
         this.yt = engine.getYt();
-        this.radius = engine.getrOfHole();
-        this.flag = true;
         this.speed = 5;
     }
 
@@ -43,15 +39,19 @@ public class BasicBot {
             physicsEngine enginetest;
             enginetest = new physicsEngine();
             enginetest.setVelocities(speedX, speedX);
-            slopex = enginetest.getSlopex();
-            slopey = enginetest.getSlopey();
+            if(engine.isInHole()) {
+                slopex=0;
+                slopey=0;
+            } else {
+                slopex = enginetest.getSlopex();
+                slopey = enginetest.getSlopey();
+            }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-        // speedX = speedX+slopex;
-        // speedY = speedY+slopey;
+        speedX = speedX+slopex;
+        speedY = speedY+slopey;
 
         StateVector min = new StateVector(x0,y0,speedX,speedY);
 
@@ -59,24 +59,6 @@ public class BasicBot {
         System.out.println("slopey:"+slopey);
 
         return min;
-    }
-
-    public double h(double x, double y) {
-        cheat cheat = new cheat();
-        return cheat.getHeightFunction(x, y);
-    }
-
-
-    public double hxderivated(double x, double y) {
-        double dx = 0.000000000001;
-        double derivative = (h(x + dx, y) - h(x, y)) / dx;
-        return derivative;
-    }
-
-    public double hyderivated(double x, double y) {
-        double dy = 0.000000000001;
-        double derivative = (h(x, y + dy) - h(x, y)) / dy;
-        return derivative;
     }
     
     public void makeMove(){

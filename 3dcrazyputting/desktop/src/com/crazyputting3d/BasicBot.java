@@ -50,8 +50,8 @@ public class BasicBot {
             e.printStackTrace();
         }
         
-        speedX = speedX+slopex;
-        speedY = speedY+slopey;
+         speedX = speedX+slopex;
+         speedY = speedY+slopey;
 
         StateVector min = new StateVector(x0,y0,speedX,speedY);
 
@@ -59,6 +59,24 @@ public class BasicBot {
         System.out.println("slopey:"+slopey);
 
         return min;
+    }
+
+    public double h(double x, double y) {
+        cheat cheat = new cheat();
+        return cheat.getHeightFunction(x, y);
+    }
+
+
+    public double hxderivated(double x, double y) {
+        double dx = 0.000000000001;
+        double derivative = (h(x + dx, y) - h(x, y)) / dx;
+        return derivative;
+    }
+
+    public double hyderivated(double x, double y) {
+        double dy = 0.000000000001;
+        double derivative = (h(x, y + dy) - h(x, y)) / dy;
+        return derivative;
     }
     
     public void makeMove(){

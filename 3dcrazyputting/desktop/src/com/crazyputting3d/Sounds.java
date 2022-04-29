@@ -14,7 +14,7 @@ import javax.sound.sampled.Clip;
 
 public class Sounds implements Runnable{
 
-    private String filePath = "C:\\Users\\caspe\\Documents\\Projects\\GitHub Projects\\Group-04\\3dcrazyputting\\assets\\";
+    private String filePath = "3dcrazyputting\\assets\\";
 
     private File fileName0;
     private File fileName1;

@@ -3,6 +3,8 @@ package com.crazyputting3d;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
 /**
  * The physics engine simulates the real-life motion of the ball in a golf
  * course.
@@ -301,6 +303,7 @@ public class physicsEngine {
     }
 
     public StateVector start(StateVector v, boolean botPlays) {
+        Adams(v, muk);
         x0 = v.getX();
         y0 = v.getY();
         StateVector newV = trajectory(v, botPlays);
@@ -319,7 +322,7 @@ public class physicsEngine {
             ball_coordinates_y[counter] = y0;
             counter++;
         }
-        //System.out.println(newV);
+        System.out.println(newV);
         return newV;
     }
 
@@ -488,7 +491,7 @@ public class physicsEngine {
         // adams
         initialVector = new AdamsStateVector(a0,a1,a2,a3);
     }
-    public StateVector AdamsPredictor(StateVector a, double m){
+    public StateVector AdamsBashforth(StateVector a, double m){
         StateVector a0;
         StateVector a1;
         StateVector a2;
@@ -509,17 +512,38 @@ public class physicsEngine {
         double ax3 = acelerationX(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
         double ay3 = acelerationY(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
 
-        double x = a3.getX() + 1/ 24 * h * (55 * a3.getVX() - 59 * a2.getVX() + 37 * a1.getVX() - 9 * a0.getVX());
-        double y = a3.getY() + 1/ 24 * h * (55 * a3.getVY() - 59 * a2.getVY() + 37 * a1.getVY() - 9 * a0.getVY());
-        double vx = a3.getVX() + 1/ 24 * h * (55 * ax3 - 59 * ax2 + 37 * ax1 - 9 * ax0);
-        double vy = a3.getVY() + 1/ 24 * h * (55 * ay3 - 59 * ay2 + 37 * ay1 - 9 * ay0);
+        double x = a3.getX() + 1/ 24.0 * h * (55 * a3.getVX() - 59 * a2.getVX() + 37 * a1.getVX() - 9 * a0.getVX());
+        double y = a3.getY() + 1/ 24.0 * h * (55 * a3.getVY() - 59 * a2.getVY() + 37 * a1.getVY() - 9 * a0.getVY());
+        double vx = a3.getVX() + 1/ 24.0 * h * (55 * ax3 - 59 * ax2 + 37 * ax1 - 9 * ax0);
+        double vy = a3.getVY() + 1/ 24.0 * h * (55 * ay3 - 59 * ay2 + 37 * ay1 - 9 * ay0);
         StateVector a4 = new StateVector(x,y,vx,vy);
+        a4 = AdamsMolton(a0,a1,a2,a3,a4,m);
+        return a4;
+    }
+    public StateVector AdamsMolton(StateVector a0, StateVector a1, StateVector a2, StateVector a3 ,StateVector a4, double m){
+        double ax0 = acelerationX(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
+        double ay0 = acelerationY(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
+        double ax1 = acelerationX(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
+        double ay1 = acelerationY(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
+        double ax2 = acelerationX(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
+        double ay2 = acelerationY(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
+        double ax3 = acelerationX(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
+        double ay3 = acelerationY(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
+        double ax4 = acelerationX(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
+        double ay4 = acelerationY(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
+
+        double x = a3.getX() + 1/ 720.0 * h * (251*a4.getVX() + 646 * a3.getVX() - 264 * a2.getVX() + 106 * a1.getVX() - 19 * a0.getVX());
+        double y = a3.getY() + 1/ 720.0 * h * (251*a4.getVY() + 646 * a3.getVY() - 264 * a2.getVY() + 106 * a1.getVY() - 19 * a0.getVY());
+        double vx = a3.getVX() + 1/ 720.0 * h * (251*ax4 + 646 * ax3 - 264 * ax2 + 106 * ax1 - 19 * ax0);
+        double vy = a3.getVY() + 1/ 720.0 * h * (251*ay4 + 646 * ay3 - 264 * ay2 + 106 * ay1 - 19 * ay0);
+        StateVector a5 = new StateVector(x,y,vx,vy);
         initialVector.setFirst(a1);
         initialVector.setSecond(a2);
         initialVector.setThird(a3);
-        initialVector.setFourth(a4);
-        return a4;
+        initialVector.setFourth(a5);
+        return a5;
     }
+
 
     public StateVector RungeKutta2(StateVector a, double m) {
         double x0 = a.getX();
@@ -612,7 +636,7 @@ public class physicsEngine {
                 }
                 return null;
             }
-            v = DormandPrince(v, m,0.001);
+            v = AdamsBashforth(v,m);
             if((Math.hypot(x-xt, y-yt)>Math.hypot(v.getX()-xt,v.getY()-yt))){
             slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
             slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;

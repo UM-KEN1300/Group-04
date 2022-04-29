@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class physicsEngine {
-    public static double h = 0.001; // we decide on step size
+    public static double h = 0.0001; // we decide on step size
     public double k = h;
     private double x0; // given in input file
     private double y0;
@@ -41,6 +41,7 @@ public class physicsEngine {
     private boolean flag = false;
     private double slopex;
     private double slopey;
+    private AdamsStateVector initialVector;
 
     /**
      * Constructor initiates variables according to input file data. These include:
@@ -395,7 +396,7 @@ public class physicsEngine {
         return a;
     }
 
-    public StateVector DormandPrince(StateVector a, double m) {
+    public StateVector DormandPrince(StateVector a, double m,double e) {
         double x0 = a.getX();
         double y0 = a.getY();
         double vx0 = a.getVX();
@@ -450,25 +451,74 @@ public class physicsEngine {
 
         double vx6 = vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
                 - (2187.0 / 6784.0 * ax4) * k + (11.0 / 84.0 * ax5) * k;
-        a.setX(x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
-                - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k);
-        a.setY(y0 + (35.0 / 384.0 * vy0) * k + (500.0 / 1113.0 * vy2) * k + (125.0 / 192.0 * vy3) * k
-                - (2187.0 / 6784.0 * vy4) * k + (11.0 / 84.0 * vy5) * k);
-        a.setVX(vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
-                - (2187.0 / 6784.0 * ax4) * k
-                + (11.0 / 84.0 * ax5) * k);
-        a.setVY(vy0 + (35.0 / 384.0 * ay0) * k + (500.0 / 1113.0 * ay2) * k + (125.0 / 192.0 * ay3) * k
-                - (2187.0 / 6784.0 * ay4) * k
-                + (11.0 / 84.0 * ay5) * k);
 
         double exact_next = x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
                 - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k;
         double average_next = x0 + k * (1921409.0 * vx0 + 9690880.0 * vx2 + 13122270.0 * vx3 - 5802111.0 * vx4
                 + 1902912.0 * vx5 + 534240.0 * vx6) / 21369600.0;
         double s = Math.abs(exact_next - average_next);
-        double optimal_t = Math.pow((k * 0.000001) / ((2 * s)), 1.0 / 5.0);
-        k = optimal_t * k;
-        return a;
+        if(s>e*k){
+            double optimal_t = Math.pow((k * e) / ((2 * s)), 1.0 / 5.0);
+            k = optimal_t*k;
+            return DormandPrince(a, m, e);
+        }
+        else{
+            a.setX(x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
+                - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k);
+            a.setY(y0 + (35.0 / 384.0 * vy0) * k + (500.0 / 1113.0 * vy2) * k + (125.0 / 192.0 * vy3) * k
+                - (2187.0 / 6784.0 * vy4) * k + (11.0 / 84.0 * vy5) * k);
+            a.setVX(vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
+                - (2187.0 / 6784.0 * ax4) * k
+                + (11.0 / 84.0 * ax5) * k);
+            a.setVY(vy0 + (35.0 / 384.0 * ay0) * k + (500.0 / 1113.0 * ay2) * k + (125.0 / 192.0 * ay3) * k
+                - (2187.0 / 6784.0 * ay4) * k
+                + (11.0 / 84.0 * ay5) * k);
+            k = Math.max(k,e*k);
+            return a;
+        }
+    }
+    public void Adams(StateVector a0, double m){
+        StateVector a1;
+        StateVector a2;
+        StateVector a3;
+        a1 = RungeKutta4(a0, m);
+        a2 = RungeKutta4(a1, m);
+        a3 = RungeKutta4(a2,m);
+
+        // adams
+        initialVector = new AdamsStateVector(a0,a1,a2,a3);
+    }
+    public StateVector AdamsPredictor(StateVector a, double m){
+        StateVector a0;
+        StateVector a1;
+        StateVector a2;
+        StateVector a3;
+        a0 = initialVector.getFirst();
+        a1 = initialVector.getSecond();
+        a2 = initialVector.getThird();
+        a3 = initialVector.getFourth();
+        a = EulersMethod(a,m);
+        if(terminates(a.getVX(),a.getVY(),m)){return a;}
+
+        double ax0 = acelerationX(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
+        double ay0 = acelerationY(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
+        double ax1 = acelerationX(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
+        double ay1 = acelerationY(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
+        double ax2 = acelerationX(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
+        double ay2 = acelerationY(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
+        double ax3 = acelerationX(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
+        double ay3 = acelerationY(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
+
+        double x = a3.getX() + 1/ 24 * h * (55 * a3.getVX() - 59 * a2.getVX() + 37 * a1.getVX() - 9 * a0.getVX());
+        double y = a3.getY() + 1/ 24 * h * (55 * a3.getVY() - 59 * a2.getVY() + 37 * a1.getVY() - 9 * a0.getVY());
+        double vx = a3.getVX() + 1/ 24 * h * (55 * ax3 - 59 * ax2 + 37 * ax1 - 9 * ax0);
+        double vy = a3.getVY() + 1/ 24 * h * (55 * ay3 - 59 * ay2 + 37 * ay1 - 9 * ay0);
+        StateVector a4 = new StateVector(x,y,vx,vy);
+        initialVector.setFirst(a1);
+        initialVector.setSecond(a2);
+        initialVector.setThird(a3);
+        initialVector.setFourth(a4);
+        return a4;
     }
 
     public StateVector RungeKutta2(StateVector a, double m) {
@@ -562,11 +612,11 @@ public class physicsEngine {
                 }
                 return null;
             }
-            v = RungeKutta2(v, m);
-            
-            
-            slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g) + h;
-            slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g) + h;
+            v = DormandPrince(v, m,0.001);
+            if((Math.hypot(x-xt, y-yt)>Math.hypot(v.getX()-xt,v.getY()-yt))){
+            slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+            slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+            }
 
             double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
             if (terminates(vx, vy, m)) {

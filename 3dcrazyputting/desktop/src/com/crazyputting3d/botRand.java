@@ -1,9 +1,6 @@
 package com.crazyputting3d;
 
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.swing.DebugGraphics;
-
 public class botRand {
     private double speed;
     private double directionX;

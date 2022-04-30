@@ -3,8 +3,6 @@ package com.crazyputting3d;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-
 /**
  * The physics engine simulates the real-life motion of the ball in a golf
  * course.

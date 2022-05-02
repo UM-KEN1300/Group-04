@@ -42,6 +42,8 @@ public class physicsEngine {
     private double slopex;
     private double slopey;
     private AdamsStateVector initialVector;
+    private double closestEuklidiandistance = Double.MAX_VALUE;
+    private double initialDistance;
 
     /**
      * Constructor initiates variables according to input file data. These include:
@@ -79,6 +81,7 @@ public class physicsEngine {
             coords.add(tree_storage[i].getYStart());
         }
         setTerrainCoords();
+        initialDistance = Math.hypot(x0-xt, y0-yt);
     }
 
     /**
@@ -98,6 +101,7 @@ public class physicsEngine {
 
     public StateVector setVelocitiesForBot(double x, double y, double v0x, double v0y) {
         StateVector newv = new StateVector(x, y, v0x, v0y);
+        closestEuklidiandistance = Math.hypot(x-xt, y-yt);
         return start(newv, true);
     }
 
@@ -115,6 +119,9 @@ public class physicsEngine {
     }
     public double getY0(){
         return y0;
+    }
+    public double get_closestEuclideanDistance(){
+        return closestEuklidiandistance;
     }
 
     /**
@@ -319,8 +326,8 @@ public class physicsEngine {
             ball_coordinates_x[counter] = x0;
             ball_coordinates_y[counter] = y0;
             counter++;
+            System.out.println(newV);
         }
-        System.out.println(newV);
         return newV;
     }
 
@@ -626,6 +633,15 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
+            v = RungeKutta4(v,m);
+            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
+                slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+                slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+                closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt);
+            }
+            if(botPlays&&(closestEuklidiandistance==initialDistance)){
+                closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt)+Math.hypot(x-xt,y-yt);
+            }
             if (isInWater(v.getX(), v.getY())) {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
@@ -633,11 +649,6 @@ public class physicsEngine {
                     counter++;
                 }
                 return null;
-            }
-            v = AdamsBashforth(v,m);
-            if((Math.hypot(x-xt, y-yt)>Math.hypot(v.getX()-xt,v.getY()-yt))){
-            slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
-            slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
             }
 
             double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));

@@ -104,7 +104,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-    private HillClimbingBot botG;
+    private BruteForceBot botG;
+    private HillClimbingBot hillBot;
+    private NewtonRaphsonBot newtonBot;
     private botRand randombot;
     private BasicBot ruleBot;
 
@@ -148,9 +150,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.botG = new HillClimbingBot(engine);
+        this.botG = new BruteForceBot(engine);
         this.randombot = new botRand(engine);
         this.ruleBot = new BasicBot(engine);
+        this.hillBot = new HillClimbingBot(engine);
+        this.newtonBot = new NewtonRaphsonBot(engine);
 
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
@@ -690,7 +694,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            botG.makeMove();
+            newtonBot.makeMove();
 
 
             numShotsTaken++;

@@ -1,4 +1,4 @@
-package com.crazyputting3d;
+package com.crazyputting3d.InputReader;
 
 import java.io.*;
 import java.lang.String;
@@ -40,7 +40,7 @@ public class Search {
 
     public void run() throws IOException{
 
-        FileReader read=new FileReader("3dcrazyputting\\assets\\"+filename);
+        FileReader read=new FileReader("C:\\Users\\Guilherme\\Documents\\GitHub\\Group-04\\3dcrazyputting\\desktop\\bin\\main\\input.txt");
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 

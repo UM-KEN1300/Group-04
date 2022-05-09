@@ -1,10 +1,13 @@
-package com.crazyputting3d;
+package com.crazyputting3d.UI;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
+
+import com.crazyputting3d.InputReader.inputEditor;
+
 import java.awt.event.*;
 
 

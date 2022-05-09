@@ -1,6 +1,10 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
 
 import java.io.IOException;
+
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.Objects.StateVector;
 
 public class BasicBot {
     private physicsEngine engine;

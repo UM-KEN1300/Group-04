@@ -1,4 +1,4 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Sounds;
 
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;

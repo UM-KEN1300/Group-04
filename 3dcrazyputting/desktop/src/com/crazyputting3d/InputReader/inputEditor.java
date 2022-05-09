@@ -1,4 +1,4 @@
-package com.crazyputting3d;
+package com.crazyputting3d.InputReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,7 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
+
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
 
 public class BruteForceBot {
     public final double pi = 3.141159;

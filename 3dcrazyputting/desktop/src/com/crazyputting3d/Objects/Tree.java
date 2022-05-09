@@ -1,4 +1,4 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Objects;
 
 /**
  * Tree object.

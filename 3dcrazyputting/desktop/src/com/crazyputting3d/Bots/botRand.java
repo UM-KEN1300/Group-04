@@ -1,6 +1,10 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
 
 import java.util.concurrent.ThreadLocalRandom;
+
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.InputReader.cheat;
 public class botRand {
     private double speed;
     private double directionX;

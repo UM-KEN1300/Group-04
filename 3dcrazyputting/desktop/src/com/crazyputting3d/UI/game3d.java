@@ -1,4 +1,4 @@
-package com.crazyputting3d;
+package com.crazyputting3d.UI;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -13,7 +13,19 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.crazyputting3d.Menu;
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Bots.BasicBot;
+import com.crazyputting3d.Bots.BruteForceBot;
+import com.crazyputting3d.Bots.HillClimbingBot;
+import com.crazyputting3d.Bots.NewtonRaphsonBot;
+import com.crazyputting3d.Bots.botRand;
+import com.crazyputting3d.InputReader.Search;
+import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.Sounds.Sounds;
+
 import org.lwjgl.opengl.GL20;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -694,7 +706,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            newtonBot.makeMove();
+            hillBot.makeMove();
 
 
             numShotsTaken++;

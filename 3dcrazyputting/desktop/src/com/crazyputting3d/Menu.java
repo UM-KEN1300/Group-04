@@ -10,14 +10,16 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The Menu class initializes the starting menu.
+ * author  Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
+    
+
 public class Menu {
-    /**
-     * The Menu class initializes the starting menu.
-     * author  Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
-     *          Gabrijel Radovčić, Elza Strazda
-     * version 1.0
-     * since   2021-03-11
-     */
 
     private JFrame frame; 
     private JLabel background;
@@ -28,7 +30,7 @@ public class Menu {
     private JButton jb5; 
     private ImageIcon img; 
     private JLabel title;
-    private boolean settingsFlag=true;
+    public boolean settingsFlag=true;
     Settings settings = new Settings();
 
     /**
@@ -65,8 +67,6 @@ public class Menu {
         title.setLocation(280,0);
         title.setSize(100,100);
         title.setText("Crazy Putting 3D!");
-
-
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,13 +113,7 @@ public class Menu {
         jb5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(settingsFlag) {
-                    settings.run();
-                    settingsFlag=false;
-                } else if(!settingsFlag) {
-                    settings.remove();
-                    settingsFlag = true;
-                }
+                settings.run();
             }
         });
 

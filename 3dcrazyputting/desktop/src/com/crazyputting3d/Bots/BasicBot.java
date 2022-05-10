@@ -8,7 +8,7 @@ import com.crazyputting3d.Objects.StateVector;
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2021-03-11
+ * since   2022-05-11
  */
 
 public class BasicBot extends Bot{

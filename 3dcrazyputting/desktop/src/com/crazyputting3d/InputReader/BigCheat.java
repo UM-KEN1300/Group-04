@@ -1,5 +1,4 @@
 package com.crazyputting3d.InputReader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,9 +11,11 @@ public class BigCheat {
      * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
      * Gabrijel Radovcic, Elza Strazda
      * version 1.0
-     * since   2021-03-11
+     * since   2022-05-11
      */
+
     protected static int i;
+
     public static void writeCSV() throws IOException {
         //Get the path file and create a Search object
         try (PrintWriter writer = new PrintWriter(new File("3dcrazyputting\\desktop\\src\\com\\crazyputting3d\\cheat.java"))) {
@@ -35,12 +36,12 @@ public class BigCheat {
             sb.append('\n');
             writer.write(sb.toString());
         }
-
         catch (FileNotFoundException e) {
             //Print the error message when the FileNotFoundException is found
             System.out.println(e.getMessage());
         }  
     }
+    
     public static void main(String[] args) throws IOException {
         BigCheat.writeCSV();
     }

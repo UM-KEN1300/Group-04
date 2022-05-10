@@ -1,6 +1,4 @@
 package com.crazyputting3d.MathSolvers;
-
-import com.crazyputting3d.Objects.StateVector;
 import  com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.InputReader.cheat;
 
@@ -9,7 +7,7 @@ import com.crazyputting3d.InputReader.cheat;
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2022-05-20
+ * since   2022-05-11
  */
 
 public class AdamsMolton {

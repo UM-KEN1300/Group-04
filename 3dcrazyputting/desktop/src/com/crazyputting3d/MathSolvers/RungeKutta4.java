@@ -7,7 +7,7 @@ import  com.crazyputting3d.physicsEngine;
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2022-05-20
+ * since   2022-05-11
  */
 
 public class RungeKutta4 extends Solver{

@@ -35,7 +35,7 @@ import static com.badlogic.gdx.Gdx.input;
      * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
      * Gabrijel Radovcic, Elza Strazda
      * version 1.0
-     * since   2021-03-11
+     * since   2022-05-11
      */
 
 public class game3d extends ApplicationAdapter implements InputProcessor {
@@ -114,12 +114,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-    private BruteForceBot botG;
-    private HillClimbingBot hillBot;
-    private NewtonRaphsonBot newtonBot;
-    private RandomBot randombot;
-    private BasicBot ruleBot;
-    private int botInt;
+    public BruteForceBot botG;
+    public HillClimbingBot hillBot;
+    public NewtonRaphsonBot newtonBot;
+    public RandomBot randombot;
+    public BasicBot ruleBot;
+    public int botInt;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program

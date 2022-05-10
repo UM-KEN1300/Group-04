@@ -1,5 +1,4 @@
 package com.crazyputting3d.InputReader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.io.PrintWriter;
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2021-03-11
+ * since   2022-05-11
  */
 
 public class inputEditor {

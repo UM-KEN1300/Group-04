@@ -1,24 +1,16 @@
 package com.crazyputting3d.Bots;
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
 
 /**
  * Brute Force Bot class. 
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2021-03-11
+ * since   2022-05-11
  */
 
-import com.crazyputting3d.Objects.StateVector;
-import com.crazyputting3d.physicsEngine;
-
-public class BruteForceBot {
-    public final double pi = 3.141159;
-    private physicsEngine engine;
-    private double xt;
-    private double yt;
-    private double radius;
-    private double x0;
-    private double y0;
+public class BruteForceBot extends Bot{
 
     public BruteForceBot(physicsEngine engine) {
         this.engine = engine;

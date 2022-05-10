@@ -7,8 +7,6 @@ import com.crazyputting3d.Objects.StateVector;
 import com.crazyputting3d.Objects.Tree;
 import com.crazyputting3d.MathSolvers.RungeKutta4;
 import com.crazyputting3d.MathSolvers.RungeKutta2;
-import com.crazyputting3d.MathSolvers.AdamsBashforth;
-import com.crazyputting3d.MathSolvers.AdamsMolton;
 import com.crazyputting3d.MathSolvers.DormandPrince;
 import com.crazyputting3d.MathSolvers.EulersMethod;
 import com.crazyputting3d.MathSolvers.VerletsMethod;
@@ -22,7 +20,7 @@ import com.crazyputting3d.InputReader.cheat;
  * van Gelder, Trinh Le,
  * Gabrijel Radovcic, Elza Strazda
  * version 1.0
- * since 2021-03-11
+ * since 2022-05-11
  */
 
 public class physicsEngine {
@@ -56,10 +54,10 @@ public class physicsEngine {
     private double closestEuklidiandistance = Double.MAX_VALUE;
     private double initialDistance;
     private RungeKutta4 rk4 = new RungeKutta4(); 
-    private RungeKutta2 rk2 = new RungeKutta2(); 
-    private EulersMethod euler = new EulersMethod(); 
-    private DormandPrince dormandP = new DormandPrince(); 
-    private VerletsMethod verlets= new VerletsMethod(); 
+    public RungeKutta2 rk2 = new RungeKutta2(); 
+    public EulersMethod euler = new EulersMethod(); 
+    public DormandPrince dormandP = new DormandPrince(); 
+    public VerletsMethod verlets= new VerletsMethod(); 
 
 
 

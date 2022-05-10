@@ -1,21 +1,20 @@
 package com.crazyputting3d.Sounds;
-
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
 /**
  * The Sounds class is used for sound outputs during game play and simulations.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0
- * since   2021-03-11
+ * since   2022-05-11
  */
 
 public class Sounds implements Runnable{
 
     private String filePath = "3dcrazyputting\\assets\\";
-
     private File fileName0;
     private File fileName1;
     private File fileName2;

@@ -37,7 +37,6 @@ public class BigCheat {
             writer.write(sb.toString());
         }
         catch (FileNotFoundException e) {
-            //Print the error message when the FileNotFoundException is found
             System.out.println(e.getMessage());
         }  
     }

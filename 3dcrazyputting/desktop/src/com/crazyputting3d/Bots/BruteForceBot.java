@@ -13,12 +13,7 @@ import com.crazyputting3d.physicsEngine;
 public class BruteForceBot extends Bot{
 
     public BruteForceBot(physicsEngine engine) {
-        this.engine = engine;
-        this.xt = engine.getXt();
-        this.yt = engine.getYt();
-        this.radius = engine.getrOfHole();
-        this.x0 = engine.getX0();
-        this.y0 = engine.getY0();
+        super(engine);
     }
 
     public StateVector calculateMove() {
@@ -55,16 +50,5 @@ public class BruteForceBot extends Bot{
             }
         }
         return min;
-    }
-
-    public void makeMove() {
-        long startTime = System.nanoTime();
-        StateVector move = calculateMove();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("Run time of the BruteForce bot algorithm (ms): " + duration / 1000000);
-        double vx = move.getVX();
-        double vy = move.getVY();
-        engine.setVelocities(vx, vy);
     }
 }

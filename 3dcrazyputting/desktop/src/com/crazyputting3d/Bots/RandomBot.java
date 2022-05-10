@@ -13,17 +13,13 @@ import com.crazyputting3d.InputReader.cheat;
  */
 
 public class RandomBot extends Bot{
-
+    public double speedX;
+    public double speedY;
+    public double directionX;
+    public double directionY;
+    public boolean flag;
     public RandomBot(physicsEngine engine) {
-        this.engine = engine;
-        this.holeX = engine.getXt();
-        this.holeY = engine.getYt();
-        this.ballX = engine.getX0();
-        this.ballY = engine.getY0();
-        this.radius = engine.getrOfHole();
-        this.speed = 0;
-        this.directionX=0;
-        this.directionY=0;
+        super(engine);
         this.flag=true;
     }
 
@@ -37,8 +33,7 @@ public class RandomBot extends Bot{
     }
 
     public void setRandSpeed() {
-        //speed = randomDouble(3, 5);
-        speed=5;
+        v = randomDouble(0.1, 5);
     }
 
     public void setRandDirection() {
@@ -47,19 +42,19 @@ public class RandomBot extends Bot{
         directionY = Math.sin(angle)*length;
     }
 
-    public StateVector trajectory() {
+    public StateVector calculateMove() {
         double euklidianDistance = Double.MAX_VALUE;
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;
-        StateVector min = new StateVector(ballX,ballY,minVx,minVy);
+        StateVector min = new StateVector(x0,y0,minVx,minVy);
         while(flag) {
             setRandDirection();
             setRandSpeed();
-            speedX = speed*directionX/length;
-            speedY = speed*directionY/length;
-            StateVector temp = engine.setVelocitiesForBot(ballX, ballY, speedX, speedY);
-            double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-holeX, 2)+Math.pow(temp.getY()-holeY, 2));
-            if(tempEuclidianDistance<radius){
+            speedX = v*directionX/length;
+            speedY = v*directionY/length;
+            StateVector temp = engine.setVelocitiesForBot(x0, y0, speedX, speedY);
+            double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-x0, 2)+Math.pow(temp.getY()-yt, 2));
+            if(tempEuclidianDistance<=radius){
                 min.setVX(speedX);
                 min.setVY(speedY);
                 flag=false;
@@ -71,16 +66,5 @@ public class RandomBot extends Bot{
             }
         }
         return min;
-    }
-
-    public void makeMove(){
-        long startTime = System.nanoTime();
-        StateVector move = trajectory();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("Run time of the random bot algorithm (ms): " + duration/1000000);
-        double vx = move.getVX();
-        double vy = move.getVY();
-        engine.setVelocities(vx, vy);
     }
 }

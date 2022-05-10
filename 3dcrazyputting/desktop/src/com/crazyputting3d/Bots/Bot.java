@@ -1,6 +1,7 @@
 package com.crazyputting3d.Bots;
 import com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.Objects.StateVector;
 
 /**
  * Bot Abstract class. 
@@ -17,24 +18,20 @@ public abstract class Bot {
     public double y0;
     public double xt;
     public double yt;
-    public double speed;
-    public double directionX;
-    public double directionY;
     public final double length = 0.3;
-    public double speedX;
-    public double speedY;
-    public double slopex;
-    public double slopey;
     public final double pi = 3.141159;
     public double radius;
-    public double angle_step = pi / 180;
     public double v = 5;
     public int i = 1;
-    public boolean flag;
-    public double holeX;
-    public double holeY;
-    public double ballX;
-    public double ballY;
+
+    public Bot(physicsEngine engine) {
+        this.engine = engine;
+        this.xt = engine.getXt();
+        this.yt = engine.getYt();
+        this.radius = engine.getrOfHole();
+        this.x0 = engine.getX0();
+        this.y0 = engine.getY0();
+    }
 
     public double h(double x, double y) {
         cheat cheat = new cheat();
@@ -51,5 +48,18 @@ public abstract class Bot {
         double dy = 0.000000000001;
         double derivative = (h(x, y + dy) - h(x, y)) / dy;
         return derivative;
+    }
+
+    public abstract StateVector calculateMove();
+
+    public void makeMove(){
+        long startTime = System.nanoTime();
+        StateVector move = calculateMove();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Run time of algorithm (ms): " + duration/1000000);
+        double vx = move.getVX();
+        double vy = move.getVY();
+        engine.setVelocities(vx, vy);
     }
 }

@@ -12,24 +12,24 @@ import com.crazyputting3d.Objects.StateVector;
  */
 
 public class BasicBot extends Bot{
-
+    public double speedX;
+    public double speedY;
+    public double directionX;
+    public double directionY;
+    public double slopex;
+    public double slopey;
     public BasicBot(physicsEngine engine) {
-        this.engine = engine;
-        this.x0 = engine.getX0();
-        this.y0 = engine.getY0();
-        this.xt = engine.getXt();
-        this.yt = engine.getYt();
-        this.speed = 5;
+        super(engine);
     }
 
-    public StateVector play(){
+    public StateVector calculateMove(){
         double angle = Math.atan2((yt - y0) , (xt - x0));
 
         directionX = Math.cos(angle)*length;
         directionY = Math.sin(angle)*length;
 
-        speedX = speed*directionX/length;
-        speedY = speed*directionY/length;
+        speedX = v*directionX/length;
+        speedY = v*directionY/length;
 
         try {
             physicsEngine enginetest;
@@ -56,11 +56,4 @@ public class BasicBot extends Bot{
 
         return min;
     }
-
-    public void makeMove(){
-        StateVector move = play();
-        double vx = move.getVX();
-        double vy = move.getVY();
-        engine.setVelocities(vx, vy);
-     }
 }

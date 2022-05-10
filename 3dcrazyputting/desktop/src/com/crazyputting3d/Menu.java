@@ -73,7 +73,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(true,false), config);
+                new Lwjgl3Application(new game3d(true,false,settings.getBotInt()), config);
             }
         });
 
@@ -85,7 +85,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,false), config);
+                new Lwjgl3Application(new game3d(false,false,settings.getBotInt()), config);
             }
         });
 
@@ -104,7 +104,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true), config);
+                new Lwjgl3Application(new game3d(false,true,settings.getBotInt()), config);
             }
         });
 

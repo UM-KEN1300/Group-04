@@ -1,6 +1,5 @@
 package com.crazyputting3d.Bots;
 import com.crazyputting3d.physicsEngine;
-import com.crazyputting3d.InputReader.cheat;
 import com.crazyputting3d.Objects.StateVector;
 
 /**
@@ -32,24 +31,6 @@ public abstract class Bot {
         this.x0 = engine.getX0();
         this.y0 = engine.getY0();
     }
-
-    public double h(double x, double y) {
-        cheat cheat = new cheat();
-        return cheat.getHeightFunction(x, y);
-    }
-
-    public double hxderivated(double x, double y) {
-        double dx = 0.000000000001;
-        double derivative = (h(x + dx, y) - h(x, y)) / dx;
-        return derivative;
-    }
-
-    public double hyderivated(double x, double y) {
-        double dy = 0.000000000001;
-        double derivative = (h(x, y + dy) - h(x, y)) / dy;
-        return derivative;
-    }
-
     public abstract StateVector calculateMove();
 
     public void makeMove(){

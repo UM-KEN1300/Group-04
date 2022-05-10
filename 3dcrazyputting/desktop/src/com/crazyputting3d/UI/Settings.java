@@ -38,13 +38,10 @@ public class Settings {
 
     public void run(){
         frame = new JFrame("Settings");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocation(320, 150);
         frame.setSize(200,500);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setUndecorated(true);
-        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ie = new inputEditor();
 

@@ -3,9 +3,11 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.crazyputting3d.UI.Settings;
 import com.crazyputting3d.UI.game3d;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,8 +67,6 @@ public class Menu {
         title.setLocation(280,0);
         title.setSize(100,100);
         title.setText("Crazy Putting 3D!");
-
-
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,13 +113,7 @@ public class Menu {
         jb5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(settingsFlag) {
-                    settings.run();
-                    settingsFlag=false;
-                } else if(!settingsFlag) {
-                    settings.remove();
-                    settingsFlag = true;
-                }
+                settings.run();
             }
         });
 

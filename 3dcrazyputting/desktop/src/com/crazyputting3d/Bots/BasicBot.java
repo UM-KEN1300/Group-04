@@ -1,4 +1,7 @@
 package com.crazyputting3d.Bots;
+import java.io.IOException;
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Objects.StateVector;
 
 /**
  * Basic Bot class. 
@@ -8,25 +11,7 @@ package com.crazyputting3d.Bots;
  * since   2021-03-11
  */
 
-import java.io.IOException;
-import com.crazyputting3d.physicsEngine;
-import com.crazyputting3d.InputReader.cheat;
-import com.crazyputting3d.Objects.StateVector;
-
-public class BasicBot {
-    private physicsEngine engine;
-    private double x0;
-    private double y0;
-    private double xt;
-    private double yt;
-    private double speed;
-    private double directionX;
-    private double directionY;
-    final double length = 0.3;
-    private double speedX;
-    private double speedY;
-    private double slopex;
-    private double slopey;
+public class BasicBot extends Bot{
 
     public BasicBot(physicsEngine engine) {
         this.engine = engine;
@@ -72,30 +57,8 @@ public class BasicBot {
         return min;
     }
 
-    public double h(double x, double y) {
-        cheat cheat = new cheat();
-        return cheat.getHeightFunction(x, y);
-    }
-
-
-    public double hxderivated(double x, double y) {
-        double dx = 0.000000000001;
-        double derivative = (h(x + dx, y) - h(x, y)) / dx;
-        return derivative;
-    }
-
-    public double hyderivated(double x, double y) {
-        double dy = 0.000000000001;
-        double derivative = (h(x, y + dy) - h(x, y)) / dy;
-        return derivative;
-    }
-    
     public void makeMove(){
-        //long startTime = System.nanoTime();
         StateVector move = play();
-        //long endTime = System.nanoTime();
-        //long duration = (endTime - startTime);
-        //System.out.println("Run time of the Basic Rule bot algorithm (ms): " + duration/1000000);
         double vx = move.getVX();
         double vy = move.getVY();
         engine.setVelocities(vx, vy);

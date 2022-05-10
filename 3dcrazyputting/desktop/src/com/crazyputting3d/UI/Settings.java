@@ -1,16 +1,19 @@
 package com.crazyputting3d.UI;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
-
 import com.crazyputting3d.InputReader.inputEditor;
-
 import java.awt.event.*;
 
-
+/**
+ * Class Settings. 
+ * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ * Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
 
 public class Settings {
 
@@ -111,8 +114,6 @@ public class Settings {
         frame.setVisible(true);
     }
 
-
-
     public void remove() {
         frame.dispose();
     }
@@ -121,5 +122,4 @@ public class Settings {
         Settings test = new Settings();
         test.run();
     }
-
 }

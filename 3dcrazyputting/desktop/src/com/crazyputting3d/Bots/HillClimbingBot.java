@@ -1,5 +1,13 @@
 package com.crazyputting3d.Bots;
 
+/**
+ * Hill Climbing Bot class. 
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
+
 import com.crazyputting3d.Objects.StateVector;
 import com.crazyputting3d.physicsEngine;
 
@@ -103,13 +111,14 @@ public class HillClimbingBot {
                 counter = 0;
             }
             if(!left&!right&Math.sin(angle_step)*Math.hypot(x0-xt, y0-yt)<engine.getrOfHole()){
+                angle_step = pi/180;
                 v -= 0.1;
                 if(v<=0){
                     angle_step = 2*i*pi/180;
                     i=2*i;
                     v=5;
                     if(angle_step>=pi){
-                        return new StateVector(x0, y0, 0, 0);
+                        return new StateVector(x0, y0, vx, vy);
                     }
                 }
             }

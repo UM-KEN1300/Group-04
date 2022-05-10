@@ -1,26 +1,22 @@
 package com.crazyputting3d.UI;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import com.crazyputting3d.Menu;
 import com.crazyputting3d.Sounds.Sounds;
-
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * Class VictoryScreen will be initiated when the player has shot the ball into the hole.
+ * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ * Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
 
 public class VictoryScreen {
-    /**
-     * Class VictoryScreen will be initiated when the player has shot the ball into the hole.
-     * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
-     * Gabrijel Radovčić, Elza Strazda
-     * version 1.0
-     * since   2021-03-11
-     */
 
     private JFrame frame;
     private JLabel background;

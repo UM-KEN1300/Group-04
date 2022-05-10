@@ -4,6 +4,14 @@ import com.crazyputting3d.Objects.StateVector;
 import  com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.InputReader.cheat;
 
+/**
+ * Adams Bashforth's class. 
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2022-05-20
+ */
+
 public class AdamsBashforth {
 
     public final double g = 9.81;

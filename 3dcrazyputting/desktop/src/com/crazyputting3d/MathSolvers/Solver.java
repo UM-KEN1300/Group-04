@@ -1,22 +1,11 @@
 package com.crazyputting3d.MathSolvers;
-
-import com.crazyputting3d.Objects.StateVector;
 import  com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.InputReader.cheat;
 
-/**
- * Adams Molton's class. 
- * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
- * since   2022-05-20
- */
 
-public class AdamsMolton {
-
+public abstract class Solver {
+    
     public final double g = 9.81;
-
-    // Add here
 
 
     public boolean terminates(double vx, double vy, double m) {
@@ -65,5 +54,4 @@ public class AdamsMolton {
         double derivative = (h(x, y + dy) - h(x, y)) / dy;
         return derivative;
     }
-    
 }

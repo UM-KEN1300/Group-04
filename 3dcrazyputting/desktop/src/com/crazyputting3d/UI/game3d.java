@@ -1,5 +1,4 @@
 package com.crazyputting3d.UI;
-
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -19,19 +18,15 @@ import com.crazyputting3d.Bots.BasicBot;
 import com.crazyputting3d.Bots.BruteForceBot;
 import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
-import com.crazyputting3d.Bots.botRand;
+import com.crazyputting3d.Bots.RandomBot;
 import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.InputReader.cheat;
 import com.crazyputting3d.Sounds.Sounds;
-
 import org.lwjgl.opengl.GL20;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 import static com.badlogic.gdx.Gdx.input;
 
-public class game3d extends ApplicationAdapter implements InputProcessor {
     /**
      * This is the class which is responsible for the creation and visualization of the UI. Below is
      * visible were all the variables are created. They are created as instance variables, so they can
@@ -42,6 +37,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
      * version 1.0
      * since   2021-03-11
      */
+
+public class game3d extends ApplicationAdapter implements InputProcessor {
+
     private Search search;
     private float terrainX1;
     private float terrainX2;
@@ -119,7 +117,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private BruteForceBot botG;
     private HillClimbingBot hillBot;
     private NewtonRaphsonBot newtonBot;
-    private botRand randombot;
+    private RandomBot randombot;
     private BasicBot ruleBot;
 
     /**
@@ -163,7 +161,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             e.printStackTrace();
         }
         this.botG = new BruteForceBot(engine);
-        this.randombot = new botRand(engine);
+        this.randombot = new RandomBot(engine);
         this.ruleBot = new BasicBot(engine);
         this.hillBot = new HillClimbingBot(engine);
         this.newtonBot = new NewtonRaphsonBot(engine);

@@ -1,5 +1,4 @@
 package com.crazyputting3d;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import com.crazyputting3d.Objects.AdamsStateVector;
@@ -477,9 +476,11 @@ public class physicsEngine {
                 ms = mus;
             }
             v = rk4.run(v,m);
-            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
+            if(botPlays){
                 slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
                 slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+            }
+            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
                 closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt);
             }
             if(botPlays&&(closestEuklidiandistance==initialDistance)){

@@ -1,19 +1,16 @@
 package com.crazyputting3d.UI;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
+
 import com.crazyputting3d.InputReader.inputEditor;
+
 import java.awt.event.*;
 
-/**
- * Class Settings. 
- * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- * Gabrijel Radovčić, Elza Strazda
- * version 1.0
- * since   2021-03-11
- */
+
 
 public class Settings {
 
@@ -32,6 +29,12 @@ public class Settings {
     private JLabel lb3;
     private JLabel lb4;
     private inputEditor ie;
+    private int botInt;
+    private JLabel label;
+    private JButton jb6; 
+    private JButton jb7; 
+    private JButton jb8;
+    private JButton jb9;
 
     public void run(){
         frame = new JFrame("Settings");
@@ -75,6 +78,27 @@ public class Settings {
         lb4.setSize(200,10);
         lb4.setLocation(0,155);
 
+        jb6 = new JButton();
+        jb6.setText("Random Bot");
+        jb6.setBounds(0, 240, 200, 20);
+        jb6.setVisible(true);
+        jb7 = new JButton();
+        jb7.setText("Rule-based Bot");
+        jb7.setBounds(0, 270, 200, 20);
+        jb7.setVisible(true);
+        jb8 = new JButton();
+        jb8.setText("Hill Climbing");
+        jb8.setBounds(0, 300, 200, 20);
+        jb8.setVisible(true);
+        jb9 = new JButton();
+        jb9.setText("Newton-Raphson ");
+        jb9.setBounds(0, 330, 200, 20);
+        jb9.setVisible(true);
+
+        label=new JLabel("Current bot chosen: Random Bot");
+        label.setSize(200,20);
+        label.setLocation(0,360);
+
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,6 +124,34 @@ public class Settings {
             }
         });
 
+        jb6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                botInt=0;
+                label.setText("Current bot chosen: Random Bot");
+            }
+        });
+        jb7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                botInt=1;
+                label.setText("Current bot chosen: Rule Based Bot");
+            }
+        });
+        jb8.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                botInt=2;   
+                label.setText("Current bot chosen: Hill Climbing Bot");         }
+        });
+        jb9.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                botInt=3; 
+                label.setText("Current bot chosen: Newton-Raphson Bot");           }
+        });
+
+
         frame.add(fieldHoleXt);
         frame.add(fieldHoleYt);
         frame.add(fieldHoleX0);
@@ -109,9 +161,18 @@ public class Settings {
         frame.add(lb2);
         frame.add(lb3);
         frame.add(lb4);
+        frame.add(jb6);
+        frame.add(jb7);
+        frame.add(jb8);
+        frame.add(jb9);
+        frame.add(label);
 
         frame.setLayout(null);
         frame.setVisible(true);
+    }
+
+    public int getBotInt() {
+        return botInt;
     }
 
     public void remove() {
@@ -122,4 +183,5 @@ public class Settings {
         Settings test = new Settings();
         test.run();
     }
+
 }

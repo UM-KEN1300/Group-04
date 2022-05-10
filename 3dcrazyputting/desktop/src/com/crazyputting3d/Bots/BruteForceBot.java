@@ -1,4 +1,15 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
+
+/**
+ * Brute Force Bot class. 
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
+
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
 
 public class BruteForceBot {
     public final double pi = 3.141159;

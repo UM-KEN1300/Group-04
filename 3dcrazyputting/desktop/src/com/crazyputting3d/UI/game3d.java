@@ -1,5 +1,4 @@
-package com.crazyputting3d;
-
+package com.crazyputting3d.UI;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -13,13 +12,21 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.crazyputting3d.Menu;
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Bots.BasicBot;
+import com.crazyputting3d.Bots.BruteForceBot;
+import com.crazyputting3d.Bots.HillClimbingBot;
+import com.crazyputting3d.Bots.NewtonRaphsonBot;
+import com.crazyputting3d.Bots.RandomBot;
+import com.crazyputting3d.InputReader.Search;
+import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.Sounds.Sounds;
 import org.lwjgl.opengl.GL20;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import static com.badlogic.gdx.Gdx.input;
 
-public class game3d extends ApplicationAdapter implements InputProcessor {
     /**
      * This is the class which is responsible for the creation and visualization of the UI. Below is
      * visible were all the variables are created. They are created as instance variables, so they can
@@ -30,6 +37,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
      * version 1.0
      * since   2021-03-11
      */
+
+public class game3d extends ApplicationAdapter implements InputProcessor {
+
     private Search search;
     private float terrainX1;
     private float terrainX2;
@@ -107,18 +117,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private BruteForceBot botG;
     private HillClimbingBot hillBot;
     private NewtonRaphsonBot newtonBot;
-    private botRand randombot;
+    private RandomBot randombot;
     private BasicBot ruleBot;
-    private int botInt;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation.
      */
-    public game3d(boolean game, boolean bot, int botInt){
+    public game3d(boolean game, boolean bot){
         this.game = game;
         this.bot = bot;
-        this.botInt=botInt;
     }
 
     public void create() {
@@ -153,7 +161,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             e.printStackTrace();
         }
         this.botG = new BruteForceBot(engine);
-        this.randombot = new botRand(engine);
+        this.randombot = new RandomBot(engine);
         this.ruleBot = new BasicBot(engine);
         this.hillBot = new HillClimbingBot(engine);
         this.newtonBot = new NewtonRaphsonBot(engine);
@@ -696,15 +704,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            if(botInt==0) {
-                randombot.makeMove();
-            } else if(botInt==1) {
-                ruleBot.makeMove();
-            } else if(botInt==2) {
-                botG.makeMove();
-            } else if(botInt==3) {
-                newtonBot.makeMove();
-            } 
+            hillBot.makeMove();
 
 
             numShotsTaken++;

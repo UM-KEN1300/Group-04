@@ -1,7 +1,19 @@
 package com.crazyputting3d;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import com.crazyputting3d.Objects.AdamsStateVector;
+import com.crazyputting3d.Objects.Sandpit;
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.Objects.Tree;
+import com.crazyputting3d.MathSolvers.RungeKutta4;
+import com.crazyputting3d.MathSolvers.RungeKutta2;
+import com.crazyputting3d.MathSolvers.AdamsBashforth;
+import com.crazyputting3d.MathSolvers.AdamsMolton;
+import com.crazyputting3d.MathSolvers.DormandPrince;
+import com.crazyputting3d.MathSolvers.EulersMethod;
+import com.crazyputting3d.MathSolvers.VerletsMethod;
+import com.crazyputting3d.InputReader.Search;
+import com.crazyputting3d.InputReader.cheat;
 
 /**
  * The physics engine simulates the real-life motion of the ball in a golf
@@ -15,7 +27,6 @@ import java.util.ArrayList;
 
 public class physicsEngine {
     public static double h = 0.0001; // we decide on step size
-    public double k = h;
     private double x0; // given in input file
     private double y0;
     private double xt;
@@ -44,6 +55,14 @@ public class physicsEngine {
     private AdamsStateVector initialVector;
     private double closestEuklidiandistance = Double.MAX_VALUE;
     private double initialDistance;
+    private RungeKutta4 rk4 = new RungeKutta4(); 
+    private RungeKutta2 rk2 = new RungeKutta2(); 
+    private EulersMethod euler = new EulersMethod(); 
+    private DormandPrince dormandP = new DormandPrince(); 
+    private VerletsMethod verlets= new VerletsMethod(); 
+
+
+
 
     /**
      * Constructor initiates variables according to input file data. These include:
@@ -331,167 +350,17 @@ public class physicsEngine {
         return newV;
     }
 
-    public StateVector RungeKutta4(StateVector a, double m) {
-        double x0 = a.getX();
-        double y0 = a.getY();
-        double vx0 = a.getVX();
-        double vy0 = a.getVY();
-        double ax1 = acelerationX(x0, y0, vx0, vy0, m);
-        double ay1 = acelerationY(x0, y0, vx0, vy0, m);
-        double vx1 = vx0 + ax1 * h / 2;
-        double vy1 = vy0 + ay1 * h / 2;
-        double x1 = x0 + vx0 * h / 2;
-        double y1 = y0 + vx0 * h / 2;
 
-        double ax2 = acelerationX(x1, y1, vx1, vy1, m);
-        double ay2 = acelerationY(x1, y1, vx1, vy1, m);
-        double vx2 = vx0 + ax2 * h / 2;
-        double vy2 = vy0 + ay2 * h / 2;
-        double x2 = x0 + vx1 * h / 2;
-        double y2 = y0 + vx1 * h / 2;
-        if (terminates(vx0, vy0, m)) {
-            a.setX(x2);
-            a.setY(y2);
-            a.setVX(vx2);
-            a.setVY(vy2);
-            return a;
-        }
 
-        double ax3 = acelerationX(x2, y2, vx2, vy2, m);
-        double ay3 = acelerationY(x2, y2, vx2, vy2, m);
-        double vx3 = vx0 + ax3 * h;
-        double vy3 = vy0 + ay3 * h;
-        double x3 = x0 + vx2 * h;
-        double y3 = y0 + vx2 * h;
 
-        double ax4 = acelerationX(x3, y3, vx3, vy3, m);
-        double ay4 = acelerationY(x3, y3, vx3, vy3, m);
-
-        a.setX(x0 + h * 1.0 / 6.0 * (vx0 + 2 * vx1 + 2 * vx2 + vx3));
-        a.setY(y0 + h * 1.0 / 6.0 * (vy0 + 2 * vy1 + 2 * vy2 + vy3));
-        a.setVX(vx0 + h * 1.0 / 6.0 * (ax1 + 2 * ax2 + 2 * ax3 + ax4));
-        a.setVY(vy0 + h * 1.0 / 6.0 * (ay1 + 2 * ay2 + 2 * ay3 + ay4));
-
-        return a;
-    }
-
-    public StateVector VerletsMethod(StateVector a, double m){
-        double x0 = a.getX();
-        double y0 = a.getY();
-        double vx0 = a.getVX();
-        double vy0 = a.getVY();
-        double ax0 = acelerationX(x0, y0, vx0, vy0, m);
-        double ay0 = acelerationY(x0, y0, vx0, vy0, m);
-        double x1  = x0 + vx0*h+1.0/2.0*ax0*h*h;
-        double y1  = y0 + vy0*h+1.0/2.0*ay0*h*h;
-        double vx1 = vx0+h*ax0;
-        double vy1 = vy0+h*ay0;
-        if (terminates(vx0, vy0, m)) {
-            a.setX(x1);
-            a.setY(y1);
-            a.setVX(vx1);
-            a.setVY(vy1);
-            return a;
-        }
-        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
-        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
-        double vx2 = vx0 + 1.0/2.0*(ax0+ax1)*h;
-        double vy2 = vy0 + 1.0/2.0*(ay0+ay1)*h;
-        a.setX(x1);
-        a.setY(y1);
-        a.setVX(vx2);
-        a.setVY(vy2);
-        return a;
-    }
-
-    public StateVector DormandPrince(StateVector a, double m,double e) {
-        double x0 = a.getX();
-        double y0 = a.getY();
-        double vx0 = a.getVX();
-        double vy0 = a.getVY();
-        double ax0 = acelerationX(x0, y0, vx0, vy0, m);
-        double ay0 = acelerationY(x0, y0, vx0, vy0, m);
-        double x1 = x0 + vx0 * h;
-        double y1 = y0 + vy0 * h;
-        double vx1 = vx0 + (1.0 / 5.0 * ax0) * k;
-        double vy1 = vy0 + (1.0 / 5.0 * ay0) * k;
-        if (terminates(vx0, vy0, m)) {
-            a.setX(x1);
-            a.setY(y1);
-            a.setVX(vx1);
-            a.setVY(vy1);
-            return a;
-        }
-        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
-        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
-        double x2 = x0 + vx1 * h;
-        double y2 = y0 + vy1 * h;
-
-        double vx2 = vx0 + (3.0 / 40.0 * ax0) * k + (9.0 / 40.0 * ax1) * k;
-        double vy2 = vy0 + (3.0 / 40.0 * ay0) * k + (9.0 / 40.0 * ay1) * k;
-        double ax2 = acelerationX(x2, y2, vx2, vy2, m);
-        double ay2 = acelerationY(x2, y2, vx2, vy2, m);
-        double x3 = x0 + vx2 * h;
-        double y3 = y0 + vy2 * h;
-
-        double vx3 = vx0 + (44.0 / 45.0 * ax0) * k - (56.0 / 15.0 * ax1) * k + (32.0 / 9.0 * ax2) * k;
-        double vy3 = vy0 + (44.0 / 45.0 * ay0) * k - (56.0 / 15.0 * ay1) * k + (32.0 / 9.0 * ay2) * k;
-        double ax3 = acelerationX(x3, y3, vx3, vy3, m);
-        double ay3 = acelerationY(x3, y3, vx3, vy3, m);
-        double x4 = x0 + vx3 * h;
-        double y4 = y0 + vy3 * h;
-
-        double vx4 = vx0 + (19372.0 / 6561.0 * ax0) * k - (25360.0 / 2187.0 * ax1 * k + (64448.0 / 6561.0 * ax2) * k
-                - (212.0 / 729.0 * ax3) * k);
-        double vy4 = vy0 + (19372.0 / 6561.0 * ay0) * k - (25360.0 / 2187.0 * ay1) * k + (64448.0 / 6561.0 * ay2) * k
-                - (212.0 / 729.0 * ay3 * k);
-        double ax4 = acelerationX(x4, y4, vx4, vy4, m);
-        double ay4 = acelerationY(x4, y4, vx4, vy4, m);
-        double x5 = x0 + vx4 * h;
-        double y5 = y0 + vy4 * h;
-
-        double vx5 = vx0 + (9017.0 / 3168.0 * ax0) * k - (355.0 / 33.0 * ax1) * k + (46732.0 / 5247.0 * ax2) * k
-                + (64448.0 / 6561.0 * ax3) * k - (5103.0 / 18656.0 * ax4) * k;
-        double vy5 = vy0 + (9017.0 / 3168.0 * ay0) * k - (355.0 / 33.0 * ay1) * k + (46732.0 / 5247.0 * ay2) * k
-                + (64448.0 / 6561.0 * ay3) * k - (5103.0 / 18656.0 * ay4) * k;
-        double ax5 = acelerationX(x5, y5, vx4, vy4, m);
-        double ay5 = acelerationY(x5, y5, vx4, vy4, m);
-
-        double vx6 = vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
-                - (2187.0 / 6784.0 * ax4) * k + (11.0 / 84.0 * ax5) * k;
-
-        double exact_next = x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
-                - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k;
-        double average_next = x0 + k * (1921409.0 * vx0 + 9690880.0 * vx2 + 13122270.0 * vx3 - 5802111.0 * vx4
-                + 1902912.0 * vx5 + 534240.0 * vx6) / 21369600.0;
-        double s = Math.abs(exact_next - average_next);
-        if(s>e*k){
-            double optimal_t = Math.pow((k * e) / ((2 * s)), 1.0 / 5.0);
-            k = optimal_t*k;
-            return DormandPrince(a, m, e);
-        }
-        else{
-            a.setX(x0 + (35.0 / 384.0 * vx0) * k + (500.0 / 1113.0 * vx2) * k + (125.0 / 192.0 * vx3) * k
-                - (2187.0 / 6784.0 * vx4) * k + (11.0 / 84.0 * vx5) * k);
-            a.setY(y0 + (35.0 / 384.0 * vy0) * k + (500.0 / 1113.0 * vy2) * k + (125.0 / 192.0 * vy3) * k
-                - (2187.0 / 6784.0 * vy4) * k + (11.0 / 84.0 * vy5) * k);
-            a.setVX(vx0 + (35.0 / 384.0 * ax0) * k + (500.0 / 1113.0 * ax2) * k + (125.0 / 192.0 * ax3) * k
-                - (2187.0 / 6784.0 * ax4) * k
-                + (11.0 / 84.0 * ax5) * k);
-            a.setVY(vy0 + (35.0 / 384.0 * ay0) * k + (500.0 / 1113.0 * ay2) * k + (125.0 / 192.0 * ay3) * k
-                - (2187.0 / 6784.0 * ay4) * k
-                + (11.0 / 84.0 * ay5) * k);
-            k = Math.max(k,e*k);
-            return a;
-        }
-    }
+  
     public void Adams(StateVector a0, double m){
         StateVector a1;
         StateVector a2;
         StateVector a3;
-        a1 = RungeKutta4(a0, m);
-        a2 = RungeKutta4(a1, m);
-        a3 = RungeKutta4(a2,m);
+        a1 = rk4.run(a0, m);
+        a2 = rk4.run(a1, m);
+        a3 = rk4.run(a2,m);
 
         // adams
         initialVector = new AdamsStateVector(a0,a1,a2,a3);
@@ -550,33 +419,6 @@ public class physicsEngine {
     }
 
 
-    public StateVector RungeKutta2(StateVector a, double m) {
-        double x0 = a.getX();
-        double y0 = a.getY();
-        double vx0 = a.getVX();
-        double vy0 = a.getVY();
-        double ax0 = acelerationX(x0, y0, vx0, vy0, m);
-        double ay0 = acelerationY(x0, y0, vx0, vy0, m);
-        double x1 = x0 + vx0 * h;
-        double y1 = y0 + vy0 * h;
-        double vx1 = vx0 + ax0 * h;
-        double vy1 = vy0 + ay0 * h;
-        if (terminates(vx0, vy0, m)) {
-            a.setX(x1);
-            a.setY(y1);
-            a.setVX(vx1);
-            a.setVY(vy1);
-            return a;
-        }
-        double ax1 = acelerationX(x1, y1, vx1, vy1, m);
-        double ay1 = acelerationY(x1, y1, vx1, vy1, m);
-        a.setX(x0 + h * (1.0 / 2.0) * (vx0 + vx1));
-        a.setY(y0 + h * (1.0 / 2.0) * (vy0 + vy1));
-        a.setVX(vx0 + h * (1.0 / 2.0) * (ax0 + ax1));
-        a.setVY(vy0 + h * 1.0 / 2.0 * (ay0 + ay1));
-        return a;
-    }
-
     public StateVector EulersMethod(StateVector a, double m) {
         double x = a.getX(); // x(n+1) = x(n) + h*x(n) derivated
         double y = a.getY(); // y(n+1) = y(n) + h*y(n) derivated
@@ -633,10 +475,12 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            v = RungeKutta4(v,m);
-            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
+            v = rk4.run(v,m);
+            if(botPlays){
                 slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
                 slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+            }
+            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
                 closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt);
             }
             if(botPlays&&(closestEuklidiandistance==initialDistance)){

@@ -1,7 +1,19 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
+
+/**
+ * Random Bot class. 
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
 
 import java.util.concurrent.ThreadLocalRandom;
-public class botRand {
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.InputReader.cheat;
+
+public class RandomBot {
     private double speed;
     private double directionX;
     private double directionY;
@@ -16,7 +28,7 @@ public class botRand {
     private physicsEngine engine;
     final double length = 0.3;
 
-    public botRand(physicsEngine engine) {
+    public RandomBot(physicsEngine engine) {
         this.engine = engine;
         this.holeX = engine.getXt();
         this.holeY = engine.getYt();

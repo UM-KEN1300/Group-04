@@ -1,7 +1,7 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Objects;
 
 /**
- * StateVector object.
+ * State Vector object.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  *          Gabrijel Radovčić, Elza Strazda
  * version 1.0

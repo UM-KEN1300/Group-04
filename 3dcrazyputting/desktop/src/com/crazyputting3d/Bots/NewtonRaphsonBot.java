@@ -1,4 +1,15 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Bots;
+
+/**
+ * Newton Raphson Bot class. 
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
+
+import com.crazyputting3d.Objects.StateVector;
+import com.crazyputting3d.physicsEngine;
 
 public class NewtonRaphsonBot {
     public final double pi = 3.141159;
@@ -27,7 +38,7 @@ public class NewtonRaphsonBot {
         double minVy = Double.MAX_VALUE;
         StateVector min = new StateVector(x0, y0, minVx, minVy);
         double dx = 0.0000000001;
-        double angle = 0;//Math.acos(Math.abs(xt - x0) / distance);
+        double angle = Math.acos(Math.abs(xt - x0) / distance);
         double originalangle = angle;
         double vx = Math.cos(angle) * v;
         double vy = Math.sin(angle) * v;
@@ -48,7 +59,7 @@ public class NewtonRaphsonBot {
                 v -= 0.1;
                 angle = originalangle;
                 if(v<=0){
-                    return new StateVector(x0, y0, 0, 0);
+                    return new StateVector(x0, y0, vx, vy);
                 }
             }
             vx = Math.cos(angle) * v;

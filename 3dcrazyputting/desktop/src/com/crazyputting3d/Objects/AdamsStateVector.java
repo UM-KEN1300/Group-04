@@ -1,5 +1,15 @@
-package com.crazyputting3d;
+package com.crazyputting3d.Objects;
+
+/**
+ * Adams State Vector object.
+ * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ *          Gabrijel Radovčić, Elza Strazda
+ * version 1.0
+ * since   2021-03-11
+ */
+
 public class AdamsStateVector {
+
     StateVector zero;
     StateVector one;
     StateVector two;

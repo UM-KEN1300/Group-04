@@ -377,7 +377,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         double smallestX=1000000;
         double biggestY=-1000000;
         double smallestY=1000000;
-        int offset = 1;
+        int offset = 3;
         for(int i=0; i<coords.size(); i++) {
             if(i%2==0) {
                 if(coords.get(i)>biggestX) {
@@ -706,12 +706,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            if(botInt==0) {
+            if(botInt==2) {
                 randombot.makeMove();
             } else if(botInt==1) {
                 ruleBot.makeMove();
-            } else if(botInt==2) {
-                botG.makeMove();
+            } else if(botInt==0) {
+                hillBot.makeMove();
             } else if(botInt==3) {
                 newtonBot.makeMove();
             }

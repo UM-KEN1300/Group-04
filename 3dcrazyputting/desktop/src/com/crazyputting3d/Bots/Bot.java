@@ -38,7 +38,7 @@ public abstract class Bot {
         StateVector move = calculateMove();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.println("Run time of algorithm (ms): " + duration/1000000);
+        System.out.println("Run time of algorithm"+getClass()+" (ms): " + duration/1000000);
         double vx = move.getVX();
         double vy = move.getVY();
         engine.setVelocities(vx, vy);

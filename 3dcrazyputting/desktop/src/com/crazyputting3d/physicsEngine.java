@@ -224,7 +224,7 @@ public class physicsEngine {
      */
 
     public boolean isFinish(double x, double y) {
-        if (Math.sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt)) < r) {
+        if (Math.sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt)) <= r) {
             flag = true;
             return true;
         } else {
@@ -465,6 +465,7 @@ public class physicsEngine {
                 speedCounter++;
             }
             if (isFinish(x, y)) {
+                System.out.println("in the hole");
                 return v;
             } else if (isInSandPit(x, y)) {
                 m = muks;
@@ -473,7 +474,7 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            v = rk4.run(v,m);
+            v = rk2.run(v,m);
             if(botPlays){
                 slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
                 slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
@@ -612,7 +613,7 @@ public class physicsEngine {
         double smallestX = 1000000;
         double biggestY = -1000000;
         double smallestY = 1000000;
-        int offset = 1;
+        int offset = 3;
         for (int i = 0; i < coords.size(); i++) {
             if (i % 2 == 0) {
                 if (coords.get(i) > biggestX) {

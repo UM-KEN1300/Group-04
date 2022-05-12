@@ -126,7 +126,7 @@ public class Settings {
         jb6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                botInt=0;
+                botInt=2;
                 label.setText("Current bot chosen: Random Bot");
             }
         });
@@ -140,7 +140,7 @@ public class Settings {
         jb8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                botInt=2;   
+                botInt=0;   
                 label.setText("Current bot chosen: Hill Climbing Bot");         }
         });
         jb9.addActionListener(new ActionListener() {

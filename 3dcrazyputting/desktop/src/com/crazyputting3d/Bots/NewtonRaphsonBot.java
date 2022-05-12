@@ -36,17 +36,21 @@ public class NewtonRaphsonBot extends Bot{
         engine.setVelocitiesForBot(x0, y0, vx2, vy2);
         double tempEuclidianDistance2 = engine.get_closestEuclideanDistance();
         double angle_step = 0;
+        double vx3 = Math.cos(angle-dx) * v;
+        double vy3 = Math.sin(angle-dx) * v;
+        engine.setVelocitiesForBot(x0, y0, vx3, vy3);
+        double tempEuclidianDistance3 = engine.get_closestEuclideanDistance();
 
         while (tempEuclidianDistance >= radius) {
-            System.out.println(angle);
-            angle_step = tempEuclidianDistance/((tempEuclidianDistance-tempEuclidianDistance2)/dx);
+            angle_step = ((tempEuclidianDistance-tempEuclidianDistance2)/dx)/((tempEuclidianDistance3-2*tempEuclidianDistance+tempEuclidianDistance2)/(dx*dx));
             angle -= angle_step;
             if(angle_step<accuracy){
-                System.out.println(v);
                 v -= 0.1;
                 angle = originalangle;
                 if(v<=0){
-                    return new StateVector(x0, y0, vx, vy);
+                    angle = Math.random()*5;
+                    System.out.println(angle);
+                    v=5;
                 }
             }
             vx = Math.cos(angle) * v;

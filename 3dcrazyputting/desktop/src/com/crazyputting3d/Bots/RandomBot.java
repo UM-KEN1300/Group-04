@@ -33,7 +33,7 @@ public class RandomBot extends Bot{
     }
 
     public void setRandSpeed() {
-        v = randomDouble(0.1, 5);
+        v =5;//= randomDouble(0.1, 5);
     }
 
     public void setRandDirection() {
@@ -53,8 +53,8 @@ public class RandomBot extends Bot{
             speedX = v*directionX/length;
             speedY = v*directionY/length;
             StateVector temp = engine.setVelocitiesForBot(x0, y0, speedX, speedY);
-            double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-x0, 2)+Math.pow(temp.getY()-yt, 2));
-            if(tempEuclidianDistance<=radius){
+            double tempEuclidianDistance = Math.sqrt(Math.pow(temp.getX()-xt, 2)+Math.pow(temp.getY()-yt, 2));
+            if(tempEuclidianDistance<radius){
                 min.setVX(speedX);
                 min.setVY(speedY);
                 flag=false;

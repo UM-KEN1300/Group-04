@@ -16,6 +16,7 @@ public class NewtonRaphsonBot extends Bot{
 
     public NewtonRaphsonBot(physicsEngine engine) {
         super(engine);
+        System.out.println("newton bot");
     }
 
     public StateVector calculateMove() {

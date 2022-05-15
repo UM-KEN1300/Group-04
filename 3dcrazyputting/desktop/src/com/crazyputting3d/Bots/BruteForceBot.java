@@ -14,6 +14,7 @@ public class BruteForceBot extends Bot{
 
     public BruteForceBot(physicsEngine engine) {
         super(engine);
+        System.out.println("brute bot");
     }
 
     public StateVector calculateMove() {
@@ -22,10 +23,11 @@ public class BruteForceBot extends Bot{
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;
         StateVector min = new StateVector(x0, y0, minVx, minVy);
-        for (double v = 5; v >= 0; v -= 0.1) {
+        for (double v = 5; v >= 0; v -= 0.01) {
             for (int i = 0; i < 180; i++) {
                 for (int j = 0; j < 2; j++) {
                     double newangle = angle;
+                    System.out.println(v);
                     if (j == 0) {
                         newangle = angle + i * pi / 180.0;
                     } else {
@@ -44,6 +46,8 @@ public class BruteForceBot extends Bot{
                     }
                     if (tempEuclidianDistance < euklidianDistance) {
                         min = temp;
+                        min.setVX(vx);
+                        min.setVY(vy);
                         euklidianDistance = tempEuclidianDistance;
                     }
                 }

@@ -15,6 +15,7 @@ public class HillClimbingBot extends Bot {
 
     public HillClimbingBot(physicsEngine engine) {
         super(engine);
+        System.out.println("hill bot");
     }
 
     public StateVector calculateMove() {

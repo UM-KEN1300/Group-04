@@ -21,6 +21,7 @@ public class RandomBot extends Bot{
     public RandomBot(physicsEngine engine) {
         super(engine);
         this.flag=true;
+        System.out.println("random bot");
     }
 
     public double h(double x, double y){

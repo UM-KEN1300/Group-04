@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.crazyputting3d.Menu;
 import com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.Bots.BasicBot;
+import com.crazyputting3d.Bots.Bot;
 import com.crazyputting3d.Bots.BruteForceBot;
 import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
@@ -114,11 +115,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-    public BruteForceBot bruteBot;
-    public HillClimbingBot hillBot;
-    public NewtonRaphsonBot newtonBot;
-    public RandomBot randombot;
-    public BasicBot ruleBot;
+    public Bot gameBot;
     public int botInt;
 
     /**
@@ -162,11 +159,21 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.bruteBot = new BruteForceBot(engine);
-        this.randombot = new RandomBot(engine);
-        this.ruleBot = new BasicBot(engine);
-        this.hillBot = new HillClimbingBot(engine);
-        this.newtonBot = new NewtonRaphsonBot(engine);
+        if(botInt==4){
+            this.gameBot = new BruteForceBot(engine);
+        }
+        else if(botInt==2){
+            this.gameBot = new RandomBot(engine);
+        }
+        else if(botInt==3){
+            this.gameBot = new BasicBot(engine);
+        }
+        else if(botInt==0){
+            this.gameBot = new HillClimbingBot(engine);
+        }
+        else if(botInt==1){
+            this.gameBot = new NewtonRaphsonBot(engine);
+        }
 
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
@@ -706,19 +713,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            if(botInt==0) {
-                hillBot.makeMove();
-            } else if(botInt==1) {
-                newtonBot.makeMove();
-            } else if(botInt==2) {
-                randombot.makeMove();
-            } else if(botInt==3) {
-                ruleBot.makeMove();
-            } else if (botInt==4) { 
-                bruteBot.makeMove();
-            }
-
-
+            gameBot.makeMove();
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

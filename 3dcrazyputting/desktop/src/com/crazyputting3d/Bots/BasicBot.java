@@ -20,6 +20,7 @@ public class BasicBot extends Bot{
     public double slopey;
     public BasicBot(physicsEngine engine) {
         super(engine);
+        System.out.println("basic bot");
     }
 
     public StateVector calculateMove(){

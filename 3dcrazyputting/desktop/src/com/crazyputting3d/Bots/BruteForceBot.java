@@ -11,10 +11,20 @@ import com.crazyputting3d.physicsEngine;
  */
 
 public class BruteForceBot extends Bot{
+    
+    /**
+    * Constructor, inherits the constructor from the Abstract class Bot.
+    * param engine object.
+    */
 
     public BruteForceBot(physicsEngine engine) {
-        super(engine);
+        super(engine);                          
     }
+
+    /**
+    * calculateMove() method uses a Brute Force approach to calculate the best possible shot. 
+    * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is either the ball in the hole, or as close to the hole as the algorithm could possibly calculate. 
+    */
 
     public StateVector calculateMove() {
         double angle = Math.acos(Math.abs(xt - x0) / Math.sqrt(Math.pow(x0 - xt, 2) + Math.pow(y0 - yt, 2)));

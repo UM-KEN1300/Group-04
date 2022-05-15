@@ -2,7 +2,6 @@ package com.crazyputting3d.Bots;
 import java.util.concurrent.ThreadLocalRandom;
 import com.crazyputting3d.Objects.StateVector;
 import com.crazyputting3d.physicsEngine;
-import com.crazyputting3d.InputReader.cheat;
 
 /**
  * Random Bot class. 
@@ -13,28 +12,44 @@ import com.crazyputting3d.InputReader.cheat;
  */
 
 public class RandomBot extends Bot{
+
     public double speedX;
     public double speedY;
     public double directionX;
     public double directionY;
     public boolean flag;
+
+    /**
+    * Constructor, inherits the constructor from the Abstract class Bot.
+    * param engine object.
+    */
+
     public RandomBot(physicsEngine engine) {
         super(engine);
         this.flag=true;
     }
 
-    public double h(double x, double y){
-        cheat cheat = new cheat();
-        return cheat.getHeightFunction(x, y);
-    }
+    /**
+    * randomDouble() method generates a random double between min and max. 
+    * param min - lower boundary, max - higher boundary for the generation of the random double.
+    * returns a random double. 
+    */
 
     public static double randomDouble(double min, double max) {
         return (ThreadLocalRandom.current().nextDouble() * (max - min)) + min;
     }
 
+    /**
+    * setRandSpeed() method updates the initial speed of each simulation by generating a random Double value between 0.1 and 5. Can be set to 5 permanently for faster but not always possible solutions. 
+    */
+
     public void setRandSpeed() {
         v =5;//= randomDouble(0.1, 5);
     }
+
+    /**
+    * setRandDirection() method generates a randomly calculated angle by using Math.random()*Math.PI*2 and calculates + updates both X and Y direction fields with the new angle. 
+    */
 
     public void setRandDirection() {
         double angle = Math.random()*Math.PI*2;
@@ -42,11 +57,18 @@ public class RandomBot extends Bot{
         directionY = Math.sin(angle)*length;
     }
 
+    /**
+    * calculateMove() method uses randomly generated directions by the method setRandDirection() until the simulation hits the hole. 
+    * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is when the ball goes inside the hole. 
+    */
+
     public StateVector calculateMove() {
+
         double euklidianDistance = Double.MAX_VALUE;
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;
         StateVector min = new StateVector(x0,y0,minVx,minVy);
+
         while(flag) {
             setRandDirection();
             setRandSpeed();

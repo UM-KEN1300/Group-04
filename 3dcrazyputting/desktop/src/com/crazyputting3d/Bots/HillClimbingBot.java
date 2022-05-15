@@ -11,18 +11,28 @@ import com.crazyputting3d.physicsEngine;
  */
 
 public class HillClimbingBot extends Bot {
-    public double angle_step = pi / 180;
+
+    public double angle_step = pi / 180;  // initial angle-step used to determine the direction with best euclidean distance by comparing between the (current angle + angle-step) and (current angle - angle-step). 
+
+    /**
+    * Constructor, inherits the constructor from the Abstract class Bot.
+    * param engine object.
+    */
 
     public HillClimbingBot(physicsEngine engine) {
         super(engine);
     }
+
+    /**
+    * calculateMove() method uses an Hill climbing ideology to calculate the best possible shot. 
+    * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is either the ball in the hole, or as close to the hole as the algorithm could possibly calculate. 
+    */
 
     public StateVector calculateMove() {
 
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;
         StateVector min = new StateVector(x0, y0, minVx, minVy);
-
         double angle = Math.acos(Math.abs(xt - x0) / Math.sqrt(Math.pow(x0 - xt, 2) + Math.pow(y0 - yt, 2)));
         double vx = Math.cos(angle) * v;
         double vy = Math.sin(angle) * v;
@@ -35,6 +45,7 @@ public class HillClimbingBot extends Bot {
         boolean right = false;
 
         while (tempEuclidianDistance >= radius) {
+
             if (counter == 0) {
                 engine.setVelocitiesForBot(x0, y0, Math.cos(angle + angle_step) * v,
                         Math.sin(angle + angle_step) * v);
@@ -110,7 +121,6 @@ public class HillClimbingBot extends Bot {
 
         }
         min = new StateVector(x0, y0, Math.cos(angle) * v, Math.sin(angle) * v);
-
         return min;
     }
 }

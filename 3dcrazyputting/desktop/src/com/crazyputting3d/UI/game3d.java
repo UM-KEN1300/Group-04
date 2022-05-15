@@ -114,7 +114,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-    public BruteForceBot botG;
+    public BruteForceBot bruteBot;
     public HillClimbingBot hillBot;
     public NewtonRaphsonBot newtonBot;
     public RandomBot randombot;
@@ -162,7 +162,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.botG = new BruteForceBot(engine);
+        this.bruteBot = new BruteForceBot(engine);
         this.randombot = new RandomBot(engine);
         this.ruleBot = new BasicBot(engine);
         this.hillBot = new HillClimbingBot(engine);
@@ -706,14 +706,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            if(botInt==2) {
-                randombot.makeMove();
-            } else if(botInt==1) {
-                ruleBot.makeMove();
-            } else if(botInt==0) {
+            if(botInt==0) {
                 hillBot.makeMove();
-            } else if(botInt==3) {
+            } else if(botInt==1) {
                 newtonBot.makeMove();
+            } else if(botInt==2) {
+                randombot.makeMove();
+            } else if(botInt==3) {
+                ruleBot.makeMove();
+            } else if (botInt==4) { 
+                bruteBot.makeMove();
             }
 
 

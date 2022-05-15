@@ -6,6 +6,7 @@ import com.crazyputting3d.UI.game3d;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,17 +34,20 @@ public class Menu {
     public boolean settingsFlag=true;
     Settings settings = new Settings();
 
+    private int botInt;
+    private JComboBox botSelect;
+
     /**
     * run() creates frame and buttons and adds Action Listeners. 
     * Outputs the sound for the initial ball hit. 
     */
 
     public void run(){
-        //Screen size is 315x560
+        //Screen size is 560x315
         frame = new JFrame("CRAZY PUTTING - Group 04");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setLocation(620, 220);
+        frame.setLocation(420, 225);
         img = new ImageIcon("3dcrazyputting\\assets\\title6.jpeg");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0,0,1280,720);
@@ -67,6 +71,14 @@ public class Menu {
         title.setLocation(280,0);
         title.setSize(100,100);
         title.setText("Crazy Putting 3D!");
+
+        String [] botNames = {"Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force"};
+        botSelect = new JComboBox<>(botNames);
+        botSelect.setSelectedIndex(0);
+        botSelect.setLocation(280,255);
+        botSelect.setSize(110,20);
+
+        //Button for playing the game
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,10 +87,11 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(true,false,settings.getBotInt()), config);
+                new Lwjgl3Application(new game3d(true,false,botSelect.getSelectedIndex()), config);
             }
         });
 
+        //Button for launching the simulator
         jb2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,10 +100,11 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,false,settings.getBotInt()), config);
+                new Lwjgl3Application(new game3d(false,false,botSelect.getSelectedIndex()), config);
             }
         });
 
+        //Quit button
         jb3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { 
@@ -98,6 +112,7 @@ public class Menu {
             }
         });
 
+        //Button for playing with a bot
         jb4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { 
@@ -106,7 +121,7 @@ public class Menu {
                 config.setForegroundFPS(60);
                 config.setTitle("Crazy Putting!");
                 config.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,settings.getBotInt()), config);
+                new Lwjgl3Application(new game3d(false,true,botSelect.getSelectedIndex()), config);
             }
         });
 
@@ -124,6 +139,7 @@ public class Menu {
         background.add(jb4);
         background.add(jb5);
         background.add(title);
+        background.add(botSelect);
         frame.add(background); 
         frame.pack();
         frame.setVisible(true);

@@ -33,10 +33,8 @@ public class Menu {
     private JLabel title;
     public boolean settingsFlag=true;
     Settings settings = new Settings();
-
-    private int botInt;
-    private JComboBox botSelect;
-    private JComboBox solverSelect;
+    private JComboBox<String> botSelect;
+    private JComboBox<String> solverSelect;
     /**
     * run() creates frame and buttons and adds Action Listeners. 
     * Outputs the sound for the initial ball hit. 
@@ -78,7 +76,7 @@ public class Menu {
         botSelect.setLocation(160,170);
         botSelect.setSize(110,20);
 
-        String [] solverNames = {"Eulers Method", "Runge-Kutta 2", "Runge-Kutta 4", "Dormand Prince", "Verlets Method"};
+        String [] solverNames = {"Eulers Method", "Runge-Kutta 2", "Runge-Kutta 4", "Dormand Prince", "Verlets Method", "Predictor corrector"};
         solverSelect = new JComboBox<>(solverNames);
         solverSelect.setSelectedIndex(0);
         solverSelect.setLocation(160,140);

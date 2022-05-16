@@ -12,6 +12,10 @@ import  com.crazyputting3d.physicsEngine;
 
 public class EulersMethod extends Solver {
 
+    public EulersMethod(physicsEngine engine) {
+        super(engine);
+    }
+
     public StateVector run(StateVector a, double m) {
         double x = a.getX(); // x(n+1) = x(n) + h*x(n) derivated
         double y = a.getY(); // y(n+1) = y(n) + h*y(n) derivated
@@ -19,8 +23,8 @@ public class EulersMethod extends Solver {
         double vy = a.getVY(); // vy(n+1) = vy(n) + h*vy(n) derivated
         a.setX(physicsEngine.h * vx + x);
         a.setY(physicsEngine.h * vy + y);
-        double ax = acelerationX(x, y, vx, vy, m);
-        double ay = acelerationY(x, y, vx, vy, m);
+        double ax = engine.acelerationX(x, y, vx, vy, m);
+        double ay = engine.acelerationY(x, y, vx, vy, m);
         a.setVX(vx + physicsEngine.h * ax);
         a.setVY(vy + physicsEngine.h * ay);
         return a;

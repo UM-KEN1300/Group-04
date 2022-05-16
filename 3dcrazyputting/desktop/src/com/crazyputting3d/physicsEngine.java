@@ -1,7 +1,6 @@
 package com.crazyputting3d;
 import java.io.IOException;
 import java.util.ArrayList;
-import com.crazyputting3d.Objects.AdamsStateVector;
 import com.crazyputting3d.Objects.Sandpit;
 import com.crazyputting3d.Objects.StateVector;
 import com.crazyputting3d.Objects.Tree;
@@ -9,6 +8,7 @@ import com.crazyputting3d.MathSolvers.RungeKutta4;
 import com.crazyputting3d.MathSolvers.RungeKutta2;
 import com.crazyputting3d.MathSolvers.DormandPrince;
 import com.crazyputting3d.MathSolvers.EulersMethod;
+import com.crazyputting3d.MathSolvers.PredictorCorrector;
 import com.crazyputting3d.MathSolvers.VerletsMethod;
 import com.crazyputting3d.MathSolvers.Solver;
 import com.crazyputting3d.InputReader.Search;
@@ -51,17 +51,11 @@ public class physicsEngine {
     private boolean flag = false;
     private double slopex;
     private double slopey;
-    private AdamsStateVector initialVector;
     private double closestEuklidiandistance = Double.MAX_VALUE;
     private double initialDistance;
-    private RungeKutta4 rk4 = new RungeKutta4(); 
-    public RungeKutta2 rk2 = new RungeKutta2(); 
-    public EulersMethod euler = new EulersMethod(); 
-    public DormandPrince dormandP = new DormandPrince(); 
-    public VerletsMethod verlets= new VerletsMethod(); 
-
     private Solver solver;
     public static int solvernum;
+    private StateVector tempV;
 
 
     /**
@@ -123,7 +117,9 @@ public class physicsEngine {
         closestEuklidiandistance = Math.hypot(x-xt, y-yt);
         return start(newv, true);
     }
-    
+    public double get_muk(){
+        return muk;
+    }
 
     public double getXt(){
         return xt;
@@ -316,20 +312,13 @@ public class physicsEngine {
      * 
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
-        // for (i nt i = 0; i < 1000; i++) {
-        StateVector vector = new StateVector(0, 0, 1, 0);
-        physicsEngine engine = new physicsEngine();
-        vector = engine.start(vector, true);
-        double error = Math.abs((vector.getX() / 0.5096839959) - 1);
-        System.out.println(vector.getX() + "," + error);
-        // h = h + 0.0001;
-        // }
+    public StateVector getTempV(){
+        return tempV;
     }
 
     public StateVector start(StateVector v, boolean botPlays) {
+        tempV = v;
         solver = selectedSolver(solvernum);
-        Adams(v, muk);
         x0 = v.getX();
         y0 = v.getY();
         StateVector newV = trajectory(v, botPlays);
@@ -351,90 +340,6 @@ public class physicsEngine {
         }
         return newV;
     }
-
-
-
-
-  
-    public void Adams(StateVector a0, double m){
-        StateVector a1;
-        StateVector a2;
-        StateVector a3;
-        a1 = rk4.run(a0, m);
-        a2 = rk4.run(a1, m);
-        a3 = rk4.run(a2,m);
-
-        // adams
-        initialVector = new AdamsStateVector(a0,a1,a2,a3);
-    }
-    public StateVector AdamsBashforth(StateVector a, double m){
-        StateVector a0;
-        StateVector a1;
-        StateVector a2;
-        StateVector a3;
-        a0 = initialVector.getFirst();
-        a1 = initialVector.getSecond();
-        a2 = initialVector.getThird();
-        a3 = initialVector.getFourth();
-        a = EulersMethod(a,m);
-        if(terminates(a.getVX(),a.getVY(),m)){return a;}
-
-        double ax0 = acelerationX(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
-        double ay0 = acelerationY(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
-        double ax1 = acelerationX(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
-        double ay1 = acelerationY(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
-        double ax2 = acelerationX(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
-        double ay2 = acelerationY(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
-        double ax3 = acelerationX(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
-        double ay3 = acelerationY(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
-
-        double x = a3.getX() + 1/ 24.0 * h * (55 * a3.getVX() - 59 * a2.getVX() + 37 * a1.getVX() - 9 * a0.getVX());
-        double y = a3.getY() + 1/ 24.0 * h * (55 * a3.getVY() - 59 * a2.getVY() + 37 * a1.getVY() - 9 * a0.getVY());
-        double vx = a3.getVX() + 1/ 24.0 * h * (55 * ax3 - 59 * ax2 + 37 * ax1 - 9 * ax0);
-        double vy = a3.getVY() + 1/ 24.0 * h * (55 * ay3 - 59 * ay2 + 37 * ay1 - 9 * ay0);
-        StateVector a4 = new StateVector(x,y,vx,vy);
-        a4 = AdamsMolton(a0,a1,a2,a3,a4,m);
-        return a4;
-    }
-    public StateVector AdamsMolton(StateVector a0, StateVector a1, StateVector a2, StateVector a3 ,StateVector a4, double m){
-        double ax0 = acelerationX(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
-        double ay0 = acelerationY(a0.getX(), a0.getY(), a0.getVX(), a0.getVY(), m);
-        double ax1 = acelerationX(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
-        double ay1 = acelerationY(a1.getX(), a1.getY(), a1.getVX(), a1.getVY(), m);
-        double ax2 = acelerationX(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
-        double ay2 = acelerationY(a2.getX(), a2.getY(), a2.getVX(), a2.getVY(), m);
-        double ax3 = acelerationX(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
-        double ay3 = acelerationY(a3.getX(), a3.getY(), a3.getVX(), a3.getVY(), m);
-        double ax4 = acelerationX(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
-        double ay4 = acelerationY(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
-
-        double x = a3.getX() + 1/ 720.0 * h * (251*a4.getVX() + 646 * a3.getVX() - 264 * a2.getVX() + 106 * a1.getVX() - 19 * a0.getVX());
-        double y = a3.getY() + 1/ 720.0 * h * (251*a4.getVY() + 646 * a3.getVY() - 264 * a2.getVY() + 106 * a1.getVY() - 19 * a0.getVY());
-        double vx = a3.getVX() + 1/ 720.0 * h * (251*ax4 + 646 * ax3 - 264 * ax2 + 106 * ax1 - 19 * ax0);
-        double vy = a3.getVY() + 1/ 720.0 * h * (251*ay4 + 646 * ay3 - 264 * ay2 + 106 * ay1 - 19 * ay0);
-        StateVector a5 = new StateVector(x,y,vx,vy);
-        initialVector.setFirst(a1);
-        initialVector.setSecond(a2);
-        initialVector.setThird(a3);
-        initialVector.setFourth(a5);
-        return a5;
-    }
-
-
-    public StateVector EulersMethod(StateVector a, double m) {
-        double x = a.getX(); // x(n+1) = x(n) + h*x(n) derivated
-        double y = a.getY(); // y(n+1) = y(n) + h*y(n) derivated
-        double vx = a.getVX(); // vx(n+1) = vx(n) + h*vx(n) derivated
-        double vy = a.getVY(); // vy(n+1) = vy(n) + h*vy(n) derivated
-        a.setX(h * vx + x);
-        a.setY(h * vy + y);
-        double ax = acelerationX(x, y, vx, vy, m);
-        double ay = acelerationY(x, y, vx, vy, m);
-        a.setVX(vx + h * ax);
-        a.setVY(vy + h * ay);
-        return a;
-    }
-
     public double acelerationX(double x, double y, double vx, double vy, double m) {
         return -g * hxderivated(x, y) - m * g * vx / (Math.sqrt(vx * vx + vy * vy));
     }
@@ -469,7 +374,6 @@ public class physicsEngine {
                 speedCounter++;
             }
             if (isFinish(x, y)) {
-                System.out.println("in the hole");
                 return v;
             } else if (isInSandPit(x, y)) {
                 m = muks;
@@ -652,15 +556,17 @@ public class physicsEngine {
 
     public Solver selectedSolver(int num) {
         if (num==0) {
-            return euler;
-        } if (num==1) {
-            return rk2;
-        } if (num==2) {
-            return rk4;
-        } if (num==3) {
-            return dormandP;
-        } if (num==4) {
-            return verlets;
+            return new EulersMethod(this);
+        }else if (num==1) {
+            return new RungeKutta2(this);
+        }else if (num==2) {
+            return new RungeKutta4(this);
+        }else if (num==3) {
+            return new DormandPrince(this);
+        }else if (num==4) {
+            return new VerletsMethod(this);
+        }else if (num==5) {
+            return new PredictorCorrector(this);
         }
         return null;
     }

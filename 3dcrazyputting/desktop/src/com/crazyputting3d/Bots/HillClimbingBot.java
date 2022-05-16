@@ -11,23 +11,12 @@ import com.crazyputting3d.physicsEngine;
  */
 
 public class HillClimbingBot extends Bot {
-
-    public double angle_step = pi / 180;  // initial angle-step used to determine the direction with best euclidean distance by comparing between the (current angle + angle-step) and (current angle - angle-step). 
-
-    /**
-    * Constructor, inherits the constructor from the Abstract class Bot.
-    * param engine object.
-    */
+    public double angle_step = pi / 180;
 
     public HillClimbingBot(physicsEngine engine) {
         super(engine);
         System.out.println("hill bot");
     }
-
-    /**
-    * calculateMove() method uses an Hill climbing ideology to calculate the best possible shot. 
-    * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is either the ball in the hole, or as close to the hole as the algorithm could possibly calculate. 
-    */
 
     public StateVector calculateMove() {
 

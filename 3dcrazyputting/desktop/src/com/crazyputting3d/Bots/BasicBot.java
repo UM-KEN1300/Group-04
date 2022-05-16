@@ -12,29 +12,17 @@ import com.crazyputting3d.Objects.StateVector;
  */
 
 public class BasicBot extends Bot{
-
     public double speedX;
     public double speedY;
     public double directionX;
     public double directionY;
     public double slopex;
     public double slopey;
-
-    /**
-    * Constructor, inherits the constructor from the Abstract class Bot.
-    * param engine object.
-    */
-
     public BasicBot(physicsEngine engine) {
         super(engine);
         System.out.println("basic bot");
     }
 
-    /**
-    * calculateMove() method shoots in the direction of the hole. 
-    * returns StateVector with initial X and Y direction and speed of the shot aimed directly towards the hole.
-    */
-    
     public StateVector calculateMove(){
         double angle = Math.atan2((yt - y0) , (xt - x0));
 

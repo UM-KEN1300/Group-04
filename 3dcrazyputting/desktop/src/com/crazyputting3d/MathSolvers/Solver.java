@@ -1,6 +1,7 @@
 package com.crazyputting3d.MathSolvers;
 import  com.crazyputting3d.physicsEngine;
 import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.Objects.StateVector;
 
 /**
  * Solver Abstract class. 
@@ -34,6 +35,10 @@ public abstract class Solver {
     public double h(double x, double y) {
         cheat cheat = new cheat();
         return cheat.getHeightFunction(x, y);
+    }
+
+    public StateVector run(StateVector a, double m) {
+        return null;
     }
 
     /**

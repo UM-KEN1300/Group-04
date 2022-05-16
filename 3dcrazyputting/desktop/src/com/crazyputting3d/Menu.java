@@ -36,7 +36,7 @@ public class Menu {
 
     private int botInt;
     private JComboBox botSelect;
-
+    private JComboBox solverSelect;
     /**
     * run() creates frame and buttons and adds Action Listeners. 
     * Outputs the sound for the initial ball hit. 
@@ -75,13 +75,22 @@ public class Menu {
         String [] botNames = {"Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force"};
         botSelect = new JComboBox<>(botNames);
         botSelect.setSelectedIndex(0);
-        botSelect.setLocation(280,255);
+        botSelect.setLocation(160,170);
         botSelect.setSize(110,20);
+
+        String [] solverNames = {"Eulers Method", "Runge-Kutta 2", "Runge-Kutta 4", "Dormand Prince", "Verlets Method"};
+        solverSelect = new JComboBox<>(solverNames);
+        solverSelect.setSelectedIndex(0);
+        solverSelect.setLocation(160,140);
+        solverSelect.setSize(110,20);
+
+
 
         //Button for playing the game
         jb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                physicsEngine.solvernum = solverSelect.getSelectedIndex();
                 frame.dispose();
                 Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                 config.setForegroundFPS(60);
@@ -95,6 +104,7 @@ public class Menu {
         jb2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                physicsEngine.solvernum = solverSelect.getSelectedIndex();
                 frame.dispose();
                 Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                 config.setForegroundFPS(60);
@@ -115,7 +125,8 @@ public class Menu {
         //Button for playing with a bot
         jb4.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { 
+            public void actionPerformed(ActionEvent e) {
+                physicsEngine.solvernum = solverSelect.getSelectedIndex(); 
                 frame.dispose();
                 Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                 config.setForegroundFPS(60);
@@ -140,6 +151,7 @@ public class Menu {
         background.add(jb5);
         background.add(title);
         background.add(botSelect);
+        background.add(solverSelect);
         frame.add(background); 
         frame.pack();
         frame.setVisible(true);

@@ -10,6 +10,7 @@ import com.crazyputting3d.MathSolvers.RungeKutta2;
 import com.crazyputting3d.MathSolvers.DormandPrince;
 import com.crazyputting3d.MathSolvers.EulersMethod;
 import com.crazyputting3d.MathSolvers.VerletsMethod;
+import com.crazyputting3d.MathSolvers.Solver;
 import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.InputReader.cheat;
 
@@ -59,7 +60,7 @@ public class physicsEngine {
     public DormandPrince dormandP = new DormandPrince(); 
     public VerletsMethod verlets= new VerletsMethod(); 
 
-
+    public static int solvernum;
 
 
     /**
@@ -475,7 +476,7 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            v = rk2.run(v,m);
+            v = selectedSolver(solvernum).run(v,m);
             if(botPlays){
                 slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
                 slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
@@ -644,5 +645,21 @@ public class physicsEngine {
 
     public double getSlopey() {
         return slopey;
+    }
+
+
+    public Solver selectedSolver(int num) {
+        if (num==0) {
+            return euler;
+        } if (num==1) {
+            return rk2;
+        } if (num==2) {
+            return rk4;
+        } if (num==3) {
+            return dormandP;
+        } if (num==4) {
+            return verlets;
+        }
+        return null;
     }
 }

@@ -12,14 +12,24 @@ import com.crazyputting3d.physicsEngine;
 
 public class NewtonRaphsonBot extends Bot{
 
-    
+    /**
+    * Constructor, inherits the constructor from the Abstract class Bot.
+    * param engine object.
+    */
 
     public NewtonRaphsonBot(physicsEngine engine) {
         super(engine);
         System.out.println("newton bot");
     }
 
+    /**
+    * calculateMove() method uses a confined version of the Newton Raphson algorithm to calculate the best hit of the golf ball
+    * in order to reach the closest possible position to the hole. Ideally making the ball go inside the hole. 
+    * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is either the ball in the hole, or as close to the hole as the algorithm could possibly calculate. 
+    */
+
     public StateVector calculateMove() {
+
         double distance = Math.hypot(x0-xt, y0-yt);
         double accuracy = 0.0000001;
         double dx = 0.01;

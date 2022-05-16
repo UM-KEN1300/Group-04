@@ -60,6 +60,7 @@ public class physicsEngine {
     public DormandPrince dormandP = new DormandPrince(); 
     public VerletsMethod verlets= new VerletsMethod(); 
 
+    private Solver solver;
     public static int solvernum;
 
 
@@ -327,6 +328,7 @@ public class physicsEngine {
     }
 
     public StateVector start(StateVector v, boolean botPlays) {
+        solver = selectedSolver(solvernum);
         Adams(v, muk);
         x0 = v.getX();
         y0 = v.getY();
@@ -476,7 +478,7 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            v = selectedSolver(solvernum).run(v,m);
+            v = solver.run(v,m);
             if(botPlays){
                 slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
                 slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;

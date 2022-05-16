@@ -30,34 +30,23 @@ public class AdamsStateVector {
      * Setters and getters.
      */
 
-    public StateVector getFirst(){
-        return zero;
-    }
-
+    public StateVector getFirst(){return zero;}
     public StateVector getSecond(){
         return one;
     }
-
     public StateVector getThird(){
         return two;
     }
-
     public StateVector getFourth(){
         return three;
     }
-
     public void setFirst(StateVector zero){
         this.zero = zero;
     }
-
-    public void setSecond(StateVector one){
-        this.one = one;
-    }
-
+    public void setSecond(StateVector one){this.one = one;}
     public void setThird(StateVector two){
         this.two = two;
     }
-    
     public void setFourth(StateVector three){
         this.three = three;
     }

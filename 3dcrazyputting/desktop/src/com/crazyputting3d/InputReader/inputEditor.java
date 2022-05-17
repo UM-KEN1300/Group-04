@@ -13,6 +13,10 @@ import java.io.PrintWriter;
  */
 
 public class inputEditor {
+    /**
+     * Create the instance field for the input editor
+     */
+
     double x0;
     double y0;
     double xt;
@@ -29,13 +33,9 @@ public class inputEditor {
     double muks;
     double muss;
 
-
-    public static void main(String[] args) throws IOException {
-        inputEditor ie = new inputEditor();
-        ie.getInformation();
-        ie.writeCSV();
-    }
-
+    /**
+     * editXtYt is the method for changing the location of the hole
+     */
     public void editXtYt(double newxt, double newyt) {
         try {
             getInformation();
@@ -51,6 +51,9 @@ public class inputEditor {
         }
     }
 
+    /**
+     * editX0Y0 is the method for changing the location of the ball
+     */
     public void editX0Y0(double newx0, double newy0) {
         try {
             getInformation();
@@ -65,6 +68,10 @@ public class inputEditor {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Copy the data from the input.txt file at its current state
+     */
 
     public void writeCSV() throws IOException{
         try (PrintWriter writer = new PrintWriter(new File("3dcrazyputting\\assets\\input.txt"))) {
@@ -122,6 +129,10 @@ public class inputEditor {
             System.out.println(e.getMessage());
         }  
     }
+
+    /**
+     * Set all the instance variables to the current state of the variables. 
+     */
 
     public void getInformation() throws IOException {
         Search search = new Search("input.txt");

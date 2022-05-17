@@ -12,6 +12,11 @@ import  com.crazyputting3d.physicsEngine;
 
 public class RungeKutta4 extends Solver{
 
+    /**
+     * This is the class which implements the Runge Kutta 4 method for solving ODE's.
+     * For more information: https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods.
+     */
+    
     public RungeKutta4(physicsEngine engine) {
         super(engine);
     }

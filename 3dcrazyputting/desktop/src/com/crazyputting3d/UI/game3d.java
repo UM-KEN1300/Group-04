@@ -154,6 +154,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         getValues();
         ballZ = h(ballX,ballY);
         setTerrainCoords();
+
+        /**
+         * According to the parameter botInt, channge which bot will be used
+         */
+
         try {
             engine = new physicsEngine();
         } catch (IOException e) {

@@ -11,7 +11,10 @@ import com.crazyputting3d.Objects.StateVector;
  */
 
 public abstract class Solver {
-    
+    /**
+     * This is the abstract class for the mathmatical solvers.
+     * It contains the gravity's constant and two method which need to be implemented.
+     */
     public final double g = 9.81;
     protected physicsEngine engine;
     public Solver(physicsEngine engine){

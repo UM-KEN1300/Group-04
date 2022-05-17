@@ -16,6 +16,8 @@ import java.awt.event.*;
 
 public class Settings {
 
+    //Create the instance variables 
+
     private JFrame frame;
     private JTextField fieldHoleXt;
     private JTextField fieldHoleYt;
@@ -33,6 +35,9 @@ public class Settings {
     private inputEditor ie;
 
     public void run(){
+        /**
+         * the run() methods creates the settings frame, with all its buttons and textfields
+         */
         frame = new JFrame("Settings");
         frame.setResizable(false);
         frame.setLocation(320, 150);

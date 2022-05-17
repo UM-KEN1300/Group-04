@@ -12,6 +12,11 @@ import  com.crazyputting3d.physicsEngine;
 
 public class VerletsMethod extends Solver{
 
+    /**
+     * This is the class which implements the Verlets method for solving ODE's.
+     * For more information: https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods.
+     */
+
     public VerletsMethod(physicsEngine engine) {
         super(engine);
     }

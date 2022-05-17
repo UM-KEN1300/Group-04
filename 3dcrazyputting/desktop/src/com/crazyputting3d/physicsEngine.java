@@ -554,6 +554,7 @@ public class physicsEngine {
     }
 
 
+    //Method which chooses a solver bases on its input
     public Solver selectedSolver(int num) {
         if (num==0) {
             return new EulersMethod(this);

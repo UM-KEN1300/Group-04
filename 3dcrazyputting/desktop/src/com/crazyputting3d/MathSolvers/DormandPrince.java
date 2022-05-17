@@ -12,6 +12,11 @@ import  com.crazyputting3d.physicsEngine;
 
 public class DormandPrince extends Solver{
 
+    /**
+     *  This is the code which implements the Dormand Prince which is a mathematical solver for solving ODE's.
+     *  For more information, go to https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method.
+     */
+
     public DormandPrince(physicsEngine engine) {
         super(engine);
     }

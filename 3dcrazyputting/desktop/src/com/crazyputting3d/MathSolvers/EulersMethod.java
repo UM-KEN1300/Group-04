@@ -12,6 +12,10 @@ import  com.crazyputting3d.physicsEngine;
 
 public class EulersMethod extends Solver {
 
+    /**
+     * This is the method which implements the Eulers method which is able to solve ODE's.
+     * For more information go to: https://en.wikipedia.org/wiki/Euler_method#:~:text=The%20Euler%20method%20is%20a,proportional%20to%20the%20step%20size.
+     */
     public EulersMethod(physicsEngine engine) {
         super(engine);
     }

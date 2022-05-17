@@ -12,6 +12,13 @@ import com.crazyputting3d.Objects.StateVector;
  */
 
 public class PredictorCorrector extends Solver{
+    /**
+     * This is the method for the Predictor corrector method. 
+     * It implemehts a predictor which is Adams Bashforth
+     * It also implements the corrector Adams Moulton
+     * For more information go to: https://en.wikipedia.org/wiki/Linear_multistep_method
+     */
+
     AdamsStateVector initialVector;
     public PredictorCorrector(physicsEngine engine) {
         super(engine);

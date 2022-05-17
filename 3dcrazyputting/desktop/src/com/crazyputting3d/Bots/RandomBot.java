@@ -18,6 +18,7 @@ public class RandomBot extends Bot{
     public double directionX;
     public double directionY;
     public boolean flag;
+    private int counter;
 
     /**
     * Constructor, inherits the constructor from the Abstract class Bot.
@@ -45,7 +46,7 @@ public class RandomBot extends Bot{
     */
 
     public void setRandSpeed() {
-        v =5; //= randomDouble(0.1, 5);
+        v = randomDouble(3, 5);
     }
 
     /**
@@ -83,7 +84,14 @@ public class RandomBot extends Bot{
             }
             if(tempEuclidianDistance<euklidianDistance){
                 min = temp;
+                min.setVX(speedX);
+                min.setVY(speedY);
                 euklidianDistance = tempEuclidianDistance;
+            }
+            counter++;
+            if(counter>=5000) {
+                flag=false;
+                return min;
             }
         }
         return min;

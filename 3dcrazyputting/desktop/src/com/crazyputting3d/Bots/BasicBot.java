@@ -1,6 +1,6 @@
 package com.crazyputting3d.Bots;
 import java.io.IOException;
-import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.Objects.StateVector;
 
 /**
@@ -27,7 +27,6 @@ public class BasicBot extends Bot{
 
     public BasicBot(physicsEngine engine) {
         super(engine);
-        System.out.println("basic bot");
     }
 
     /**

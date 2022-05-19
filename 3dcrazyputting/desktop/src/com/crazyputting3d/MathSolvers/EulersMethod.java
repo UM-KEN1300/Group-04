@@ -1,6 +1,6 @@
 package com.crazyputting3d.MathSolvers;
 import com.crazyputting3d.Objects.StateVector;
-import  com.crazyputting3d.physicsEngine;
+import  com.crazyputting3d.Engine.physicsEngine;
 
 /**
  * Eulers Method class. 

@@ -1,6 +1,6 @@
 package com.crazyputting3d.Bots;
 import com.crazyputting3d.Objects.StateVector;
-import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Engine.physicsEngine;
 
 /**
  * Newton Raphson Bot class. 
@@ -19,7 +19,6 @@ public class NewtonRaphsonBot extends Bot{
 
     public NewtonRaphsonBot(physicsEngine engine) {
         super(engine);
-        System.out.println("newton bot");
     }
 
     /**

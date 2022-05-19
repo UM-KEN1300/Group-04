@@ -1,6 +1,6 @@
 package com.crazyputting3d.Bots;
 import com.crazyputting3d.Objects.StateVector;
-import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Engine.physicsEngine;
 
 /**
  * Hill Climbing Bot class. 
@@ -21,7 +21,6 @@ public class HillClimbingBot extends Bot {
 
     public HillClimbingBot(physicsEngine engine) {
         super(engine);
-        System.out.println("hill bot");
     }
 
     /**

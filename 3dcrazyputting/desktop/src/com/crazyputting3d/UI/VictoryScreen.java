@@ -1,7 +1,7 @@
 package com.crazyputting3d.UI;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import com.crazyputting3d.Menu;
+
 import com.crazyputting3d.Sounds.Sounds;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;

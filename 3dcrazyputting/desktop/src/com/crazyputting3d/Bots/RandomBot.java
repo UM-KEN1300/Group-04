@@ -1,7 +1,7 @@
 package com.crazyputting3d.Bots;
 import java.util.concurrent.ThreadLocalRandom;
 import com.crazyputting3d.Objects.StateVector;
-import com.crazyputting3d.physicsEngine;
+import com.crazyputting3d.Engine.physicsEngine;
 
 /**
  * Random Bot class. 
@@ -28,7 +28,6 @@ public class RandomBot extends Bot{
     public RandomBot(physicsEngine engine) {
         super(engine);
         this.flag=true;
-        System.out.println("random bot");
     }
 
     /**

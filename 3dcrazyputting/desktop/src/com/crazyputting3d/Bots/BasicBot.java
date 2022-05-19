@@ -63,9 +63,6 @@ public class BasicBot extends Bot{
 
         StateVector min = new StateVector(x0,y0,speedX,speedY);
 
-        System.out.println("slopex:"+slopex);
-        System.out.println("slopey:"+slopey);
-
         return min;
     }
 }

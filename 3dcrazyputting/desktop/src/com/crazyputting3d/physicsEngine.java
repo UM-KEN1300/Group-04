@@ -336,7 +336,6 @@ public class physicsEngine {
             ball_coordinates_x[counter] = x0;
             ball_coordinates_y[counter] = y0;
             counter++;
-            System.out.println(newV);
         }
         return newV;
     }

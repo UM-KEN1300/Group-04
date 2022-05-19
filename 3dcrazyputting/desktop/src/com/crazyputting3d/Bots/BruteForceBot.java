@@ -35,6 +35,7 @@ public class BruteForceBot extends Bot{
         for (double v = 5; v >= 0; v -= 0.01) {
             for (int i = 0; i < 180; i++) {
                 for (int j = 0; j < 2; j++) {
+                    numberOfIterations++;
                     double newangle = angle;
                     if (j == 0) {
                         newangle = angle + i * pi / 180.0;

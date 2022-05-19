@@ -229,7 +229,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     to be showed and exit the current game screen
                  */
                 VictoryScreen VScreen = new VictoryScreen();
-                VScreen.run(numShotsTaken);
+                if(bot){
+                    VScreen.run(numShotsTaken,bot,gameBot.getNumberOfIteretions(),gameBot.getRuntime());
+                }
+                else{
+                    VScreen.run(numShotsTaken,bot,0,0);
+                }
                 sound.victory();
                 Gdx.app.exit();
             }

@@ -69,6 +69,7 @@ public class RandomBot extends Bot{
         double minVy = Double.MAX_VALUE;
         StateVector min = new StateVector(x0,y0,minVx,minVy);
         while(flag) {
+            numberOfIterations++;
             setRandDirection();
             setRandSpeed();
             speedX = v*directionX/length;

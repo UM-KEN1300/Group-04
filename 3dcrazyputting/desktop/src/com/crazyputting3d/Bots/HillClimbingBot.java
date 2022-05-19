@@ -46,6 +46,7 @@ public class HillClimbingBot extends Bot {
         boolean right = false;
 
         while (tempEuclidianDistance >= radius) {
+            numberOfIterations++;
             if (counter == 0) {
                 engine.setVelocitiesForBot(x0, y0, Math.cos(angle + angle_step) * v,
                         Math.sin(angle + angle_step) * v);

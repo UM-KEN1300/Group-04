@@ -52,6 +52,7 @@ public class NewtonRaphsonBot extends Bot{
         double tempEuclidianDistance3 = engine.get_closestEuclideanDistance();
 
         while (tempEuclidianDistance >= radius&&tempEuclidianDistance2 >= radius && tempEuclidianDistance3>=radius) {
+            numberOfIterations++;
             angle_step = dx-((tempEuclidianDistance-tempEuclidianDistance3)*dx)/((tempEuclidianDistance2-2*tempEuclidianDistance+tempEuclidianDistance3));
             angle -= angle_step;
             if(angle_step<accuracy){

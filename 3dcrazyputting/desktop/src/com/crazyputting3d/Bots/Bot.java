@@ -12,16 +12,19 @@ import com.crazyputting3d.Objects.StateVector;
 
 public abstract class Bot {
 
-    public physicsEngine engine;
-    public double x0;                           // initial x position of the ball. 
-    public double y0;                           // initial y position of the ball. 
-    public double xt;                           // x position of the hole. 
-    public double yt;                           // y position of the hole. 
-    public final double length = 0.3;
-    public final double pi = 3.141159;  
-    public double radius;                       // radius of the hole. 
-    public double v = 5;
-    public int i = 1;
+    protected physicsEngine engine;
+    protected double x0;                           // initial x position of the ball. 
+    protected double y0;                           // initial y position of the ball. 
+    protected double xt;                           // x position of the hole. 
+    protected double yt;                           // y position of the hole. 
+    protected final double length = 0.3;
+    protected final double pi = 3.141159;  
+    protected double radius;                       // radius of the hole. 
+    protected double v = 5;
+    protected int i = 1;
+    protected int numberOfIterations;
+    protected double runtime;
+
 
     /**
     * Constructor, sets the undeclared fields with corresponding values by using the engine object.
@@ -37,6 +40,7 @@ public abstract class Bot {
         this.x0 = engine.getX0();
         this.y0 = engine.getY0();
     }
+    
 
     /**
     * calculateMove() empty, to be implemented by the subclasses. 
@@ -53,9 +57,18 @@ public abstract class Bot {
         StateVector move = calculateMove();
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.println("Run time of algorithm"+getClass()+" (ms): " + duration/1000000);
+        runtime = duration/1000000;
         double vx = move.getVX();
         double vy = move.getVY();
         engine.setVelocities(vx, vy);
+    }
+    /**
+     * getNumberOfIterations() return number of times each algorithm calculated their move before it came to hole in one
+     */
+    public int getNumberOfIteretions(){
+        return numberOfIterations;
+    }
+    public double getRuntime(){
+        return runtime;
     }
 }

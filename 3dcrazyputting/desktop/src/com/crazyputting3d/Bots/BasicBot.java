@@ -35,6 +35,7 @@ public class BasicBot extends Bot{
     */
     
     public StateVector calculateMove(){
+        numberOfIterations++;
         double angle = Math.atan2((yt - y0) , (xt - x0));
 
         directionX = Math.cos(angle)*length;

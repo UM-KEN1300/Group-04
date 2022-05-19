@@ -36,7 +36,6 @@ public class BruteForceBot extends Bot{
             for (int i = 0; i < 180; i++) {
                 for (int j = 0; j < 2; j++) {
                     double newangle = angle;
-                    System.out.println(v);
                     if (j == 0) {
                         newangle = angle + i * pi / 180.0;
                     } else {
@@ -50,7 +49,6 @@ public class BruteForceBot extends Bot{
                     if (tempEuclidianDistance < radius) {
                         min.setVX(vx);
                         min.setVY(vy);
-                        System.out.println(v);
                         return min;
                     }
                     if (tempEuclidianDistance < euklidianDistance) {

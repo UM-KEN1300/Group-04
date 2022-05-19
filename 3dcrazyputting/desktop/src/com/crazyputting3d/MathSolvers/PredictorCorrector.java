@@ -34,7 +34,6 @@ public class PredictorCorrector extends Solver{
         a1 = rk4.run(a0, m);
         a2 = rk4.run(a1, m);
         a3 = rk4.run(a2,m);
-        // adams
         return new AdamsStateVector(a0,a1,a2,a3);
     }
     public StateVector run(StateVector a, double m){
@@ -78,10 +77,10 @@ public class PredictorCorrector extends Solver{
         double ax4 = engine.acelerationX(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
         double ay4 = engine.acelerationY(a4.getX(), a4.getY(), a4.getVX(), a4.getVY(), m);
 
-        double x = a3.getX() + 1/ 720.0 * physicsEngine.h * (251*a4.getVX() + 646 * a3.getVX() - 264 * a2.getVX() + 106 * a1.getVX() - 19 * a0.getVX());
-        double y = a3.getY() + 1/ 720.0 * physicsEngine.h * (251*a4.getVY() + 646 * a3.getVY() - 264 * a2.getVY() + 106 * a1.getVY() - 19 * a0.getVY());
-        double vx = a3.getVX() + 1/ 720.0 * physicsEngine.h * (251*ax4 + 646 * ax3 - 264 * ax2 + 106 * ax1 - 19 * ax0);
-        double vy = a3.getVY() + 1/ 720.0 * physicsEngine.h * (251*ay4 + 646 * ay3 - 264 * ay2 + 106 * ay1 - 19 * ay0);
+        double x = a3.getX() + 1.0/ 720.0 * physicsEngine.h * (251*a4.getVX() + 646 * a3.getVX() - 264 * a2.getVX() + 106 * a1.getVX() - 19 * a0.getVX());
+        double y = a3.getY() + 1.0/ 720.0 * physicsEngine.h * (251*a4.getVY() + 646 * a3.getVY() - 264 * a2.getVY() + 106 * a1.getVY() - 19 * a0.getVY());
+        double vx = a3.getVX() + 1.0/ 720.0 * physicsEngine.h * (251*ax4 + 646 * ax3 - 264 * ax2 + 106 * ax1 - 19 * ax0);
+        double vy = a3.getVY() + 1.0/ 720.0 * physicsEngine.h * (251*ay4 + 646 * ay3 - 264 * ay2 + 106 * ay1 - 19 * ay0);
         StateVector a5 = new StateVector(x,y,vx,vy);
         initialVector.setFirst(a1);
         initialVector.setSecond(a2);

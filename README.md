@@ -2,7 +2,7 @@
 # Crazy Putting - Group 04
 
 We have created a program which is able to simulate a 3D golf game with 2D physics. This program uses its own custom made physics engine for computing the trajectory of the ball. 
-This physics engine can use six different ODE solvers for computing the physics. This program also contains five different bots which are able to complete the game.
+This physics engine can use six different ODE solvers for computing the physics. This program also contains five different bots which are able to solve courses.
 
 
 ![](https://media.discordapp.net/attachments/945742228108742668/976104158572728381/Screenshot_2022-05-17_at_14.49.20.png?width=1185&height=670)
@@ -29,7 +29,7 @@ To run the experiments go to the following folder.
 ```bash
    group-04\3dcrazyputting\desktop\src\com\crazyputting3d\Experiment
 ```
-Then, go to the experimentmain.java file and run the main method. The result data will be showed in the Experiment.csv file which is placed in the same folder.
+Then, go to the experimentmain.java file and run the main method. The resulting data will be showed in the Experiment.csv file which is placed in the same folder.
 
 ## Features
 
@@ -41,11 +41,11 @@ Then, go to the experimentmain.java file and run the main method. The result dat
 ## Modes
 - Mode "Game": when the program is launched as "Game" the user will be able to play the game as a normal golf game.
 
-- Mode "Simulator": when the program is launched as "Simulator" the program will take the data from the file "input2.txt" and visualize the inputs. This file can be found and editted in the following folder.
+- Mode "Simulator": when the program is launched as "Simulator" the program will take the data from the file input2.txt and visualize the inputs. This file can be found and editted in the following folder.
 ```bash
    group-04\3dcrazyputting\assets
 ```
-- Mode "Bot": the bot which is currently selected will solve the hole in one problem once the spacebar is pressed. You can change the currently selected bot by going to the main menu and selecting a different one from the drop down menu.
+- Mode "Bot": the bot which is currently selected will solve the hole in one problem once the spacebar is pressed. You can change the currently selected bot by going to the main menu and selecting a different bot from the drop down menu.
 
 ## Solvers and bots
 In this program you can choose from the following different solvers.

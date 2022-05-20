@@ -12,7 +12,7 @@ import com.crazyputting3d.MathSolvers.PredictorCorrector;
 import com.crazyputting3d.MathSolvers.VerletsMethod;
 import com.crazyputting3d.MathSolvers.Solver;
 import com.crazyputting3d.InputReader.Search;
-import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.InputReader.Function;
 
 /**
  * The physics engine simulates the real-life motion of the ball in a golf
@@ -185,8 +185,8 @@ public class physicsEngine {
      */
 
     public double h(double x, double y) {
-        cheat cheat = new cheat();
-        return cheat.getHeightFunction(x, y);
+        Function function = new Function();
+        return function.getHeightFunction(x, y);
     }
 
     /**

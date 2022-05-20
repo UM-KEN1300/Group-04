@@ -23,13 +23,20 @@ Next, go to the following folder.
    group-04\3dcrazyputting\desktop\src\com\crazyputting3d
 ```
 Finally, run the main of the class Main.java to run the program.
+
+## Run experiments
+To run the experiments go to the following folder.
+```bash
+   group-04\3dcrazyputting\desktop\src\com\crazyputting3d\Experiment
+```
+Then, go to the experimentmain.java file and run the main method. The result data will be showed in the Experiment.csv file which is placed in the same folder.
+
 ## Features
 
 - Settings menu to change X and Y  positions of the hole and ball
 - Drop down menu to change which bot will be used
 - Drop down menu to change which solver will be utilized
 - Three launch modes (Game, Simulator, Bot)
-
 
 ## Modes
 - Mode "Game": when the program is launched as "Game" the user will be able to play the game as a normal golf game.
@@ -55,8 +62,23 @@ In this program you can also choose from the following bots.
 - Rule based bot
 - Random based bot
 - Brute force bot
-## Authors
 
+
+## Change input
+
+It is also possible to change the input of the program. To do this, go to the following folder.
+```bash
+   group-04\3dcrazyputting\assets
+```
+Then, go to the file input.txt. In here it is possible to change the inputs. 
+
+Note: some extra work is needed to change the heightprofile. First, change the heightprofile to the function which is desired. Then, go to the following folder. 
+```bash
+   group-04\3dcrazyputting\desktop\src\com\crazyputting3d\InputReader
+```
+Next, open the file called FunctionReader.java and run its main method. You're now all set.
+
+## Authors
 - [@Casper Brocheler](https://github.com/casperbroch)
 - [@Gabrijel Radovcic](https://github.com/gabrijelradovcic)
 - [@Guilherme Sequeira](https://github.com/sequeiragui)

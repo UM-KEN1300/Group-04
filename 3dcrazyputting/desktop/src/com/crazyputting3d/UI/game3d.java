@@ -20,7 +20,7 @@ import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
 import com.crazyputting3d.Bots.RandomBot;
 import com.crazyputting3d.InputReader.Search;
-import com.crazyputting3d.InputReader.cheat;
+import com.crazyputting3d.InputReader.Function;
 import com.crazyputting3d.Sounds.Sounds;
 import org.lwjgl.opengl.GL20;
 import java.io.IOException;
@@ -341,7 +341,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
     //Get the function of the terrain from cheat.java
     public float h(double x, double y){
-        cheat cheat = new cheat();
+        Function cheat = new Function();
         return (float) cheat.getHeightFunction(x, y);
     }
 

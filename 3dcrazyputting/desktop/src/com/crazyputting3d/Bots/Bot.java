@@ -61,8 +61,6 @@ public abstract class Bot {
         double vx = move.getVX();
         double vy = move.getVY();
         engine.setVelocities(vx, vy);
-        x0 = engine.getX0();
-        y0 = engine.getY0();
     }
     /**
      * getNumberOfIterations() return number of times each algorithm calculated their move before it came to hole in one

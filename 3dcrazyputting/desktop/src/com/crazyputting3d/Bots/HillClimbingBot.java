@@ -122,6 +122,7 @@ public class HillClimbingBot extends Bot {
 
         }
         min = new StateVector(x0, y0, Math.cos(angle) * v, Math.sin(angle) * v);
+
         return min;
     }
 }

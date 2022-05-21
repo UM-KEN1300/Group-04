@@ -6,11 +6,11 @@ import java.io.PrintWriter;
 
 public class FunctionReader {
     /**
-     * Class BigCheat must be run manually when changing the heightmap. The class creates a new cheat.java
+     * Class FunctionReader must be run manually when changing the heightmap. The class creates a new cheat.java
      * file which acts as a new class which is responsible for distributing the heightmap function.
      * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
      * Gabrijel Radovcic, Elza Strazda
-     * version 1.0
+     * version 2.0
      * since   2022-05-11
      */
 

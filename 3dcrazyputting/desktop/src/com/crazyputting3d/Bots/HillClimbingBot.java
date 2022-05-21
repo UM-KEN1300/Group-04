@@ -5,14 +5,15 @@ import com.crazyputting3d.Engine.physicsEngine;
 /**
  * Hill Climbing Bot class. 
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
 public class HillClimbingBot extends Bot {
 
-    public double angle_step = pi / 180;  // initial angle-step used to determine the direction with best euclidean distance by comparing between the (current angle + angle-step) and (current angle - angle-step). 
+     // initial angle-step used to determine the direction with best euclidean distance by comparing between the (current angle + angle-step) and (current angle - angle-step). 
+    public double angle_step = pi / 180; 
 
     /**
     * Constructor, inherits the constructor from the Abstract class Bot.

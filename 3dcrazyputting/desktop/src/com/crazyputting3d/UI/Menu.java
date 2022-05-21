@@ -14,13 +14,17 @@ import java.awt.event.ActionListener;
 /**
  * The Menu class initializes the starting menu.
  * author  Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2021-03-11
  */
     
 
 public class Menu {
+
+    /**
+     * Instance variables used to create the main menu frame.
+     */
 
     private JFrame frame; 
     private JLabel background;
@@ -134,13 +138,13 @@ public class Menu {
             }
         });
 
+        //Button to create the settings frame
         jb5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settings.run();
             }
         });
-
 
         background.add(jb1);
         background.add(jb2);

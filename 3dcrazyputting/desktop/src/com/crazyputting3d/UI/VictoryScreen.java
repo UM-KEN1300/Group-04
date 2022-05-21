@@ -15,11 +15,15 @@ import java.awt.event.ActionListener;
  * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
  * Gelder, Trinh Le,
  * Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * version 2.0
  * since 2022-05-11
  */
 
 public class VictoryScreen {
+
+    /**
+     * Instance variables
+     */
 
     private JFrame frame;
     private JLabel background;
@@ -36,6 +40,8 @@ public class VictoryScreen {
      * run() creates frame and buttons and adds Action Listeners.
      * It also receives an integer for the amount of shots the user has taken
      * to get the ball into the hole.
+     * When the bot plays, this screen also shows the number of iterations
+     * which the bot took and the runtime of the selected bot. 
      */
 
     public void run(int numshots, boolean botPlays, int numberOfIterations, double runtime) {

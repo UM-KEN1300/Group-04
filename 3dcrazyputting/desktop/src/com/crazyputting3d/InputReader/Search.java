@@ -6,13 +6,12 @@ import java.util.ArrayList;
 /**
  * The Search class is used to read the Input file and make get_methods for each variable
  * author  Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
 public class Search {
-
     public ArrayList<String[]> words =  new ArrayList<>();
     String filename;
     private int cnt_x_tree = 1;
@@ -27,7 +26,7 @@ public class Search {
      * Constructor method calls run() as a start-up.
      */
 
-    public Search(String filename) throws IOException{
+    public Search(String filename) throws IOException {
         this.filename = filename;
         run();
     }
@@ -38,13 +37,11 @@ public class Search {
      */
 
     public void run() throws IOException{
-
         FileReader read=new FileReader("3dcrazyputting\\assets\\"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 
         while((string = buffer_reader.readLine()) != null) {
-
             String[] st = string.split(" ");
             String [] a = new String[2];
             a[1]=st[2];

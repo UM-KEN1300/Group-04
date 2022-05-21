@@ -10,7 +10,7 @@ import java.awt.event.*;
  * Settings Class.
  * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  * Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * version 2.0
  * since   2022-05-11
  */
 
@@ -36,8 +36,12 @@ public class Settings {
 
     public void run(){
         /**
-         * the run() methods creates the settings frame, with all its buttons and textfields
+         * the run() methods creates the settings frame, with all its buttons and textfields.
+         * In this settings frame, you are able to change the input which is located
+         * in the input.txt file (as of version 2.0, you are only able to change the
+         * x and y location of the ball and hole)
          */
+
         frame = new JFrame("Settings");
         frame.setResizable(false);
         frame.setLocation(320, 150);
@@ -115,6 +119,9 @@ public class Settings {
         frame.setVisible(true);
     }
 
+    /**
+     * the remove() method is used to dispose the screen
+     */
 
     public void remove() {
         frame.dispose();

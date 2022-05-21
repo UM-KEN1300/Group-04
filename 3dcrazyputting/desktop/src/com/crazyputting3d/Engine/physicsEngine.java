@@ -20,13 +20,16 @@ import com.crazyputting3d.InputReader.Function;
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen
  * van Gelder, Trinh Le,
  * Gabrijel Radovcic, Elza Strazda
- * version 1.0
+ * version 2.0
  * since 2022-05-11
  */
 
 public class physicsEngine {
-    public static double h = 0.0001; // we decide on step size
-    private double x0; // given in input file
+    /**
+     * The instance field which creates all of the variables which the physics engine uses
+     */
+    public static double h = 0.0001; 
+    private double x0; 
     private double y0;
     private double xt;
     private double yt;
@@ -102,6 +105,8 @@ public class physicsEngine {
      * engine over again.
      * param new velocities v0x and v0y the ball will have once it is hit with the
      * stick.
+     * The setVelocitiesForBot() method essentially does the same thing but instead it runs 
+     * the start() method with true in the parameter. 
      */
 
     public void setVelocities(double v0x, double v0y) {
@@ -117,6 +122,10 @@ public class physicsEngine {
         closestEuklidiandistance = Math.hypot(x-xt, y-yt);
         return start(newv, true);
     }
+
+    /**
+     * Below are multiple getters for the input variables and a getter for the closest euklidian distance.
+     */
     public double get_muk(){
         return muk;
     }
@@ -179,7 +188,7 @@ public class physicsEngine {
 
     /**
      * h() is used to get the height function value.
-     * param values for x and y, to be input once calling cheat.getHeightFunction(x,
+     * param values for x and y, to be input once calling function.getHeightFunction(x,
      * y).
      * returns the height function value according to x and y.
      */
@@ -302,19 +311,18 @@ public class physicsEngine {
         return false;
     }
 
+    //getTempV() method returns the variable tempV
+
+    public StateVector getTempV(){
+        return tempV;
+    }
+
     /**
      * start() used to return the ball to initial position once it hits the water
      * param current vector state
      * returns initial vector state if in water, or current vector state otherwise.
-     * 
-     * @param <Calculable>
-     * @param <EquationSolver>
-     * 
-     * @throws IOException
+     * Other param is a boolean which tells the start method if the bot is playing or not.
      */
-    public StateVector getTempV(){
-        return tempV;
-    }
 
     public StateVector start(StateVector v, boolean botPlays) {
         tempV = v;
@@ -339,6 +347,10 @@ public class physicsEngine {
         }
         return newV;
     }
+
+    /**
+     * acelerationX and acelerationY calculate the acceleration according to their param
+     */
     public double acelerationX(double x, double y, double vx, double vy, double m) {
         return -g * hxderivated(x, y) - m * g * vx / (Math.sqrt(vx * vx + vy * vy));
     }
@@ -348,10 +360,10 @@ public class physicsEngine {
     }
 
     /**
-     * EulersMethod() recursively calculates final positions of the ball by using
-     * the well-known Euler's method.
-     * param current Vector.
-     * returns final vector.
+     * Trajectory(Statevector, boolean) calculates the final position of the ball by using
+     * the selected ODE solver. The parameter is the current vector and the boolean
+     * to let it now if the bot is playing or not. This method will return the
+     * final vector. 
      */
 
     public StateVector trajectory(StateVector v, boolean botPlays) {
@@ -443,6 +455,10 @@ public class physicsEngine {
         }
     }
 
+    /**
+     * The terminates(vx,vx,m) method checks to see if the current speed is 
+     * almost 0. If it is, return true, else return false. 
+     */
     public boolean terminates(double vx, double vy, double m) {
         if ((vx < h && vx > -h ) && (vy < h && vy > -h )){
             return true;
@@ -511,8 +527,9 @@ public class physicsEngine {
     }
 
     /**
-     * Use the array which stores the coordinates to calculate the min and max of X
-     * and Y.
+     * setTerrainCoords() calculates the boundries of the terrain.
+     * This method is used to see if the ball is outside the boundries
+     * or not. 
      */
 
     public void setTerrainCoords() {
@@ -544,6 +561,11 @@ public class physicsEngine {
         boundYEnd = (float) (biggestY + offset);
     }
 
+    /**
+     * getSlopex() and getSlopey() return the variables of the slopex and slopey
+     * variable which are used by the basic rule bot.
+     */
+
     public double getSlopex() {
         return slopex;
     }
@@ -553,7 +575,10 @@ public class physicsEngine {
     }
 
 
-    //Method which chooses a solver bases on its input
+    /**
+     * selectedSolver uses its parameter integer to determine which solver 
+     * will be returned. 
+     */
     public Solver selectedSolver(int num) {
         if (num==0) {
             return new EulersMethod(this);

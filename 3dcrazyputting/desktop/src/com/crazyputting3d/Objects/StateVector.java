@@ -3,14 +3,18 @@ package com.crazyputting3d.Objects;
 /**
  * State Vector object.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
 
 public class StateVector {
 
+    /**
+     * Variable instance field
+     */
+    
     double x;
     double y;
     double vx;

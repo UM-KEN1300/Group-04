@@ -31,14 +31,19 @@ import static com.badlogic.gdx.Gdx.input;
      * This is the class which is responsible for the creation and visualization of the UI. Below is
      * visible were all the variables are created. They are created as instance variables, so they can
      * be used in the entire class.
-     * authors
+     * Authors
      * Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
      * Gabrijel Radovcic, Elza Strazda
-     * version 1.0
+     * version 2.0
      * since   2022-05-11
      */
 
 public class game3d extends ApplicationAdapter implements InputProcessor {
+
+    /**
+     * The instance field which contains all of the instance variables
+     * which are used when visualizing the program in 3D.
+     */
 
     private Search search;
     private float terrainX1;
@@ -119,8 +124,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
-     *  is going to run as a game or as the simulation.
+     *  is going to run as a game or as the simulation. It contains another boolean which is responsible
+     *  for checking if the program is run in 'bot' mode. The third parameter is an integer which is used
+     *  to determine which bot is used when the game is launched in bot mode. 
      */
+
     public game3d(boolean game, boolean bot, int botInt){
         this.game = game;
         this.bot = bot;
@@ -132,6 +140,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         *   The create() method is runned once and only once when the game3d class is run.
         *   If the 'game' variable is false, the input for velocities is given from the input file.
         */
+
         if(!game && !bot){
             try {
                 search2 = new Search("input2.txt");
@@ -147,6 +156,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
          * Create sound object and threads. Run getValues and setTerrainCoords method and create
          * an physicsEngine object.
          */
+
         sound = new Sounds();
         thread = sound.background();
         thread2 = sound.background2();
@@ -224,9 +234,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             fallFrames++;
             animateBallFalling();
             if(fallFrames==9) {
-                /*
-                    If the falling animation is done, trigger the victory screen
-                    to be showed and exit the current game screen
+                /**
+                 * If the falling animation is done, trigger the victory screen
+                 * to be showed and exit the current game screen
                  */
                 VictoryScreen VScreen = new VictoryScreen();
                 if(bot){
@@ -260,6 +270,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             isInWater=true;
         }
         if((Math.abs(ballX-terrainX1)<0.05||Math.abs(ballX-terrainX2)<0.05||Math.abs(ballY-terrainZ1)<0.05||Math.abs(ballY-terrainZ2)<0.05)&&hitWall&&index>=2){
+            //If the ball hits a wall, trigger the appropriate sound
             sound.wall_hit();
             hitWall=false;
         }
@@ -292,6 +303,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         else
             renderWall2(terrainX1+terrainX2 + 7, terrainZ1);
         modelBatch.end();
+
         //Render the ball and the stick (if the game is played as the user)
         renderBall((float) ballX, (float) ballY, ballZ, 0.05f);
         if(game) {
@@ -309,7 +321,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
         font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
         font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
-
 
         font.getData().setScale(2, 2);
         font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
@@ -478,11 +489,18 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             }
         }
     }
+
+    /**
+     * The method which is used to create a gradient for the colors. When the terrain is higher
+     * the grass becomes a lighter green and vice versa. 
+     */
+
     public Color collorheight(float h){
         float r=(150*h+30f)/255;
         float g=(150*h+125f)/255;
         return new Color(r,g,0,1f);
     }
+    
     //The method which is responsible for rendering and creating the trees given an array for all the
     public void renderTrees(double[] radius) {
         for(int i=0; i<xvaluesT.length; i++) {

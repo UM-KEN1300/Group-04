@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Input Editor class. 
+ * Input Editor class is used to remotely change the input.txt file. It is made to be used 
+ * by the settings.java file. 
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 

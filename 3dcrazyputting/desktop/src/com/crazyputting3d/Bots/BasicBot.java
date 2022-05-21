@@ -6,8 +6,8 @@ import com.crazyputting3d.Objects.StateVector;
 /**
  * Basic Bot class. 
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
@@ -31,7 +31,9 @@ public class BasicBot extends Bot{
 
     /**
     * calculateMove() method shoots in the direction of the hole. 
-    * returns StateVector with initial X and Y direction and speed of the shot aimed directly towards the hole.
+    * Returns StateVector with initial X and Y direction and speed of the shot aimed directly towards the hole.
+    * If the ball doesn't go in the hole, compute the x and y derivative at each step and add it to the 
+    * x and y speed. 
     */
     
     public StateVector calculateMove(){

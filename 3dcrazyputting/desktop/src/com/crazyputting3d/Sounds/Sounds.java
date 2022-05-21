@@ -7,12 +7,16 @@ import javax.sound.sampled.Clip;
 /**
  * The Sounds class is used for sound outputs during game play and simulations.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
 public class Sounds implements Runnable{
+
+    /**
+     * Instance field for all the different sounds and the filepath
+     */
 
     private String filePath = "3dcrazyputting\\assets\\";
     private File fileName0;

@@ -6,8 +6,8 @@ import com.crazyputting3d.Engine.physicsEngine;
 /**
  * Random Bot class. 
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
- *          Gabrijel Radovčić, Elza Strazda
- * version 1.0
+ * Gabrijel Radovčić, Elza Strazda
+ * version 2.0
  * since   2022-05-11
  */
 
@@ -41,7 +41,7 @@ public class RandomBot extends Bot{
     }
 
     /**
-    * setRandSpeed() method updates the initial speed of each simulation by generating a random Double value between 0.1 and 5. Can be set to 5 permanently for faster but not always possible solutions. 
+    * setRandSpeed() method updates the initial speed of each simulation by generating a random Double value between 3 and 5. Can be set to 5 permanently for faster but not always possible solutions. 
     */
 
     public void setRandSpeed() {
@@ -61,6 +61,7 @@ public class RandomBot extends Bot{
     /**
     * calculateMove() method uses randomly generated directions by the method setRandDirection() until the simulation hits the hole. 
     * returns StateVector with the optimal initial direction and speed. Optimal in this scenario, is when the ball goes inside the hole. 
+    * When the number of iterations reaches 5000, the computations stop and the method returns the shot which was the closest.
     */
 
     public StateVector calculateMove() {

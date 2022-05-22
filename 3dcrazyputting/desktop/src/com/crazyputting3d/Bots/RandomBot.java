@@ -13,11 +13,11 @@ import com.crazyputting3d.Engine.physicsEngine;
 
 public class RandomBot extends Bot{
 
-    public double speedX;
-    public double speedY;
-    public double directionX;
-    public double directionY;
-    public boolean flag;
+    private double speedX;
+    private double speedY;
+    private double directionX;
+    private double directionY;
+    private boolean flag;
     private int counter;
 
     /**
@@ -65,6 +65,8 @@ public class RandomBot extends Bot{
     */
 
     public StateVector calculateMove() {
+        flag = true;
+        counter = 0;
         double euklidianDistance = Double.MAX_VALUE;
         double minVx = Double.MAX_VALUE;
         double minVy = Double.MAX_VALUE;

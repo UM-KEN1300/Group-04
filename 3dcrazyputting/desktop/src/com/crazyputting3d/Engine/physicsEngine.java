@@ -596,6 +596,9 @@ public class physicsEngine {
         }
         return null;
     }
+    /** 
+     * trajectory calculator for experiments loop
+    */
     public StateVector experimentloop(StateVector v) {
         solver = selectedSolver(solvernum);
         x0 = v.getX();

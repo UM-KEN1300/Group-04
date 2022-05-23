@@ -110,7 +110,7 @@ public class HillClimbingBot extends Bot {
             }
             if(!left&!right&Math.sin(angle_step)*Math.hypot(x0-xt, y0-yt)<engine.getrOfHole()/Math.pow(10,100*(0.15-radius))){
                 angle_step = pi/180;
-                v -= 0.02;
+                v -= 0.01;
                 if(v<=0){
                     angle_step = 2*i*pi/180;
                     i=2*i;

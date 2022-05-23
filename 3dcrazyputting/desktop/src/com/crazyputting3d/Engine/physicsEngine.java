@@ -367,7 +367,7 @@ public class physicsEngine {
      */
 
     public StateVector trajectory(StateVector v, boolean botPlays) {
-        for(int g = 0; g < 1.0/h;g++) {
+        while(true) {
             double m = 0;
             double ms = 0;
             double x = v.getX();
@@ -453,7 +453,6 @@ public class physicsEngine {
             }
 
         }
-        return v;
     }
 
     /**

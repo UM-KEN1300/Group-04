@@ -87,7 +87,7 @@ public class experimentmain {
                 physicsEngine engine = new physicsEngine();
                 physicsEngine.h = 1.0/i;
                 physicsEngine.solvernum=j;
-                vector = engine.start(vector, false); 
+                vector = engine.experimentloop(vector); 
                 double error = Math.abs(vector.getX()-exact);
                 errors[k-i] += error + ",";
             }

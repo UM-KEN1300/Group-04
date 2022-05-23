@@ -206,7 +206,7 @@ public class physicsEngine {
      */
 
     public double hxderivated(double x, double y) {
-        double dx = 0.000000000001;
+        double dx = 0.0000001;
         double derivative = (h(x + dx, y) - h(x, y)) / dx;
         return derivative;
     }
@@ -219,7 +219,7 @@ public class physicsEngine {
      */
 
     public double hyderivated(double x, double y) {
-        double dy = 0.000000000001;
+        double dy = 0.0000001;
         double derivative = (h(x, y + dy) - h(x, y)) / dy;
         return derivative;
     }
@@ -367,7 +367,7 @@ public class physicsEngine {
      */
 
     public StateVector trajectory(StateVector v, boolean botPlays) {
-        while (true) {
+        for(int g = 0; g < 1.0/h;g++) {
             double m = 0;
             double ms = 0;
             double x = v.getX();
@@ -453,6 +453,7 @@ public class physicsEngine {
             }
 
         }
+        return v;
     }
 
     /**
@@ -594,5 +595,14 @@ public class physicsEngine {
             return new PredictorCorrector(this);
         }
         return null;
+    }
+    public StateVector experimentloop(StateVector v) {
+        solver = selectedSolver(solvernum);
+        x0 = v.getX();
+        y0 = v.getY();
+        for(int g = 0; g < 1.0/h;g++) {
+            v = solver.run(v,0.1);
+        }
+        return v;
     }
 }

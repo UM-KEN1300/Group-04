@@ -15,10 +15,6 @@ import com.crazyputting3d.UI.MenuTest;
 
 public class Main {
     public static void main(String[] args) {
-//        Menu start_up = new Menu();
-//        start_up.run();
-
-
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("Crazy Putting!");

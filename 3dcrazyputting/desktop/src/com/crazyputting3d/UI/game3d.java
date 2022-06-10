@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.Bots.BasicBot;
 import com.crazyputting3d.Bots.Bot;
@@ -23,12 +22,16 @@ import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
 import com.crazyputting3d.Bots.RandomBot;
 import com.crazyputting3d.InputReader.Search;
+import com.crazyputting3d.Network.Client;
+import com.crazyputting3d.Network.ClientThread;
 import com.crazyputting3d.InputReader.Function;
+import com.crazyputting3d.InputReader.FunctionReader;
 import com.crazyputting3d.Sounds.Sounds;
 import org.lwjgl.opengl.GL20;
 import java.io.IOException;
 import java.util.ArrayList;
 import static com.badlogic.gdx.Gdx.input;
+
 
     /**
      * This is the class which is responsible for the creation and visualization of the UI. Below is
@@ -41,7 +44,7 @@ import static com.badlogic.gdx.Gdx.input;
      * since   2022-05-11
      */
 
-public class game3d extends ApplicationAdapter implements InputProcessor, Screen {
+public class game3d extends ApplicationAdapter implements InputProcessor {
 
     /**
      * The instance field which contains all of the instance variables
@@ -99,7 +102,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
     private int fallFrames=-1;
     private boolean playFlag=false;
     private boolean arrowFlag=true;
-    public static int numShotsTaken;
+    static int numShotsTaken;
     private BitmapFont font;
     private SpriteBatch batch;
     private Sounds sound;
@@ -124,8 +127,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
     private double[] radius;
     public Bot gameBot;
     public int botInt;
-    private VictoryScreenNew victoryScreenNew = new VictoryScreenNew();
-    private LevelScreen levelScreen = new LevelScreen();
+
+    private int playerid=10;
+    ClientThread clientthread;;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
@@ -145,6 +149,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
         *   The create() method is runned once and only once when the game3d class is run.
         *   If the 'game' variable is false, the input for velocities is given from the input file.
         */
+
+        if(game) {
+            clientthread = new ClientThread();
+            clientthread.start();
+            clientthread.getClient().createPlayer(playerid);
+        }
 
         if(!game && !bot){
             try {
@@ -253,6 +263,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
                     new Lwjgl3Application(new VictoryScreenGame(), config);
                 } else {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                    clientthread.getClient().deletePlayer(playerid);
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(), config);
@@ -334,8 +345,15 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
         font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
         font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
 
+        for(int k=0; k<Client.playerdata.size(); k++) {
+            font.draw(batch, "Player "+Client.playerdata.get(k).get(1)+" has score: "+Client.playerdata.get(k).get(0), 5, camera.viewportHeight-195-(k*20));
+        }
+        
+
         font.getData().setScale(2, 2);
         font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
+
+
         }
         font.getData().setScale(2, 2);
         font.draw(batch, "The X coordinate of the ball is: " + String.format("%.3f",ballX), 5, camera.viewportHeight-660);
@@ -357,7 +375,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
         ballY = ballcoordsY[ballcoordsX.length-1];
         ballZ = ballZ - 0.01f;
         if(stopgame) {
-            //sound.ball_inhole();
+            sound.ball_inhole();
             stopgame=false;
         }
     }
@@ -472,8 +490,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
     */
     public void renderTerrain() {
         Color color = Color.GREEN;
-        for(float x=terrainX2; x>=terrainX1;x=x-0.1f) {
-            for(float z=terrainZ2; z>=terrainZ1; z=z-0.1f) {
+        for(float x=terrainX2; x>=terrainX1;x=x-0.5f) {
+            for(float z=terrainZ2; z>=terrainZ1; z=z-0.5f) {
 
                 if (h(x, z) < 0) {
                     color = Color.NAVY;
@@ -641,6 +659,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
     public void update() {
         if(input.isKeyPressed(Input.Keys.ESCAPE)) {
             //Exit the program when the ESCAPE key is pressed
+            if (game) {
+                clientthread.getClient().deletePlayer(playerid);
+            }
             Gdx.app.exit();
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)&&game) {
@@ -721,6 +742,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
             treeHitted = true;
             isInWater = false;
             hitWall = true;
+
+            clientthread.getClient().updatePlayer(playerid);
+
         }
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&game){
             /*
@@ -765,8 +789,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
 
         if(input.isKeyPressed(Input.Keys.R)) {
             //When the button R is pressed, close the game and bring the player back to the main menu
-            //Menu start_up = new Menu();
-            //start_up.run();
             Gdx.app.exit();
         }
 
@@ -813,30 +835,4 @@ public class game3d extends ApplicationAdapter implements InputProcessor, Screen
         return false;
     }
 
-        @Override
-        public void show() {
-
-                /**
-                 * If the falling animation is done, trigger the victory screen
-                 * to be showed and exit the current game screen
-                 */
-
-
-                    //VScreen.run(numShotsTaken,bot,gameBot.getNumberOfIteretions(),gameBot.getRuntime());
-                    // ((Game)Gdx.app.getApplicationListener()).setScreen(victoryScreenNew);
-
-
-
-        }
-
-        @Override
-        public void render(float delta) {
-//            stage.act();
-//            stage.draw();
-        }
-
-        @Override
-        public void hide() {
-
-        }
-    }
+}

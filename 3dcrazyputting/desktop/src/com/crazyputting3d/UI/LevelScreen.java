@@ -31,14 +31,14 @@ public class LevelScreen implements Screen {
         stage = new Stage();
 
 
-        texture = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/LevelImage Medium 5.jpeg");
+        texture = new Texture("3dcrazyputting\\assets\\LevelImage Medium 5.jpeg");
         splashImage = new Image(texture);
         splashImage.setPosition(0,40);
-        texture2 = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/Screenshot 2022-06-09 at 14.14.29.png");
+        texture2 = new Texture("3dcrazyputting\\assets\\Screenshot 2022-06-09 at 14.14.29.png");
         splashImage2 = new Image(texture2);
 
         final MenuScreen menuScreen = new MenuScreen();
-        skin = new Skin(Gdx.files.internal("skin freeze/freezing-ui.json"));
+        skin = new Skin(Gdx.files.internal("skin freeze\\freezing-ui.json"));
         Gdx.input.setInputProcessor(stage);
 
         backButton = new TextButton("Back", skin);

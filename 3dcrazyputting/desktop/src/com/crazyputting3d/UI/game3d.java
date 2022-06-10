@@ -1,5 +1,7 @@
 package com.crazyputting3d.UI;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.Bots.BasicBot;
 import com.crazyputting3d.Bots.Bot;
@@ -38,7 +41,7 @@ import static com.badlogic.gdx.Gdx.input;
      * since   2022-05-11
      */
 
-public class game3d extends ApplicationAdapter implements InputProcessor {
+public class game3d extends ApplicationAdapter implements InputProcessor, Screen {
 
     /**
      * The instance field which contains all of the instance variables
@@ -96,7 +99,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int fallFrames=-1;
     private boolean playFlag=false;
     private boolean arrowFlag=true;
-    private int numShotsTaken;
+    public static int numShotsTaken;
     private BitmapFont font;
     private SpriteBatch batch;
     private Sounds sound;
@@ -121,6 +124,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double[] radius;
     public Bot gameBot;
     public int botInt;
+    private VictoryScreenNew victoryScreenNew = new VictoryScreenNew();
+    private LevelScreen levelScreen = new LevelScreen();
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
@@ -234,19 +239,26 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             fallFrames++;
             animateBallFalling();
             if(fallFrames==9) {
+
+                sound.victory();
                 /**
                  * If the falling animation is done, trigger the victory screen
                  * to be showed and exit the current game screen
                  */
-                VictoryScreen VScreen = new VictoryScreen();
-                if(bot){
-                    VScreen.run(numShotsTaken,bot,gameBot.getNumberOfIteretions(),gameBot.getRuntime());
-                }
-                else{
-                    VScreen.run(numShotsTaken,bot,0,0);
+                //VictoryScreen VScreen = new VictoryScreen();
+                if (bot) {
+                    Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                    config.setTitle("Crazy Putting 3D!");
+                    config.setWindowedMode(600, 360);
+                    new Lwjgl3Application(new VictoryScreenGame(), config);
+                } else {
+                    Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                    config.setTitle("Crazy Putting 3D!");
+                    config.setWindowedMode(600, 360);
+                    new Lwjgl3Application(new VictoryScreenGame(), config);
                 }
                 sound.victory();
-                Gdx.app.exit();
+
             }
 
         } else if(index==ballcoordsX.length-1 && fallFrames<10 && playFlag ==true) {
@@ -345,7 +357,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         ballY = ballcoordsY[ballcoordsX.length-1];
         ballZ = ballZ - 0.01f;
         if(stopgame) {
-            sound.ball_inhole();
+            //sound.ball_inhole();
             stopgame=false;
         }
     }
@@ -753,8 +765,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         if(input.isKeyPressed(Input.Keys.R)) {
             //When the button R is pressed, close the game and bring the player back to the main menu
-            Menu start_up = new Menu();
-            start_up.run();
+            //Menu start_up = new Menu();
+            //start_up.run();
             Gdx.app.exit();
         }
 
@@ -801,4 +813,30 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         return false;
     }
 
-}
+        @Override
+        public void show() {
+
+                /**
+                 * If the falling animation is done, trigger the victory screen
+                 * to be showed and exit the current game screen
+                 */
+
+
+                    //VScreen.run(numShotsTaken,bot,gameBot.getNumberOfIteretions(),gameBot.getRuntime());
+                    // ((Game)Gdx.app.getApplicationListener()).setScreen(victoryScreenNew);
+
+
+
+        }
+
+        @Override
+        public void render(float delta) {
+//            stage.act();
+//            stage.draw();
+        }
+
+        @Override
+        public void hide() {
+
+        }
+    }

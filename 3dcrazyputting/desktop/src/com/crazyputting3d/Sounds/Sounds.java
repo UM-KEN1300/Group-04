@@ -18,7 +18,7 @@ public class Sounds implements Runnable{
      * Instance field for all the different sounds and the filepath
      */
 
-    private String filePath = "3dcrazyputting\\assets\\";
+    private String filePath = "3dcrazyputting/assets/";
     private File fileName0;
     private File fileName1;
     private File fileName2;

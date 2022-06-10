@@ -1,6 +1,8 @@
 package com.crazyputting3d;
 
-import com.crazyputting3d.UI.Menu;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.crazyputting3d.UI.MenuTest;
 
 /**
  * This is the main class. To run the program, run the
@@ -13,7 +15,14 @@ import com.crazyputting3d.UI.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Menu start_up = new Menu(); 
-        start_up.run(); 
+//        Menu start_up = new Menu();
+//        start_up.run();
+
+
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setForegroundFPS(60);
+        config.setTitle("Crazy Putting!");
+        config.setWindowedMode(600,360);
+        new Lwjgl3Application(new MenuTest(), config);
     }
 }

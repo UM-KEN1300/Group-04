@@ -138,7 +138,11 @@ public class MenuScreen implements Screen {
         multiplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                physicsEngine.solvernum = solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(false,false,botSelect.getSelectedIndex()), config2);
             }
         });
         quit.addListener(new ChangeListener() {

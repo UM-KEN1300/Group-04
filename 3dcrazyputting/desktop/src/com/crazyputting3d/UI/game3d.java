@@ -128,7 +128,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     public Bot gameBot;
     public int botInt;
 
-    private int playerid=10;
+    private int playerid=5;
     ClientThread clientthread;;
 
     /**
@@ -308,6 +308,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         //Render the terrain
         for(int i=0; i<terrain3d.size(); i++) {
             modelBatch.render(terrain3d.get(i), environment);
+
         }
 
         //Render all the trees
@@ -479,7 +480,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         float intersect = rad*2;
         holeBuilder = new ModelBuilder();
         hole = holeBuilder.createSphere(intersect,0.01f,intersect,30,30,new Material(ColorAttribute.createDiffuse(Color.BLACK)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        holeInstance = new ModelInstance(hole, x,h(x,y)+0.07f,y);
+        holeInstance = new ModelInstance(hole, x,h(x,y)+0.10f,y);
         modelBatch.render(holeInstance,environment);
     }
 
@@ -490,8 +491,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     */
     public void renderTerrain() {
         Color color = Color.GREEN;
-        for(float x=terrainX2; x>=terrainX1;x=x-0.5f) {
-            for(float z=terrainZ2; z>=terrainZ1; z=z-0.5f) {
+        for(float x=terrainX2; x>=terrainX1;x=x-0.2f) {
+            for(float z=terrainZ2; z>=terrainZ1; z=z-0.2f) {
+
+
 
                 if (h(x, z) < 0) {
                     color = Color.NAVY;
@@ -506,15 +509,17 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 }
 
                 if(x!=terrainX1) {
-                    Model arrow1 = terrainBuilder.createArrow(x - 0.1f, h(x - 0.1f, z), z, x, h(x, z), z, 0.01f, 100f, 100,
+                    Model arrow1 = terrainBuilder.createBox(0.3f,0.1f,0.3f,
                             GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(color)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    terrain3d.add(new ModelInstance(arrow1));
+                    ModelInstance model = new ModelInstance(arrow1);
+                    model.transform.setToTranslation(x,h(x,z),z);
+                    terrain3d.add(model);
+
+
                 }
-                if(z!=terrainZ1) {
-                    Model arrow2 = terrainBuilder.createArrow(x, h(x, z), z, x, h(x, z - 0.01f), z - 0.1f, 0.01f, 100f, 100,
-                            GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(color)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                    terrain3d.add(new ModelInstance(arrow2));
-                }
+
+
+
 
             }
         }

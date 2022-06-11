@@ -53,6 +53,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         Table table = new Table();
         table.setPosition(300,200);
 

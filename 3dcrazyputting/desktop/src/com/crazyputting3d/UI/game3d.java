@@ -150,21 +150,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         *   If the 'game' variable is false, the input for velocities is given from the input file.
         */
 
-        if(game) {
+        if(!game && !bot){
             clientthread = new ClientThread();
             clientthread.start();
             clientthread.getClient().createPlayer(playerid);
-        }
-
-        if(!game && !bot){
-            try {
-                search2 = new Search("input2.txt");
-                speedsX = search2.get_v0x();
-                speedsY = search2.get_v0y();
-                count=0;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         
         /**
@@ -277,7 +266,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             ballArrowX = ballcoordsX[index]+0.3f;
             ballArrowY = ballcoordsY[index];
             playFlag=false;
-        }else if(index==ballcoordsX.length-1 && fallFrames<10 && game == true){
+        }else if(index==ballcoordsX.length-1 && fallFrames<10 && ((game)||(!game&&!bot))){
             //Trigger the rendering of the arrow which points at the direction of were to shoot the ball
             arrowFlag=true;
         }
@@ -330,7 +319,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         //Render the ball and the stick (if the game is played as the user)
         renderBall((float) ballX, (float) ballY, ballZ, 0.05f);
-        if(game) {
+        if((game)||(!game&&!bot)) {
             renderStick1((float) ballX, (float) ballY, ballZ);
         }
 
@@ -341,20 +330,26 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         font.draw(batch, "Press 'SPACE' to shoot the ball", 5,  camera.viewportHeight-45);
         font.draw(batch, "Press 'ESCAPE' to close the game", 5,  camera.viewportHeight-65);
         font.draw(batch, "Press 'R'  to go back to the main menu", 5,  camera.viewportHeight-85);
+
+        if(!game&&!bot) {
+            for(int k=0; k<Client.playerdata.size(); k++) {
+                font.draw(batch, "Player "+Client.playerdata.get(k).get(1)+" has score: "+Client.playerdata.get(k).get(0), 5, camera.viewportHeight-195-(k*20));
+            }
+                font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
+                font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
+                font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
+
+                font.getData().setScale(2, 2);
+                font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
+        
+        }
         if(game){
         font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
         font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
         font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
-
-        for(int k=0; k<Client.playerdata.size(); k++) {
-            font.draw(batch, "Player "+Client.playerdata.get(k).get(1)+" has score: "+Client.playerdata.get(k).get(0), 5, camera.viewportHeight-195-(k*20));
-        }
         
-
         font.getData().setScale(2, 2);
         font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
-
-
         }
         font.getData().setScale(2, 2);
         font.draw(batch, "The X coordinate of the ball is: " + String.format("%.3f",ballX), 5, camera.viewportHeight-660);
@@ -466,7 +461,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         ball = ballBuilder.createSphere(intersection,intersection,intersection,30,30,new Material(ColorAttribute.createDiffuse(Color.WHITE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         ballInstance = new ModelInstance(ball, x, z+rad+(float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, y);
 
-        if(arrowFlag&&game) {
+        if(arrowFlag&&((game)||(!game&&!bot))) {
             Model ballArrow = modelBuilder.createArrow(x, h(x, y) + rad + (float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, y, (float) (ballArrowX), h(ballArrowX, ballArrowY) + rad + (float)Math.sqrt(Math.pow(0.1f*(float)engine.hxderivated(x, y),2)+Math.pow(0.1f*(float)engine.hyderivated(x, y),2))+0.03f, (float) ballArrowY, 0.1f, 0.6f, 5,
                     GL20.GL_TRIANGLES, new Material(ColorAttribute.createDiffuse(Color.DARK_GRAY)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
             bArrowInstance = new ModelInstance(ballArrow);
@@ -664,12 +659,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     public void update() {
         if(input.isKeyPressed(Input.Keys.ESCAPE)) {
             //Exit the program when the ESCAPE key is pressed
-            if (game) {
+            if (!game && !bot) {
                 clientthread.getClient().deletePlayer(playerid);
             }
             Gdx.app.exit();
         }
-        if(input.isKeyPressed(Input.Keys.RIGHT)&&game) {
+        if(input.isKeyPressed(Input.Keys.RIGHT)&&((game)||(!game&&!bot))) {
             //Move the arrow for the direction to the right when the RIGHT arrow is pressed
             double x1 = ballArrowX - ballX;
             double y1 = ballArrowY - ballY;
@@ -684,7 +679,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             ballArrowY = (float) (y22 + ballY);
         }
 
-        if(input.isKeyPressed(Input.Keys.LEFT)&&game) {
+        if(input.isKeyPressed(Input.Keys.LEFT)&&((game)||(!game&&!bot))) {
             //Move the arrow for the direction to the left when the LEFT arrow is pressed
             double x1 = ballArrowX - ballX;
             double y1 = ballArrowY - ballY;
@@ -698,7 +693,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             ballArrowX = (float) (x22 + ballX);
             ballArrowY = (float) (y22 + ballY);
         }
-        if(input.isKeyPressed(Input.Keys.UP)&&game) {
+        if(input.isKeyPressed(Input.Keys.UP)&&((game)||(!game&&!bot))) {
             //Increase the velocity of the next shot when pressing the UP arrow
             if(velocity<=4.9) {
                 velocity += 0.1;
@@ -718,7 +713,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 soundOn = true;
             }
         }
-        if(input.isKeyPressed(Input.Keys.DOWN)&&game) {
+        if(input.isKeyPressed(Input.Keys.DOWN)&&((game)||(!game&&!bot))) {
             //Decrease the velocity of the next shot when pressing the DOWN arrow
             if(velocity>0.2) {
                 velocity -= 0.1;
@@ -747,25 +742,41 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             treeHitted = true;
             isInWater = false;
             hitWall = true;
-
-            clientthread.getClient().updatePlayer(playerid);
-
         }
-        if(input.isKeyJustPressed(Input.Keys.SPACE)&&game){
+        if(input.isKeyJustPressed(Input.Keys.SPACE)&&((game)||(!game&&!bot))){
             /*
                 When SPACE is pressed, the stick is rendered for the animation
              */
+            System.out.println(12);
             renderStick((float) ballX, (float) ballY, ballZ);
         }
-        if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot){
+        if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot&&playFlag==false){
             /*
                 When SPACE is pressed and the game is in simulator mode, visualise the next
                 move of the input file.
              */
-            if(count<speedsX.length){
-                engine.setVelocities(speedsX[count],speedsY[count]);
-                count++;
-            }
+            //BELOW IS OLD SIMULATOR CODE
+            // if(count<speedsX.length){
+            //     engine.setVelocities(speedsX[count],speedsY[count]);
+            //     count++;
+            // }
+            // numShotsTaken++;
+            // playFlag = true;
+            // arrowFlag = false;
+            // ballcoordsX = engine.get_ball_coordinatesX();
+            // ballcoordsY = engine.get_ball_coordinatesY();
+            // index=-1;
+            // treeHitted = true;
+            // isInWater = false;
+
+            //BELOW IS NEW NETWORK CODE
+            sound.ball_hit();
+            double velocityX = ballArrowX-ballX;
+            double velocityY = ballArrowY-ballY;
+            double length = Math.sqrt(velocityX*velocityX+velocityY*velocityY);
+            speedX = velocity*velocityX/length;
+            speedY = velocity*velocityY/length;
+            engine.setVelocities(speedX,speedY);
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;
@@ -774,6 +785,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             index=-1;
             treeHitted = true;
             isInWater = false;
+            hitWall = true;
+            clientthread.getClient().updatePlayer(playerid);
         }
 
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&bot){
@@ -794,6 +807,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         if(input.isKeyPressed(Input.Keys.R)) {
             //When the button R is pressed, close the game and bring the player back to the main menu
+            if(!bot&&!game) {
+                clientthread.getClient().deletePlayer(playerid);
+            }
             Gdx.app.exit();
         }
 

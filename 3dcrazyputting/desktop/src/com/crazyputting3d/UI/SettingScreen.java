@@ -34,6 +34,7 @@ public class SettingScreen implements Screen{
 
     @Override
     public void show() {
+        ie = new inputEditor();
         stage = new Stage();
         final MenuScreen menuScreen = new MenuScreen();
         skin = new Skin(Gdx.files.internal("skin default/uiskin.json"));

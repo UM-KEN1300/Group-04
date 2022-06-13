@@ -679,6 +679,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 clientthread.getClient().deletePlayer(playerid);
             }
             Gdx.app.exit();
+            System.exit(-1);
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)&&((game)||(!game&&!bot))) {
             //Move the arrow for the direction to the right when the RIGHT arrow is pressed

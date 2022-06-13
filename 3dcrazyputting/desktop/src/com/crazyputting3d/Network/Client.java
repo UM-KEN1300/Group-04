@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Client {
 
     private final String url = "https://daa2-137-120-131-94.eu.ngrok.io";
+
     public static ArrayList<ArrayList<Integer>> playerdata;
     private String playable;
 

@@ -108,13 +108,34 @@ public class SettingScreen implements Screen{
         apply.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                contentXt = fieldHoleXt.getText();
-                contentYt = fieldHoleYt.getText();
+                if(!fieldHoleXt.getText().equals("")) {
+                    System.out.println("test");
+                    contentXt = fieldHoleXt.getText();
+                }
+                if(!fieldHoleYt.getText().equals("")) {
+                    contentYt = fieldHoleYt.getText();
+                }
+                if(!fieldHoleX0.getText().equals("")) {
+                    contentX0 = fieldHoleX0.getText();
+                }
+                if(!fieldHoleY0.getText().equals("")) {
+                    contentY0 = fieldHoleY0.getText();
+                }
+                if(!playerTag.getText().equals("")) {
+                    game3d.playerid = Integer.parseInt(playerTag.getText());
+                }
+    
 
-                contentX0 = fieldHoleX0.getText();
-                contentY0 = fieldHoleY0.getText();
+                if(!(fieldHoleXt.getText().equals("")&&fieldHoleYt.getText().equals(""))) {
+                    System.out.println("test2");
+                    ie.editXtYt(Double.parseDouble(contentXt), Double.parseDouble(contentYt));
+                }
 
-                playerID = Integer.parseInt(playerTag.getText());
+                if(!(fieldHoleX0.getText().equals(""))&&!(fieldHoleY0.getText().equals(""))) {
+                    System.out.println("test3");
+                    ie.editX0Y0(Double.parseDouble(contentX0), Double.parseDouble(contentY0));
+                }
+
                 playerTag.setText("");
 
                 fieldHoleXt.setText("");
@@ -122,15 +143,6 @@ public class SettingScreen implements Screen{
 
                 fieldHoleX0.setText("");
                 fieldHoleY0.setText("");
-
-
-                if(contentXt!=null&&contentYt!=null) {
-                    ie.editXtYt(Double.parseDouble(contentXt), Double.parseDouble(contentYt));
-                }
-
-                if(contentX0!=null&&contentY0!=null) {
-                    ie.editX0Y0(Double.parseDouble(contentX0), Double.parseDouble(contentY0));
-                }
             }
         });
 

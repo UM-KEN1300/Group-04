@@ -132,6 +132,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     ClientThread clientthread;
     private boolean waitingroom;
 
+    private boolean ballCam;
+
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation. It contains another boolean which is responsible
@@ -227,6 +229,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
     //The render() method is fired 60 times per second and is used to update locations and logic variables
     public void render() {
+        if(ballCam) {
+            camera.position.set((float)ballX,h(ballX,ballY)+1,(float)ballY);
+        }
 
         if(waitingroom) {
             waitingroom = !clientthread.getClient().isPlayable();
@@ -346,6 +351,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         font.draw(batch, "Press 'SPACE' to shoot the ball", 5,  camera.viewportHeight-45);
         font.draw(batch, "Press 'ESCAPE' to close the game", 5,  camera.viewportHeight-65);
         font.draw(batch, "Press 'R'  to go back to the main menu", 5,  camera.viewportHeight-85);
+        font.draw(batch, "Press 'B'  to toggle ball cam on/off", 5,  camera.viewportHeight-105);
+
 
         if(waitingroom) {
             font.getData().setScale(2,2);
@@ -355,14 +362,14 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         if(!game&&!bot) {
             for(int k=0; k<Client.playerdata.size(); k++) {
-                font.draw(batch, "Player "+Client.playerdata.get(k).get(0)+" has score: "+Client.playerdata.get(k).get(1), 5, camera.viewportHeight-195-(k*20));
+                font.draw(batch, "Player "+Client.playerdata.get(k).get(0)+" has score: "+Client.playerdata.get(k).get(1), 5, camera.viewportHeight-205-(k*20));
             }
         }
 
         if(game||(!game&&!bot)){
-        font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
-        font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
-        font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
+        font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-125);
+        font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-145);
+        font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-165);
         
         font.getData().setScale(2, 2);
         font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
@@ -828,6 +835,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 clientthread.getClient().deletePlayer(playerid);
             }
             Gdx.app.exit();
+        }
+
+        if(input.isKeyJustPressed(Input.Keys.B)) {
+            if(ballCam) {
+                ballCam=false;
+            } else ballCam=true;
         }
 
     }

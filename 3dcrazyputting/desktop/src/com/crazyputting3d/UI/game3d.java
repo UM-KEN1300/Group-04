@@ -253,7 +253,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     new Lwjgl3Application(new VictoryScreenGame(), config);
                 } else {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-                    //clientthread.getClient().deletePlayer(playerid);
+                    clientthread.getClient().deletePlayer(playerid);
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(), config);

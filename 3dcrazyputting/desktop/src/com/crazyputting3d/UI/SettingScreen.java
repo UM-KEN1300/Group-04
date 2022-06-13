@@ -20,9 +20,9 @@ public class SettingScreen implements Screen{
     private Skin skin;
     private TextButton backButton;
     private TextButton apply;
-    private Label lb1, lb2, lb3, lb4, Title;
+    private Label lb1, lb2, lb3, lb4, Title, player;
     private Table table, table2;
-    private TextArea fieldHoleXt, fieldHoleYt, fieldHoleX0, fieldHoleY0;
+    private TextArea fieldHoleXt, fieldHoleYt, fieldHoleX0, fieldHoleY0, playerTag;
     private String contentXt;
     private String contentYt;
     private String contentX0;
@@ -47,7 +47,7 @@ public class SettingScreen implements Screen{
 
         backButton = new TextButton("Back", skin);
         apply = new TextButton("Apply", skin);
-        apply.setPosition(360,90);
+        apply.setPosition(360,65);
 
         backButton.setSize(60,40);
 
@@ -58,11 +58,13 @@ public class SettingScreen implements Screen{
         lb2 = new Label("Y Position of the hole: ", skin);
         lb3 = new Label("X Position of the ball: ", skin);
         lb4 = new Label("Y Position of the ball: ", skin);
+        player = new Label("Player ID: ", skin);
 
         fieldHoleXt = new TextArea("",skin);
         fieldHoleYt = new TextArea("",skin);
         fieldHoleX0= new TextArea("",skin);
         fieldHoleY0= new TextArea("",skin);
+        playerTag = new TextArea("", skin);
 
         table2.add(fieldHoleXt);
         table2.row().pad(10,0,10,0);
@@ -71,6 +73,8 @@ public class SettingScreen implements Screen{
         table2.add(fieldHoleX0);
         table2.row().pad(10,0,10,0);
         table2.add(fieldHoleY0);
+        table2.row();
+        table2.add(playerTag);
         table2.setPosition(280,150);
 
 
@@ -82,6 +86,8 @@ public class SettingScreen implements Screen{
         table.add(lb3);
         table.row().pad(10,0,10,0);
         table.add(lb4);
+        table.row();
+        table.add(player);
         table.setPosition(100,150);
 
         stage.addActor(apply);

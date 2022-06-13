@@ -27,6 +27,7 @@ public class SettingScreen implements Screen{
     private String contentYt;
     private String contentX0;
     private String contentY0;
+    private int playerID;
     private inputEditor ie;
 
 
@@ -112,6 +113,9 @@ public class SettingScreen implements Screen{
 
                 contentX0 = fieldHoleX0.getText();
                 contentY0 = fieldHoleY0.getText();
+
+                playerID = Integer.parseInt(playerTag.getText());
+                playerTag.setText("");
 
                 fieldHoleXt.setText("");
                 fieldHoleYt.setText("");

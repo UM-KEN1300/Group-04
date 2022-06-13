@@ -73,52 +73,97 @@ public class LevelScreen implements Screen {
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex()), config2);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),1), config2);
             }
         }
         if(Gdx.input.getX()>186 && Gdx.input.getX()<247 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 2");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),2), config2);
             }
         }
         if(Gdx.input.getX()>285 && Gdx.input.getX()<351 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 3");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),3), config2);
             }
         }
         if(Gdx.input.getX()>388 && Gdx.input.getX()<456 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 4");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),4), config2);
             }
         }
         if(Gdx.input.getX()>491 && Gdx.input.getX()<556 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 5");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),5), config2);
             }
         }
         if(Gdx.input.getX()>81 && Gdx.input.getX()<150 && Gdx.input.getY() > 222 && Gdx.input.getY() <280 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 6");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),6), config2);
             }
         }
         if(Gdx.input.getX()>186 && Gdx.input.getX()<247 && Gdx.input.getY() > 222 && Gdx.input.getY() <280 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 7");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),7), config2);
             }
         }
         if(Gdx.input.getX()>285 && Gdx.input.getX()<351 && Gdx.input.getY() > 222 && Gdx.input.getY() <280){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 8");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),8), config2);
             }
         }
         if(Gdx.input.getX()>388 && Gdx.input.getX()<456 && Gdx.input.getY() > 222 && Gdx.input.getY() < 280 ){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 9");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),9), config2);
             }
         }
         if(Gdx.input.getX()>491 && Gdx.input.getX()<556 && Gdx.input.getY() > 222 && Gdx.input.getY() < 280){
             if(Gdx.input.isTouched()) {
-                System.out.println("Level 10");
+                System.out.println("Level 1");
+                physicsEngine.solvernum = MenuScreen.solverSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(true,false,MenuScreen.botSelect.getSelectedIndex(),10), config2);
             }
         }
 

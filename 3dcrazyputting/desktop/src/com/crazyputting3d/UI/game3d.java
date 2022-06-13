@@ -127,6 +127,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double[] radius;
     public static Bot gameBot;
     public int botInt;
+    private int level;
 
     public static int playerid;
     ClientThread clientthread;
@@ -141,10 +142,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
      *  to determine which bot is used when the game is launched in bot mode. 
      */
 
-    public game3d(boolean game, boolean bot, int botInt){
+    public game3d(boolean game, boolean bot, int botInt, int level){
         this.game = game;
         this.bot = bot;
         this.botInt = botInt;
+        this.level = level;
         if(!bot&&!game) {
             waitingroom=true;
         } else waitingroom=false;
@@ -408,7 +410,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     //Get all the values from search.java and put them into the appropriate variables
     public void getValues() {
         try {
-            search = new Search("input.txt");
+            search = new Search("levels\\inputFile"+level+".txt");
             search.run();
 
             xvaluesSP = search.get_sandPitX();

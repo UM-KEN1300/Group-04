@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.crazyputting3d.Engine.physicsEngine;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import org.lwjgl.system.CallbackI;
 
 
 public class MenuScreen implements Screen {
@@ -38,6 +39,7 @@ public class MenuScreen implements Screen {
 
     private LevelScreen levelScreen = new LevelScreen();
     private VictoryScreenNew victoryScreenNew = new VictoryScreenNew();
+    private SettingScreen settingScreen = new SettingScreen();
 
 
     public MenuScreen(){
@@ -152,6 +154,17 @@ public class MenuScreen implements Screen {
                 Gdx.app.exit();
             }
         });
+
+        settings.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+                ((Game)Gdx.app.getApplicationListener()).setScreen(settingScreen);
+            }
+        });
+
+
+
     }
 
     @Override

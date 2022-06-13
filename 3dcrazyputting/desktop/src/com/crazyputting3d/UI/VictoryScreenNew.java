@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.crazyputting3d.Sounds.Sounds;
 
@@ -19,7 +16,12 @@ public class VictoryScreenNew implements Screen {
     private Texture texture;
     private Image splashImage;
     private TextArea textField;
+    private Label label;
+    private Label label2;
+    private Label label3;
     private int numshots;
+    private int numberOfIterations;
+    private double runtime;
     private Skin skin;
     private TextButton quitButton;
     Sounds sound;
@@ -30,14 +32,31 @@ public class VictoryScreenNew implements Screen {
         sound.victory();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("skin flat earth/flat-earth-ui.json"));
+        skin = new Skin(Gdx.files.internal("skin default/uiskin.json"));
         numshots = game3d.numShotsTaken;
+
         texture = new Texture("victory.png");
         splashImage = new Image(texture);
         stage.addActor(splashImage);
-        textField = new TextArea("Number of shots = "+ numshots,skin );
-        textField.setPosition(0,250);
-        stage.addActor(textField);
+        label = new Label("Number of shots = "+ numshots,skin );
+        if(numshots == 1){
+            label.setText("Hole in one!");
+        }
+        label.setSize( 170,30);
+        label.setPosition(0,200);
+        stage.addActor(label);
+
+        if(game3d.bot){
+            numberOfIterations = game3d.gameBot.getNumberOfIteretions();
+            runtime = game3d.gameBot.getRuntime();
+            label2 = new Label("Number of iterations: " + numberOfIterations, skin);
+            label2.setPosition(0,180);
+            stage.addActor(label2);
+
+            label3 = new Label("Runtime: " + runtime + " ms",skin);
+            label3.setPosition(0,160);
+            stage.addActor(label3);
+        }
 
         quitButton = new TextButton("Quit", skin);
         stage.addActor(quitButton);

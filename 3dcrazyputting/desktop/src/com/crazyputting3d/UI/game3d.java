@@ -117,7 +117,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean soundOn;
     private physicsEngine engine;
     private boolean game;
-    private boolean bot;
+    public static boolean bot;
     private double renderSpeed=0.0167;
     private Search search2;
     private double [] speedsX;
@@ -125,7 +125,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int count;
     private boolean stopgame = true;
     private double[] radius;
-    public Bot gameBot;
+    public static Bot gameBot;
     public int botInt;
 
     private int playerid=5;
@@ -245,6 +245,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                  * to be showed and exit the current game screen
                  */
                 //VictoryScreen VScreen = new VictoryScreen();
+                System.out.println(bot);
                 if (bot) {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
@@ -252,12 +253,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     new Lwjgl3Application(new VictoryScreenGame(), config);
                 } else {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-                    clientthread.getClient().deletePlayer(playerid);
+                    //clientthread.getClient().deletePlayer(playerid);
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(), config);
                 }
-                sound.victory();
+                //sound.victory();
 
             }
 

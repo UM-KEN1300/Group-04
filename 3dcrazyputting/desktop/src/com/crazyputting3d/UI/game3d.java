@@ -129,7 +129,8 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     public int botInt;
 
     private int playerid=5;
-    ClientThread clientthread;;
+    ClientThread clientthread;
+    private boolean waitingroom;
 
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
@@ -142,6 +143,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         this.game = game;
         this.bot = bot;
         this.botInt = botInt;
+        if(!bot&&!game) {
+            waitingroom=true;
+        } else waitingroom=false;
     }
 
     public void create() {
@@ -223,7 +227,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
     //The render() method is fired 60 times per second and is used to update locations and logic variables
     public void render() {
-        update();
+
+        if(waitingroom) {
+            waitingroom = !clientthread.getClient().isPlayable();
+        } else {
+            update();
+        }
 
         //Get the time (in seconds) which will be stored in a variable
         timeSeconds +=Gdx.graphics.getDeltaTime();
@@ -251,9 +260,14 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(), config);
+                } if(!bot&&!game) {
+                    clientthread.getClient().deletePlayer(playerid);
+                    Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                    config.setTitle("Crazy Putting 3D!");
+                    config.setWindowedMode(600, 360);
+                    new Lwjgl3Application(new VictoryScreenGame(), config);
                 } else {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-                    clientthread.getClient().deletePlayer(playerid);
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(), config);
@@ -326,25 +340,26 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         //Render the text on the screen
         batch.begin();
+        font.getData().setScale(1,1);
         font.draw(batch, "FPS = " + Gdx.graphics.getFramesPerSecond(), 5,  camera.viewportHeight-5);
         font.draw(batch, "Shots taken = " + numShotsTaken, 5,  camera.viewportHeight-25);
         font.draw(batch, "Press 'SPACE' to shoot the ball", 5,  camera.viewportHeight-45);
         font.draw(batch, "Press 'ESCAPE' to close the game", 5,  camera.viewportHeight-65);
         font.draw(batch, "Press 'R'  to go back to the main menu", 5,  camera.viewportHeight-85);
 
+        if(waitingroom) {
+            font.getData().setScale(2,2);
+            font.draw(batch, "Waiting for other players...",450,400);
+            font.getData().setScale(1,1);
+        }
+
         if(!game&&!bot) {
             for(int k=0; k<Client.playerdata.size(); k++) {
-                font.draw(batch, "Player "+Client.playerdata.get(k).get(1)+" has score: "+Client.playerdata.get(k).get(0), 5, camera.viewportHeight-195-(k*20));
+                font.draw(batch, "Player "+Client.playerdata.get(k).get(0)+" has score: "+Client.playerdata.get(k).get(1), 5, camera.viewportHeight-195-(k*20));
             }
-                font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
-                font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
-                font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);
-
-                font.getData().setScale(2, 2);
-                font.draw(batch, "V = " + (float)velocity, camera.viewportWidth-100,  camera.viewportHeight-690);
-        
         }
-        if(game){
+
+        if(game||(!game&&!bot)){
         font.draw(batch, "Press ' Left-Arrow ' or ' Right-Arrow ' to change direction of the shot", 5,  camera.viewportHeight-105);
         font.draw(batch, "Press ' WASD ' to move the camera", 5,  camera.viewportHeight-125);
         font.draw(batch, "Press 'UP-DOWN' to change selected speed", 5,  camera.viewportHeight-145);

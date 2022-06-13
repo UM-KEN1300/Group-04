@@ -9,6 +9,7 @@ public class Client {
 
     private final String url = "https://daa2-137-120-131-94.eu.ngrok.io";
     public static ArrayList<ArrayList<Integer>> playerdata;
+    private String playable;
 
     private String run(String url){
         try {
@@ -50,6 +51,13 @@ public class Client {
         run(url+"/reset");
     }
 
+    public boolean isPlayable() {
+        playable = run(url+"/playable");
+        if(playable.equals("true")) {
+            return true;
+        } else return false;
+    }
+
 
     private ArrayList<ArrayList<Integer>> parse(String original) {
         //Example JSON String to parse:
@@ -79,5 +87,4 @@ public class Client {
         }
         return data;
     }
-
 }

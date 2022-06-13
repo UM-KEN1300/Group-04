@@ -128,7 +128,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     public static Bot gameBot;
     public int botInt;
 
-    private int playerid=5;
+    public static int playerid;
     ClientThread clientthread;
     private boolean waitingroom;
 

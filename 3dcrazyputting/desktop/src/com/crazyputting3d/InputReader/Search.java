@@ -147,7 +147,7 @@ public class Search {
      */
 
     public double [] get_treeX(){
-        double [] x0 = new double [20];
+        double [] x0 = new double [1000];
         int cnt = 0;
         for(int i = 0;i < words.size();i++){
             if(words.get(i)[0].equals("TreeX" + cnt_x_tree)){
@@ -169,7 +169,7 @@ public class Search {
      */
 
     public double [] get_treeY(){
-        double [] x0 = new double [20] ;
+        double [] x0 = new double [1000] ;
         int cnt = 0;
         for(int i = 0;i < words.size();i++){
             if(words.get(i)[0].equals("TreeY" + cnt_y_tree)){
@@ -191,7 +191,7 @@ public class Search {
      */
 
     public double [] get_treeR(){
-        double [] x0 = new double [20] ;
+        double [] x0 = new double [1000] ;
         int cnt = 0;
         for(int i = 0;i < words.size();i++){
             if(words.get(i)[0].equals("TreeR" + cnt_r_tree)){

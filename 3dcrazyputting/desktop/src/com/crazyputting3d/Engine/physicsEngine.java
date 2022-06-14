@@ -13,6 +13,7 @@ import com.crazyputting3d.MathSolvers.VerletsMethod;
 import com.crazyputting3d.MathSolvers.Solver;
 import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.InputReader.Function;
+import com.crazyputting3d.Objects.Wall;
 
 /**
  * The physics engine simulates the real-life motion of the ball in a golf
@@ -48,6 +49,7 @@ public class physicsEngine {
     private Search search;
     public Tree[] tree_storage;
     public Sandpit[] sand_storage;
+    public Wall[] wall_storage;
     public ArrayList<Double> coords = new ArrayList<Double>();
     public Double[] ball_coordinates_x = new Double[500000];
     public Double[] ball_coordinates_y = new Double[500000];
@@ -82,6 +84,7 @@ public class physicsEngine {
         this.mus = search.get_mus();
         tree_storage = this.tree_builder();
         sand_storage = this.sand_builder();
+        wall_storage = this.wall_builder();
         this.muks = search.get_muks();
         this.muss = search.get_muss();
         for (int i = 0; i < sand_storage.length; i++) {
@@ -95,6 +98,12 @@ public class physicsEngine {
         for (int i = 0; i < tree_storage.length; i++) {
             coords.add(tree_storage[i].getXStart());
             coords.add(tree_storage[i].getYStart());
+        }
+        for (int i = 0; i < wall_storage.length; i++) {
+            coords.add(wall_storage[i].getXEnd());
+            coords.add(wall_storage[i].getXStart());
+            coords.add(wall_storage[i].getYEnd());
+            coords.add(wall_storage[i].getYStart());
         }
         setTerrainCoords();
         initialDistance = Math.hypot(x0-xt, y0-yt);
@@ -186,6 +195,18 @@ public class physicsEngine {
         return sand_storage;
     }
 
+    public Wall[] wall_builder() throws IOException{
+        double[] x = search.get_wallX();
+        double [] y = search.get_sandPitY();
+        Wall[] wall_storage = new Wall[x.length/2];
+        int cnt = 0;
+        for (int i = 0; i < x.length; i +=2) {
+            wall_storage[cnt] = new Wall(x[i], x[i + 1], y[i], y[i +1]);
+            cnt++;
+        }
+        return wall_storage;
+    }
+
     /**
      * h() is used to get the height function value.
      * param values for x and y, to be input once calling function.getHeightFunction(x,
@@ -254,6 +275,16 @@ public class physicsEngine {
             Sandpit sand = sand_storage[i];
             if (sand.isInSandPit(x, y)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isInWall(double x, double y){
+        for (int i = 0; i < wall_storage.length; i++) {
+            Wall wall = wall_storage[i];
+            if(wall.isInWall(x,y)){
+                return true
             }
         }
         return false;

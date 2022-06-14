@@ -16,10 +16,11 @@ public class FunctionReader {
 
     protected static int i;
 
-    public static void writeCSV() throws IOException {
+    public static void writeCSV(int level) throws IOException {
         //Get the path file and create a Search object
         try (PrintWriter writer = new PrintWriter(new File("3dcrazyputting\\desktop\\src\\com\\crazyputting3d\\InputReader\\Function.java"))) {
-            Search search = new Search("input.txt");
+            Search search = new Search("inputFile"+level+".txt");
+
             //Create a stringbuilder and create the cheat.java file line by line
             StringBuilder sb = new StringBuilder();
             sb.append("package com.crazyputting3d.InputReader;");
@@ -40,8 +41,11 @@ public class FunctionReader {
             System.out.println(e.getMessage());
         }  
     }
-    
+
     public static void main(String[] args) throws IOException {
-        FunctionReader.writeCSV();
+        FunctionReader fr = new FunctionReader();
+        int level=1;
+        fr.writeCSV(2);
     }
+    
 }

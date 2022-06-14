@@ -69,8 +69,8 @@ public class physicsEngine {
      * Sets terrain coordinates.
      */
 
-    public physicsEngine() throws IOException {
-        search = new Search("input.txt");
+    public physicsEngine(int level) throws IOException {
+        search = new Search("inputFile"+level+".txt");
         this.x0 = search.get_x0();
         this.y0 = search.get_y0();
         coords.add(x0);

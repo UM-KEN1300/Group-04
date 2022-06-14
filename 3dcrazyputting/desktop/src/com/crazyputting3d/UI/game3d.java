@@ -150,6 +150,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         if(!bot&&!game) {
             waitingroom=true;
         } else waitingroom=false;
+
     }
 
     public void create() {
@@ -181,7 +182,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
          */
 
         try {
-            engine = new physicsEngine();
+            engine = new physicsEngine(level);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -416,7 +417,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     //Get all the values from search.java and put them into the appropriate variables
     public void getValues() {
         try {
-            search = new Search("input.txt");
+            search = new Search("inputFile"+level+".txt");
             search.run();
 
             xvaluesSP = search.get_sandPitX();
@@ -639,7 +640,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         for(int i=0; i<xvaluesW.length-1; i++) {
             double lengthX = xvaluesW[i+1] - xvaluesW[i];
             double lengthZ = zvaluesW[i+1] - zvaluesW[i];
-            System.out.println(xvaluesW[i]);
            // System.out.println(zvaluesW[i]);
                 Model wall = wallBuilder.createBox((float)lengthX, 1.5F, (float) lengthZ,new Material(ColorAttribute.createDiffuse(Color.BLACK)),
                         VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
@@ -802,7 +802,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             /*
                 When SPACE is pressed, the stick is rendered for the animation
              */
-            System.out.println(12);
             renderStick((float) ballX, (float) ballY, ballZ);
         }
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot&&playFlag==false){

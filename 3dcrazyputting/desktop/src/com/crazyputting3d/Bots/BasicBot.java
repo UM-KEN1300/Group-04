@@ -48,7 +48,7 @@ public class BasicBot extends Bot{
 
         try {
             physicsEngine enginetest;
-            enginetest = new physicsEngine();
+            enginetest = new physicsEngine(1);
             enginetest.setVelocities(speedX, speedX);
             if(engine.isInHole()) {
                 slopex=0;

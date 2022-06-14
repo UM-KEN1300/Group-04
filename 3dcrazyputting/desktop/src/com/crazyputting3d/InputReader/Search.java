@@ -41,7 +41,7 @@ public class Search {
      */
 
     public void run() throws IOException{
-        FileReader read=new FileReader("assets/"+filename);
+        FileReader read=new FileReader("3dcrazyputting/assets/levels/"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 

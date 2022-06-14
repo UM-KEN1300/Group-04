@@ -59,7 +59,7 @@ public class experimentmain {
          * a very small step size. 
          */
         
-        physicsEngine engine2 = new physicsEngine();
+        physicsEngine engine2 = new physicsEngine(1);
         StateVector vector2 = new StateVector(0, 0, 1, 0);
         physicsEngine.h = 0.0000001;
         physicsEngine.solvernum=2;
@@ -84,7 +84,7 @@ public class experimentmain {
                     continue;
                 }
                 StateVector vector = new StateVector(0, 0, 1, 0);
-                physicsEngine engine = new physicsEngine();
+                physicsEngine engine = new physicsEngine(1);
                 physicsEngine.h = 1.0/i;
                 physicsEngine.solvernum=j;
                 vector = engine.experimentloop(vector); 

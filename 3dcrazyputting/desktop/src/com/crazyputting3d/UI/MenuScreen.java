@@ -37,10 +37,12 @@ public class MenuScreen implements Screen {
 
     private LevelScreen levelScreen;
     private SettingScreen settingScreen;
+    private MultiplayerScreen multiplayerScreen;
 
 
     public MenuScreen(){
         levelScreen = new LevelScreen(this);
+        multiplayerScreen = new MultiplayerScreen(this);
         stage = new Stage();
         settingScreen = new SettingScreen();
         Gdx.input.setInputProcessor(stage);
@@ -139,6 +141,10 @@ public class MenuScreen implements Screen {
         multiplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+//                if(){
+//                  ((Game)Gdx.app.getApplicationListener()).setScreen(multiplayerScreen);
+//                }
+//                else
                 physicsEngine.solvernum = solverSelect.getSelectedIndex();
                 selectedSolver = solverSelect.getSelectedIndex();
                 selectedBot = botSelect.getSelectedIndex();
@@ -175,6 +181,7 @@ public class MenuScreen implements Screen {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         stage.draw();
+
 
 
 //

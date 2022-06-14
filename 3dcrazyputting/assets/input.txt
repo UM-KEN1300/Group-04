@@ -10,5 +10,3 @@ muks = 0.0
 muss = 0.0
 wallX1  -1<y<5
 wallY1 = 0<x<0.5
-wallX2 = -1<x<-0.5
-wallY2 = 0.5<y<3

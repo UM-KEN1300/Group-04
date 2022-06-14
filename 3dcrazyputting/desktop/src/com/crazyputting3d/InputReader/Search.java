@@ -19,6 +19,10 @@ public class Search {
     private int cnt_r_tree = 1;
     private int cnt_x_sand = 1;
     private int cnt_y_sand = 1;
+
+    private int cnt_x_wall = 1;
+    private int cnt_y_wall = 1;
+
     private int cnt_v0x = 1;
     private int cnt_v0y = 1;
 
@@ -37,7 +41,7 @@ public class Search {
      */
 
     public void run() throws IOException{
-        FileReader read=new FileReader("3dcrazyputting\\assets\\"+filename);
+        FileReader read=new FileReader("assets/"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 
@@ -242,6 +246,77 @@ public class Search {
      * return  double [] with all values for sandPitX, where sandPitX_start and sandPitX_end are stored after eachother;
      * eg {sandPitX1_start, sandPitX1_end, sandPitX2_start, sandPitX2_end}
      */
+
+    public double [] get_wallX(){
+        double [] temp = new double[30];
+        int tempd = 0;
+        for (int i = 0; i < words.size(); i++) {
+            String x0 = "";
+            String x01 = "";
+            int cnt = 0;
+            if(words.get(i)[0].equals("wallX" + cnt_x_wall)){
+                for(int k =0; k< words.get(i)[1].length(); k++){
+                    if(words.get(i)[1].charAt(k) == '<' && cnt == 0){
+                        for(int j =0; j< k; j++){
+                            x0 += words.get(i)[1].charAt(j);
+                        }
+                        temp[tempd] = Double.parseDouble(x0);
+                        cnt++;
+                        tempd++;
+                    }else if(words.get(i)[1].charAt(k) == '<' && cnt == 1){
+                        for(int j = k+1; j<words.get(i)[1].length(); j++){
+                            x01 += words.get(i)[1].charAt(j);
+                        }
+                        temp[tempd] = Double.parseDouble(x01);
+                        cnt++;
+                        tempd++;
+                    }
+                }
+                cnt_x_wall++;
+            }
+        }
+        double [] temp_FINAL = new double[tempd];
+        for (int s = 0; s < temp_FINAL.length; s++){
+            temp_FINAL[s] = temp[s];
+        }
+        return temp_FINAL;
+    }
+
+    public double [] get_wallY(){
+        double [] temp = new double[30];
+        int tempd = 0;
+        for (int i = 0; i < words.size(); i++) {
+            String x0 = "";
+            String x01 = "";
+            int cnt = 0;
+            if(words.get(i)[0].equals("wallY" + cnt_y_wall)){
+                for(int k =0; k< words.get(i)[1].length(); k++){
+                    if(words.get(i)[1].charAt(k) == '<' && cnt == 0){
+                        for(int j =0; j< k; j++){
+                            x0 += words.get(i)[1].charAt(j);
+                        }
+                        temp[tempd] = Double.parseDouble(x0);
+                        cnt++;
+                        tempd++;
+                    }else if(words.get(i)[1].charAt(k) == '<' && cnt == 1){
+                        for(int j = k+1; j<words.get(i)[1].length(); j++){
+                            x01 += words.get(i)[1].charAt(j);
+                        }
+                        temp[tempd] = Double.parseDouble(x01);
+                        cnt++;
+                        tempd++;
+                    }
+                }
+                cnt_y_wall++;
+            }
+        }
+        double [] temp_FINAL = new double[tempd];
+        for (int s = 0; s < temp_FINAL.length; s++){
+            temp_FINAL[s] = temp[s];
+        }
+        return temp_FINAL;
+    }
+
 
     public double [] get_sandPitX(){
         double [] temp = new double[30];

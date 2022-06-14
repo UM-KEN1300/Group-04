@@ -65,6 +65,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double [] zvaluesSP;
     private double [] xvaluesT;
     private double [] zvaluesT;
+
+    private double []xvaluesW;
+    private double []zvaluesW;
+
     private ModelBuilder stickBuilder;
     private Model stick;
     private ModelInstance stickInstance;
@@ -90,6 +94,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private ModelInstance bArrowInstance;
     private ArrayList<ModelInstance> terrain3d = new ArrayList<>();
     private ArrayList<ModelInstance> trees3d = new ArrayList<>();
+    private ArrayList<ModelInstance> wall3d = new ArrayList<>();
     private int screenWidth;
     private int screenHeight;
     private double ballArrowX;
@@ -222,6 +227,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         //Run the render Terrain and render Trees method
         renderTerrain();
         renderTrees(radius);
+        renderWallMaze();
     }
 
     //The render() method is fired 60 times per second and is used to update locations and logic variables
@@ -322,6 +328,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             modelBatch.render(trees3d.get(i), environment);
         }
 
+        //Render all the walls
+        for (int i = 0; i < wall3d.size(); i++) {
+            modelBatch.render(wall3d.get(i),environment);
+        }
+
         //Render the hole and the flag
         renderHole((float) holeX, (float) holeY, (float) holeRad);
         renderFlag((float) holeX, (float) holeY);
@@ -413,6 +424,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
             xvaluesT = search.get_treeX();
             zvaluesT = search.get_treeY();
+
+            xvaluesW = search.get_wallX();
+            zvaluesW = search.get_wallY();
 
             ballArrowX = search.get_x0()+0.3f;
             ballArrowY = search.get_y0();
@@ -618,6 +632,26 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         modelBatch.render(wallInstance1);
         modelBatch.render(wallInstance2);
     }
+
+    public void renderWallMaze(){
+        ModelBuilder wallBuilder;
+        wallBuilder = new ModelBuilder();
+        for(int i=0; i<xvaluesW.length-1; i++) {
+            double lengthX = xvaluesW[i+1] - xvaluesW[i];
+            double lengthZ = zvaluesW[i+1] - zvaluesW[i];
+            System.out.println(xvaluesW[i]);
+            System.out.println(zvaluesW[i]);
+                Model wall = wallBuilder.createBox((float)lengthX, 1.5F, (float) lengthZ,new Material(ColorAttribute.createDiffuse(Color.BLACK)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                ModelInstance model = new ModelInstance(wall);
+
+                model.transform.setToTranslation((float) (lengthX/2 + xvaluesW[i]),h(xvaluesW[i],zvaluesW[i]), (float) (lengthZ/2 +zvaluesW[i]));
+                wall3d.add(new ModelInstance(model));
+            }
+        }
+
+
+
 
     //Render the flag which is at the exact location of the hole
     public void renderFlag(float x, float y){

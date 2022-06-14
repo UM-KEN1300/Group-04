@@ -8,7 +8,7 @@ mus = 0.2
 heightProfile = 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8))
 muks = 0.0
 muss = 0.0
-sandPitX1 = -1<x<2
-sandPitY1 = -1<y<2
-wallX1 = 0<x<0.5
-wallY1 = -1<y<5
+wallX1  -1<y<5
+wallY1 = 0<x<0.5
+wallX2 = -1<x<-0.5
+wallY2 = 0.5<y<3

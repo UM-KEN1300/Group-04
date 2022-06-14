@@ -119,12 +119,10 @@ public class SettingScreen implements Screen{
     
 
                 if(!(fieldHoleXt.getText().equals("")&&fieldHoleYt.getText().equals(""))) {
-                    System.out.println("test2");
                     ie.editXtYt(Double.parseDouble(contentXt), Double.parseDouble(contentYt));
                 }
 
                 if(!(fieldHoleX0.getText().equals(""))&&!(fieldHoleY0.getText().equals(""))) {
-                    System.out.println("test3");
                     ie.editX0Y0(Double.parseDouble(contentX0), Double.parseDouble(contentY0));
                 }
 

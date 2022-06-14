@@ -128,6 +128,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean waitingroom;
     private boolean ballCam;
 
+
     /**
      *  The constructor of game3d brings a boolean variable which is responsible for checking if the program
      *  is going to run as a game or as the simulation. It contains another boolean which is responsible
@@ -140,6 +141,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         this.bot = bot;
         this.botInt = botInt;
         this.level = level;
+
         if(!bot&&!game) {
             waitingroom=true;
         } else waitingroom=false;

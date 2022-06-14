@@ -1,8 +1,11 @@
 package com.crazyputting3d.UI;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,9 +30,13 @@ public class VictoryScreenNew implements Screen {
     private Skin skin;
     private TextButton quitButton;
     private Sounds sound;
+    private TextButton playAgainButton;
+
+
     public VictoryScreenNew(game3d game){
         this.game = game;
         this.bot = game.getBot();
+
     }
     @Override
     public void show() {
@@ -65,10 +72,25 @@ public class VictoryScreenNew implements Screen {
 
         quitButton = new TextButton("Quit", skin);
         stage.addActor(quitButton);
+        playAgainButton = new TextButton("Play Again", skin);
+        playAgainButton.setPosition(300,200);
+        stage.addActor(playAgainButton);
+
         quitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
+            }
+        });
+        playAgainButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+                Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+                config.setForegroundFPS(60);
+                config.setTitle("Crazy Putting!");
+                config.setWindowedMode(600,360);
+                new Lwjgl3Application(new MenuTest(), config);
             }
         });
 

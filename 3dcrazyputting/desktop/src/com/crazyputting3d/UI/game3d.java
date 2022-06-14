@@ -25,7 +25,6 @@ import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.Network.Client;
 import com.crazyputting3d.Network.ClientThread;
 import com.crazyputting3d.InputReader.Function;
-import com.crazyputting3d.InputReader.FunctionReader;
 import com.crazyputting3d.Sounds.Sounds;
 import org.lwjgl.opengl.GL20;
 import java.io.IOException;
@@ -62,10 +61,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double holeX;
     private double holeY;
     private double holeRad;
-    double [] xvaluesSP;
-    double [] zvaluesSP;
-    double [] xvaluesT;
-    double [] zvaluesT;
+    private double [] xvaluesSP;
+    private double [] zvaluesSP;
+    private double [] xvaluesT;
+    private double [] zvaluesT;
     private ModelBuilder stickBuilder;
     private Model stick;
     private ModelInstance stickInstance;
@@ -102,7 +101,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private int fallFrames=-1;
     private boolean playFlag=false;
     private boolean arrowFlag=true;
-    static int numShotsTaken;
+    private int numShotsTaken;
     private BitmapFont font;
     private SpriteBatch batch;
     private Sounds sound;
@@ -117,22 +116,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean soundOn;
     private physicsEngine engine;
     private boolean game;
-    public static boolean bot;
+    private boolean bot;
     private double renderSpeed=0.0167;
-    private Search search2;
-    private double [] speedsX;
-    private double [] speedsY;
-    private int count;
     private boolean stopgame = true;
     private double[] radius;
-    public static Bot gameBot;
-    public int botInt;
+    private Bot gameBot;
+    private int botInt;
     private int level;
-
-    public static int playerid;
-    ClientThread clientthread;
+    private int playerid;
+    private ClientThread clientthread;
     private boolean waitingroom;
-
     private boolean ballCam;
 
     /**
@@ -266,18 +259,18 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
-                    new Lwjgl3Application(new VictoryScreenGame(), config);
+                    new Lwjgl3Application(new VictoryScreenGame(this), config);
                 } if(!bot&&!game) {
                     clientthread.getClient().deletePlayer(playerid);
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
-                    new Lwjgl3Application(new VictoryScreenGame(), config);
+                    new Lwjgl3Application(new VictoryScreenGame(this), config);
                 } else {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
-                    new Lwjgl3Application(new VictoryScreenGame(), config);
+                    new Lwjgl3Application(new VictoryScreenGame(this), config);
                 }
                 //sound.victory();
 
@@ -410,7 +403,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     //Get all the values from search.java and put them into the appropriate variables
     public void getValues() {
         try {
-            search = new Search("levels\\inputFile"+level+".txt");
+            search = new Search("input.txt");
             search.run();
 
             xvaluesSP = search.get_sandPitX();
@@ -886,6 +879,12 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+    public Bot getBot(){
+        return gameBot;
+    }
+    public int getNumOfShootsTaken(){
+        return numShotsTaken;
     }
 
 }

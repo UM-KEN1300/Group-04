@@ -9,13 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.crazyputting3d.Bots.Bot;
 import com.crazyputting3d.Sounds.Sounds;
 
 public class VictoryScreenNew implements Screen {
+    private game3d game;
+    private Bot bot;
     private Stage stage;
     private Texture texture;
     private Image splashImage;
-    private TextArea textField;
     private Label label;
     private Label label2;
     private Label label3;
@@ -24,8 +26,11 @@ public class VictoryScreenNew implements Screen {
     private double runtime;
     private Skin skin;
     private TextButton quitButton;
-    Sounds sound;
-
+    private Sounds sound;
+    public VictoryScreenNew(game3d game){
+        this.game = game;
+        this.bot = game.getBot();
+    }
     @Override
     public void show() {
         sound = new Sounds();
@@ -33,7 +38,7 @@ public class VictoryScreenNew implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("skin default/uiskin.json"));
-        numshots = game3d.numShotsTaken;
+        numshots = game.getNumOfShootsTaken();
 
         texture = new Texture("victory.png");
         splashImage = new Image(texture);
@@ -46,9 +51,9 @@ public class VictoryScreenNew implements Screen {
         label.setPosition(0,200);
         stage.addActor(label);
 
-        if(game3d.bot){
-            numberOfIterations = game3d.gameBot.getNumberOfIteretions();
-            runtime = game3d.gameBot.getRuntime();
+        if(bot!=null){
+            numberOfIterations = bot.getNumberOfIteretions();
+            runtime = bot.getRuntime();
             label2 = new Label("Number of iterations: " + numberOfIterations, skin);
             label2.setPosition(0,180);
             stage.addActor(label2);

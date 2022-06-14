@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.crazyputting3d.Engine.physicsEngine;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import org.lwjgl.system.CallbackI;
 
 
 public class MenuScreen implements Screen {
@@ -23,31 +22,28 @@ public class MenuScreen implements Screen {
     private TextButton playBot;
     private TextButton settings;
     private TextButton multiplayer;
-    private Dialog dialogBot;
-    private Dialog dialogSolver;
-    public static SelectBox<String> botSelect;
-    public static SelectBox<String> solverSelect;
+    public SelectBox<String> botSelect;
+    public SelectBox<String> solverSelect;
     private TextArea textField;
     private Table title;
     private Table quit;
     private TextButton quitButton;
-    public static Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
-
+    private Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
+    private int selectedSolver;
+    private int selectedBot;
 
     private Texture background;
     private Image splashImage;
 
-    private LevelScreen levelScreen = new LevelScreen();
-    private VictoryScreenNew victoryScreenNew = new VictoryScreenNew();
-    private SettingScreen settingScreen = new SettingScreen();
+    private LevelScreen levelScreen;
+    private SettingScreen settingScreen;
 
 
     public MenuScreen(){
+        levelScreen = new LevelScreen(this);
         stage = new Stage();
+        settingScreen = new SettingScreen();
         Gdx.input.setInputProcessor(stage);
-    }
-    public static void CloseScreen(){
-        config2.setInitialVisible(false);
     }
 
 
@@ -131,6 +127,8 @@ public class MenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
 
                 physicsEngine.solvernum = solverSelect.getSelectedIndex();
+                selectedSolver = solverSelect.getSelectedIndex();
+                selectedBot = botSelect.getSelectedIndex();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -142,6 +140,8 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 physicsEngine.solvernum = solverSelect.getSelectedIndex();
+                selectedSolver = solverSelect.getSelectedIndex();
+                selectedBot = botSelect.getSelectedIndex();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -203,5 +203,11 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+    public int getSelectedSolver(){
+        return selectedSolver;
+    }
+    public int getSelectedBot(){
+        return selectedBot;
     }
 }

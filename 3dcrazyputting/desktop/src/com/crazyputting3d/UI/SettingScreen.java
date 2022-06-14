@@ -12,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.crazyputting3d.InputReader.inputEditor;
 
-import java.awt.*;
-
 
 public class SettingScreen implements Screen{
     private Stage stage;
@@ -27,12 +25,9 @@ public class SettingScreen implements Screen{
     private String contentYt;
     private String contentX0;
     private String contentY0;
-    private int playerID;
     private inputEditor ie;
-
-
-
-
+    public SettingScreen(){
+    }
     @Override
     public void show() {
         ie = new inputEditor();
@@ -120,9 +115,6 @@ public class SettingScreen implements Screen{
                 }
                 if(!fieldHoleY0.getText().equals("")) {
                     contentY0 = fieldHoleY0.getText();
-                }
-                if(!playerTag.getText().equals("")) {
-                    game3d.playerid = Integer.parseInt(playerTag.getText());
                 }
     
 

@@ -6,16 +6,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class SplashScreen implements Screen {
     private Texture texture;
     private Image splashImage;
     private Stage stage = new Stage();
+    public SplashScreen(){
+    }
 
     @Override
     public void show() {

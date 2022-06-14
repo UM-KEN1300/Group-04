@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.crazyputting3d.Engine.physicsEngine;
-import com.crazyputting3d.Network.Client;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 
@@ -38,12 +37,10 @@ public class MenuScreen implements Screen {
 
     private LevelScreen levelScreen;
     private SettingScreen settingScreen;
-    private MultiplayerScreen multiplayerScreen;
 
 
     public MenuScreen(){
         levelScreen = new LevelScreen(this);
-        multiplayerScreen = new MultiplayerScreen(this);
         stage = new Stage();
         settingScreen = new SettingScreen();
         Gdx.input.setInputProcessor(stage);
@@ -142,24 +139,13 @@ public class MenuScreen implements Screen {
         multiplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                try {
-                    //Exception will be thrown here if server is offline
-                    Client client = new Client();
-                    client.GetPlayerData();
-
-                    //If no exception, join server
-                    physicsEngine.solvernum = solverSelect.getSelectedIndex();
-                    selectedSolver = solverSelect.getSelectedIndex();
-                    selectedBot = botSelect.getSelectedIndex();
-                    config2.setForegroundFPS(60);
-                    config2.setTitle("Crazy Putting!");
-                    config2.setWindowedMode(1280,720);
-                    new Lwjgl3Application(new game3d(false,false,botSelect.getSelectedIndex(),11), config2);
-                } catch (Exception e) {
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(multiplayerScreen);
-                }
-            
+                physicsEngine.solvernum = solverSelect.getSelectedIndex();
+                selectedSolver = solverSelect.getSelectedIndex();
+                selectedBot = botSelect.getSelectedIndex();
+                config2.setForegroundFPS(60);
+                config2.setTitle("Crazy Putting!");
+                config2.setWindowedMode(1280,720);
+                new Lwjgl3Application(new game3d(false,false,botSelect.getSelectedIndex(),11), config2);
             }
         });
         quit.addListener(new ChangeListener() {
@@ -189,7 +175,6 @@ public class MenuScreen implements Screen {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         stage.draw();
-
 
 
 //

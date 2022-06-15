@@ -45,7 +45,7 @@ public class FunctionReader {
     public static void main(String[] args) throws IOException {
         FunctionReader fr = new FunctionReader();
         int level=1;
-        fr.writeCSV(2);
+        fr.writeCSV(level);
     }
     
 }

@@ -448,6 +448,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             coords.add(xvaluesT[i]);
             coords.add(zvaluesT[i]);
         }
+        for(int i=0; i<xvaluesW.length; i++) {
+            coords.add(xvaluesW[i]);
+            coords.add(zvaluesW[i]);
+        }
     }
 
     //Use the array which stores the coordinates to calculate the min and max of X and Y

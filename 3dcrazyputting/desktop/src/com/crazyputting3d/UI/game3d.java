@@ -577,9 +577,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         for(int i=0; i<xvaluesW.length-1; i=i+2) {
             double lengthX = xvaluesW[i+1] - xvaluesW[i];
             double lengthZ = zvaluesW[i+1] - zvaluesW[i];
-                Model wall = wallBuilder.createBox((float)lengthX, 1.5F, (float) lengthZ,new Material(ColorAttribute.createDiffuse(Color.BLACK)),
+                Model wall = wallBuilder.createBox((float)lengthX, 0.5F, (float) lengthZ,new Material(ColorAttribute.createDiffuse(Color.BLACK)),
                         VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                ModelInstance model = new ModelInstance(wall,(float) (lengthX/2 + xvaluesW[i]),0, (float) (lengthZ/2 +zvaluesW[i]));
+                ModelInstance model = new ModelInstance(wall,(float) (lengthX/2 + xvaluesW[i]),0.25f, (float) (lengthZ/2 +zvaluesW[i]));
                 wall3d.add(new ModelInstance(model));
             }
         }

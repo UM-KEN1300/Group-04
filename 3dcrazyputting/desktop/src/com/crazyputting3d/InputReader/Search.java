@@ -41,7 +41,7 @@ public class Search {
      */
 
     public void run() throws IOException{
-        FileReader read=new FileReader("3dcrazyputting/assets/levels/"+filename);
+        FileReader read=new FileReader("assets/levels/"+filename);
         BufferedReader buffer_reader = new BufferedReader(read);
         String string;
 
@@ -248,7 +248,7 @@ public class Search {
      */
 
     public double [] get_wallX(){
-        double [] temp = new double[30];
+        double [] temp = new double[1000];
         int tempd = 0;
         for (int i = 0; i < words.size(); i++) {
             String x0 = "";
@@ -283,7 +283,7 @@ public class Search {
     }
 
     public double [] get_wallY(){
-        double [] temp = new double[30];
+        double [] temp = new double[1000];
         int tempd = 0;
         for (int i = 0; i < words.size(); i++) {
             String x0 = "";

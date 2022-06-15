@@ -4,13 +4,11 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -337,13 +335,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         //Render the hole and the flag
         renderHole((float) holeX, (float) holeY, (float) holeRad);
         renderFlag((float) holeX, (float) holeY);
-
-        //Render the wall
-        if(h(terrainX1,terrainZ1) == 0) {
-            renderWall((terrainX1 + terrainX2) / 2, terrainZ1);
-        }
-        else
-            renderWall2(terrainX1+terrainX2 + 7, terrainZ1);
         modelBatch.end();
 
         //Render the ball and the stick (if the game is played as the user)
@@ -579,73 +570,16 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         }
     }
 
-    /*
-        Render the wall which is placed in front of the terrain. It can visualise a given picture.
-        Which renderWall method is rendered and used is dependent on the function of the terrain.
-     */
-    public void renderWall(float x, float y){
-        float height = (terrainX2-terrainX1)/3;
-        float depth = (terrainZ1 +terrainZ2)/2;
-
-        Texture wallTexture = new Texture("logoGroup.png");
-        wallTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        wallTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        Material material = new Material(TextureAttribute.createDiffuse(wallTexture));
-
-        Texture wallTexture2 = new Texture("logoDKE.png");
-        wallTexture2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        wallTexture2.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        Material material2 = new Material(TextureAttribute.createDiffuse(wallTexture2));
-
-        ModelBuilder wallBuilder;
-        wallBuilder = new ModelBuilder();
-        Model wall1 = wallBuilder.createBox(terrainX2-terrainX1,0.5f,0.01f,new Material(material),VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-        ModelInstance wallInstance1 = new ModelInstance(wall1,x,h(x,y)+height/6,terrainZ1);
-
-        Model wall2 = wallBuilder.createBox(0.0001f,0.5f,terrainZ2-terrainZ1,new Material(material2),VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-        ModelInstance wallInstance2 = new ModelInstance(wall2,terrainX2,h(x,y)+height/6,depth);
-
-        modelBatch.render(wallInstance1);
-        modelBatch.render(wallInstance2);
-    }
-    public void renderWall2(float x, float y){
-        float height = (terrainX2-terrainX1)/3;
-        float depth = (terrainZ1 +terrainZ2)/2;
-
-        Texture wallTexture = new Texture("dkelogosmaller.png");
-        wallTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        wallTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
-        Texture wallTexture2 = new Texture("umlogo.png");
-        wallTexture2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        wallTexture2.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        Material material2 = new Material(TextureAttribute.createDiffuse(wallTexture2));
-
-
-        ModelBuilder wallBuilder;
-        wallBuilder = new ModelBuilder();
-        Model wall1 = wallBuilder.createBox(0.0001f,height,terrainZ2-terrainZ1,new Material(material2),VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-        ModelInstance wallInstance1 = new ModelInstance(wall1,terrainX2,h(x,y)+height/2.5f,depth);
-
-        Model wall2 = wallBuilder.createBox(0.0001f,height,terrainZ2-terrainZ1,new Material(material2),VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-        ModelInstance wallInstance2 = new ModelInstance(wall2,terrainX2,h(x,y)+height/2.5f,depth);
-
-        modelBatch.render(wallInstance1);
-        modelBatch.render(wallInstance2);
-    }
 
     public void renderWallMaze(){
         ModelBuilder wallBuilder;
         wallBuilder = new ModelBuilder();
-        for(int i=0; i<xvaluesW.length-1; i++) {
+        for(int i=0; i<xvaluesW.length-1; i=i+2) {
             double lengthX = xvaluesW[i+1] - xvaluesW[i];
             double lengthZ = zvaluesW[i+1] - zvaluesW[i];
-           // System.out.println(zvaluesW[i]);
                 Model wall = wallBuilder.createBox((float)lengthX, 1.5F, (float) lengthZ,new Material(ColorAttribute.createDiffuse(Color.BLACK)),
                         VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                ModelInstance model = new ModelInstance(wall);
-
-                model.transform.setToTranslation((float) (lengthX/2 + xvaluesW[i]),0, (float) (lengthZ/2 +zvaluesW[i]));
+                ModelInstance model = new ModelInstance(wall,(float) (lengthX/2 + xvaluesW[i]),0, (float) (lengthZ/2 +zvaluesW[i]));
                 wall3d.add(new ModelInstance(model));
             }
         }

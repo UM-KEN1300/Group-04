@@ -32,3 +32,5 @@ TreeR7 = 0.25
 TreeX8 = -1.5
 TreeY8 = -1.0
 TreeR8 = 0.25
+wallX1 = -1<y<5
+wallY1 = 0<x<0.5

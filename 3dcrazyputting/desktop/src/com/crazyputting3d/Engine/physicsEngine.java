@@ -197,7 +197,7 @@ public class physicsEngine {
 
     public Wall[] wall_builder() throws IOException{
         double[] x = search.get_wallX();
-        double [] y = search.get_sandPitY();
+        double [] y = search.get_wallY();
         Wall[] wall_storage = new Wall[x.length/2];
         int cnt = 0;
         for (int i = 0; i < x.length; i +=2) {
@@ -284,7 +284,7 @@ public class physicsEngine {
         for (int i = 0; i < wall_storage.length; i++) {
             Wall wall = wall_storage[i];
             if(wall.isInWall(x,y)){
-                return true
+                return true;
             }
         }
         return false;
@@ -458,6 +458,18 @@ public class physicsEngine {
                 }
             }
             if (isInTree(v.getX(), v.getY())) {
+                if (!botPlays) {
+                    ball_coordinates_x[counter] = x;
+                    ball_coordinates_y[counter] = y;
+                    counter++;
+                }
+                v.setVX(h);
+                v.setVY(h);
+                v.setX(x);
+                v.setY(y);
+                return v;
+            }
+            if (isInWall(v.getX(), v.getY())) {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;

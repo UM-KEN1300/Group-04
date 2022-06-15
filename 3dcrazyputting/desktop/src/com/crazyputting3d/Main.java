@@ -18,7 +18,7 @@ import com.crazyputting3d.UI.MenuTest;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        FunctionReader.writeCSV(1);
+        FunctionReader.writeCSV(2);
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("Crazy Putting!");

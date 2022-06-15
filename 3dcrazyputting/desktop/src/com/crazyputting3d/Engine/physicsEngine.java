@@ -89,8 +89,8 @@ public class physicsEngine {
         this.muss = search.get_muss();
         for (int i = 0; i < sand_storage.length; i++) {
             coords.add(sand_storage[i].getXEnd());
-            coords.add(sand_storage[i].getXStart());
             coords.add(sand_storage[i].getYEnd());
+            coords.add(sand_storage[i].getXStart());
             coords.add(sand_storage[i].getYStart());
         }
         coords.add(xt);
@@ -101,10 +101,11 @@ public class physicsEngine {
         }
         for (int i = 0; i < wall_storage.length; i++) {
             coords.add(wall_storage[i].getXEnd());
-            coords.add(wall_storage[i].getXStart());
             coords.add(wall_storage[i].getYEnd());
+            coords.add(wall_storage[i].getXStart());
             coords.add(wall_storage[i].getYStart());
         }
+        
         setTerrainCoords();
         initialDistance = Math.hypot(x0-xt, y0-yt);
     }

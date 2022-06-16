@@ -21,6 +21,7 @@ public class MenuScreen implements Screen {
     private Skin skinNeutralizer;
     private TextButton play;
     private TextButton playBot;
+    private TextButton playMaze;
     private TextButton settings;
     private TextButton multiplayer;
     public SelectBox<String> botSelect;
@@ -40,10 +41,13 @@ public class MenuScreen implements Screen {
     private SettingScreen settingScreen;
     private MultiplayerScreen multiplayerScreen;
     private LevelScreenBot levelScreenBot;
+    private MazeScreen mazeScreen;
+
 
     public MenuScreen(){
         levelScreen = new LevelScreen(this);
         levelScreenBot = new LevelScreenBot(this);
+        mazeScreen = new MazeScreen(this);
         stage = new Stage();
         settingScreen = new SettingScreen();
         multiplayerScreen = new MultiplayerScreen(this);
@@ -57,7 +61,7 @@ public class MenuScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         Table table = new Table();
-        table.setPosition(300,200);
+        table.setPosition(300,220);
 
         background = new Texture("title6.jpeg");
         splashImage = new Image(background);
@@ -90,6 +94,7 @@ public class MenuScreen implements Screen {
 
         play = new TextButton("Play",skin);
         playBot = new TextButton("PlayBot",skin);
+        playMaze = new TextButton("PlayMaze",skin);
         settings = new TextButton("Settings", skin);
         multiplayer = new TextButton("Multiplayer", skin);
 
@@ -113,8 +118,10 @@ public class MenuScreen implements Screen {
         table.row().pad(10,0,10,0);
         table.add(playBot).fillX().uniformX();
         table.row();
-        table.add(multiplayer);
+        table.add(playMaze).fillX().uniformX();
         table.row().pad(10,0,10,0);
+        table.add(multiplayer);
+        table.row();
         table.add(settings);
 
 
@@ -130,7 +137,12 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(levelScreenBot);
-//
+            }
+        });
+        playMaze.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ((Game)Gdx.app.getApplicationListener()).setScreen(mazeScreen);
             }
         });
         multiplayer.addListener(new ChangeListener() {

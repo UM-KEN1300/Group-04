@@ -88,7 +88,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>165 && Gdx.input.getX()<237 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 try {
-                    FunctionReader.writeCSV(11);
+                    FunctionReader.writeCSV(12);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -97,7 +97,7 @@ public class LevelScreenBot implements Screen {
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),11), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),12), config2);
 
             }
         }

@@ -39,9 +39,11 @@ public class MenuScreen implements Screen {
     private LevelScreen levelScreen;
     private SettingScreen settingScreen;
     private MultiplayerScreen multiplayerScreen;
+    private LevelScreenBot levelScreenBot;
 
     public MenuScreen(){
         levelScreen = new LevelScreen(this);
+        levelScreenBot = new LevelScreenBot(this);
         stage = new Stage();
         settingScreen = new SettingScreen();
         multiplayerScreen = new MultiplayerScreen(this);
@@ -127,15 +129,8 @@ public class MenuScreen implements Screen {
         playBot.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                physicsEngine.solvernum = solverSelect.getSelectedIndex();
-                selectedSolver = solverSelect.getSelectedIndex();
-                selectedBot = botSelect.getSelectedIndex();
-                config2.setForegroundFPS(60);
-                config2.setTitle("Crazy Putting!");
-                config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,botSelect.getSelectedIndex(),11), config2);
-
+                ((Game)Gdx.app.getApplicationListener()).setScreen(levelScreenBot);
+//
             }
         });
         multiplayer.addListener(new ChangeListener() {

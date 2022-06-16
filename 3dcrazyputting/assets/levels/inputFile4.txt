@@ -12,4 +12,3 @@ wallX1 = 4<x<5
 wallY1 = 0.5<y<0.6
 wallX2 = 4<x<5
 wallY2 = -0.5<y<-0.4
-

@@ -31,6 +31,7 @@ public class MenuScreen implements Screen {
     private Table quit;
     private CheckBox improvedPhysics;
     private CheckBox flyingBall;
+    private CheckBox bouncing;
     private TextButton quitButton;
     private Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
     private int selectedSolver;
@@ -120,9 +121,12 @@ public class MenuScreen implements Screen {
         improvedPhysics.setPosition(100, 10);
         flyingBall = new CheckBox("FlyingBall", skinNeutralizer);
         flyingBall.setPosition(250, 10);
+        bouncing = new CheckBox("Bouncing", skinNeutralizer);
+        bouncing.setPosition(350, 10);
 
         stage.addActor(improvedPhysics);
         stage.addActor(flyingBall);
+        stage.addActor(bouncing);
 
         table.add(play).fillX().uniformX();
         table.row().pad(10,0,10,0);
@@ -200,12 +204,19 @@ public class MenuScreen implements Screen {
         improvedPhysics.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 // if(flyingBall.isChecked()){
                    
+
+             //   if(improvedPhysics.isChecked()){
+                   
+            //     }
+            //     else
+             
                 // }
                 // else
             }
-        });
+    });
 
         flyingBall.addListener(new ChangeListener() {
             @Override
@@ -219,6 +230,17 @@ public class MenuScreen implements Screen {
             }
         });
 
+        bouncing.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                 //if(bouncing.isChecked()){
+                   
+                // }
+                // else
+                   
+              
+            }
+        });
 
     }
 

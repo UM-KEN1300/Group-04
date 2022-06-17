@@ -29,6 +29,8 @@ public class MenuScreen implements Screen {
     private TextArea textField;
     private Table title;
     private Table quit;
+    private CheckBox improvedPhysics;
+    private CheckBox flyingBall;
     private TextButton quitButton;
     private Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
     private int selectedSolver;
@@ -107,12 +109,20 @@ public class MenuScreen implements Screen {
         solverSelect = new SelectBox<String>(skinNeutralizer);
         solverSelect.setItems("Eulers Method", "Runge-Kutta 2", "Runge-Kutta 4", "Dormand Prince", "Verlets Method", "Predictor corrector");
 
+        
+        
         table1.add(botSelect);
         table1.row().pad(10,0,10,0);
         table1.add(solverSelect);
 
 
+        improvedPhysics = new CheckBox("improvedPhysics", skinNeutralizer);
+        improvedPhysics.setPosition(100, 10);
+        flyingBall = new CheckBox("FlyingBall", skinNeutralizer);
+        flyingBall.setPosition(250, 10);
 
+        stage.addActor(improvedPhysics);
+        stage.addActor(flyingBall);
 
         table.add(play).fillX().uniformX();
         table.row().pad(10,0,10,0);
@@ -186,7 +196,28 @@ public class MenuScreen implements Screen {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(settingScreen);
             }
         });
+        
+        improvedPhysics.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(flyingBall.isChecked()){
+                   
+                }
+                else
+            }
+        });
 
+        flyingBall.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(flyingBall.isChecked()){
+                   
+                }
+                else
+                   
+              
+            }
+        });
 
 
     }

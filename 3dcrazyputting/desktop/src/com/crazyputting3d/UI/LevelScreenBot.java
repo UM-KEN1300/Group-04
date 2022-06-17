@@ -14,10 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.crazyputting3d.Engine.physicsEngine;
-import com.crazyputting3d.InputReader.FunctionReader;
-
-import java.io.IOException;
-
 public class LevelScreenBot implements Screen {
     private Stage stage;
     private TextButton backButton;

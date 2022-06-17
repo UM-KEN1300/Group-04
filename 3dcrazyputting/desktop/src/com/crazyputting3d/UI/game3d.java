@@ -134,6 +134,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean ballCam;
     private AstarBot astarbot;
     public long astarduration;
+    public boolean animtoggle = true;
 
 
     /**
@@ -790,15 +791,22 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 astarbot.calculateMove();
                 long stopTime = System.nanoTime();
                 astarduration = (stopTime - startTime)/1000000;
+                if(animtoggle) {
+                    ballcoordsX = astarbot.getCoordsx();
+                    ballcoordsY = astarbot.getCoordsy();
+                    ballcoordsZ = astarbot.getCoordsz();
+                }
             } else gameBot.makeMove();
-
 
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;
-            ballcoordsX = engine.get_ball_coordinatesX();
-            ballcoordsY = engine.get_ball_coordinatesY();
-            ballcoordsZ = engine.get_ball_coordinatesZ();
+
+            if(!animtoggle || botInt!=5) {
+                ballcoordsX = engine.get_ball_coordinatesX();
+                ballcoordsY = engine.get_ball_coordinatesY();
+                ballcoordsZ = engine.get_ball_coordinatesZ();
+            }
             index=-1;
             treeHitted = true;
             isInWater = false;

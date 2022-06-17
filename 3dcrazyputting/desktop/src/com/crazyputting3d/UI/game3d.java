@@ -126,13 +126,14 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean stopgame = true;
     private double[] radius;
     private Bot gameBot;
-    private int botInt;
+    public int botInt;
     private int level;
     private int playerid;
     private ClientThread clientthread;
     private boolean waitingroom;
     private boolean ballCam;
     private AstarBot astarbot;
+    public long astarduration;
 
 
     /**
@@ -785,7 +786,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 move of the bot.
              */
             if(botInt==5) {
+                long startTime = System.nanoTime();
                 astarbot.calculateMove();
+                long stopTime = System.nanoTime();
+                astarduration = (stopTime - startTime)/1000000;
             } else gameBot.makeMove();
 
 

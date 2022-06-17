@@ -23,6 +23,8 @@ public class VictoryScreenNew implements Screen {
     private Label label2;
     private Label label3;
     private Label label4;
+    private Label label5;
+    private Label label6;
     private int numshots;
     private int numberOfIterations;
     private double runtime;
@@ -35,7 +37,6 @@ public class VictoryScreenNew implements Screen {
     public VictoryScreenNew(game3d game){
         this.game = game;
         this.bot = game.getBot();
-
     }
     @Override
     public void show() {
@@ -71,6 +72,16 @@ public class VictoryScreenNew implements Screen {
             label4 = new Label("Vx: " + bot.get_v0x() + "   Vy: " +bot.get_v0y(), skin);
             label4.setPosition(0,140);
             stage.addActor(label4);
+        }
+
+        if(game.botInt==5) {
+            label5 = new Label("Runtime: " + game.astarduration + " ms", skin);
+            label5.setPosition(0,160);
+            stage.addActor(label5); 
+
+            label6 = new Label("A-star Pathfinding Algorithm", skin);
+            label6.setPosition(0,180);
+            stage.addActor(label6); 
         }
 
         quitButton = new TextButton("Quit", skin);

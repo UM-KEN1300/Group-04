@@ -40,9 +40,22 @@ public class AstarBot {
     private double prevBally;
     private boolean notMoving;
 
+    private ArrayList<Float> allXCoords;
+    private ArrayList<Float> allYCoords;
+    private ArrayList<Float> allZCoords;
+    public float[] coordsx;
+    public float[] coordsy;
+    public float[] coordsz;
+
     public AstarBot(physicsEngine engine, int level) {
         this.engine = engine;
         this.level = level;
+        coordsx = new float[500000];
+        coordsy = new float[500000];
+        coordsz = new float[500000];
+        allXCoords = new ArrayList<>();
+        allYCoords = new ArrayList<>();
+        allZCoords = new ArrayList<>();
         function = new Function();
         getValues();
         setTerrainCoords();
@@ -93,7 +106,12 @@ public class AstarBot {
 
             engine.setVelocities(spdx, spdy);
             System.out.println("Run with: " + spdx+" "+spdy+" on iteration number: "+iteration);
-
+            
+            for(int i=0; i<engine.get_ball_coordinatesX().length; i++) {
+                allXCoords.add(engine.get_ball_coordinatesX()[i]);
+                allYCoords.add(engine.get_ball_coordinatesY()[i]);
+                allZCoords.add(engine.get_ball_coordinatesZ()[i]);
+            }
 
             if(engine.isInHole()) {
                 min = new StateVector(ballX,ballY,spdx,spdy);
@@ -120,6 +138,27 @@ public class AstarBot {
         }
         return min;
 
+    }
+
+    public float[] getCoordsx() {
+        for(int i=0; i<allXCoords.size(); i++) {
+            coordsx[i] = allXCoords.get(i);
+        }
+        return coordsx;
+    }
+
+    public float[] getCoordsy() {
+        for(int i=0; i<allYCoords.size(); i++) {
+            coordsy[i] = allYCoords.get(i);
+        }
+        return coordsy;
+    }
+
+    public float[] getCoordsz() {
+        for(int i=0; i<allZCoords.size(); i++) {
+            coordsz[i] = allZCoords.get(i);
+        }
+        return coordsz;
     }
 
     public void setDead(Astar astar) {
@@ -248,8 +287,8 @@ public class AstarBot {
     }
 
     public static void main(String[] args) throws IOException {
-        physicsEngine testEngine = new physicsEngine(15);
-        AstarBot abot = new AstarBot(testEngine,15);
+        physicsEngine testEngine = new physicsEngine(11);
+        AstarBot abot = new AstarBot(testEngine,11);
         abot.calculateMove();
 
     }

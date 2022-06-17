@@ -2,11 +2,6 @@ package com.crazyputting3d.Bots.Astar;
 
 import java.util.*;
 
-import com.badlogic.gdx.utils.Array;
-
-import java.awt.*;
-
-
 public class Astar {
     private Node startNode;
     private Node endNode;

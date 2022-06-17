@@ -200,20 +200,20 @@ public class MenuScreen implements Screen {
         improvedPhysics.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(flyingBall.isChecked()){
+                // if(flyingBall.isChecked()){
                    
-                }
-                else
+                // }
+                // else
             }
         });
 
         flyingBall.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(flyingBall.isChecked()){
+                // if(flyingBall.isChecked()){
                    
-                }
-                else
+                // }
+                // else
                    
               
             }

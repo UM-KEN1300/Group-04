@@ -22,6 +22,7 @@ public class VictoryScreenNew implements Screen {
     private Label label;
     private Label label2;
     private Label label3;
+    private Label label4;
     private int numshots;
     private int numberOfIterations;
     private double runtime;
@@ -66,6 +67,10 @@ public class VictoryScreenNew implements Screen {
             label3 = new Label("Runtime: " + runtime + " ms",skin);
             label3.setPosition(0,160);
             stage.addActor(label3);
+
+            label4 = new Label("Vx: " + bot.get_v0x() + "   Vy: " +bot.get_v0y(), skin);
+            label4.setPosition(0,140);
+            stage.addActor(label4);
         }
 
         quitButton = new TextButton("Quit", skin);

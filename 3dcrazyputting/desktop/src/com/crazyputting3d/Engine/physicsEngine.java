@@ -53,6 +53,7 @@ public class physicsEngine {
     public ArrayList<Double> coords = new ArrayList<Double>();
     public Double[] ball_coordinates_x = new Double[500000];
     public Double[] ball_coordinates_y = new Double[500000];
+    public Double[] ball_coordinates_z = new Double[500000];
     private boolean flag = false;
     private double slopex;
     private double slopey;
@@ -61,6 +62,7 @@ public class physicsEngine {
     private Solver solver;
     public static int solvernum;
     private StateVector tempV;
+    private boolean improvedPhysics=true;
 
 
     /**
@@ -122,6 +124,7 @@ public class physicsEngine {
     public void setVelocities(double v0x, double v0y) {
         ball_coordinates_x = new Double[500000];
         ball_coordinates_y = new Double[500000];
+        ball_coordinates_z = new Double[500000];
         counter = 0;
         StateVector newv = new StateVector(x0, y0, v0x, v0y);
         start(newv, false);
@@ -366,6 +369,7 @@ public class physicsEngine {
             if (!botPlays) {
                 ball_coordinates_x[counter] = x0;
                 ball_coordinates_y[counter] = y0;
+                ball_coordinates_z[counter] = h(x0,y0);
                 counter++;
             }
             return v;
@@ -375,6 +379,7 @@ public class physicsEngine {
             y0 = newV.getY();
             ball_coordinates_x[counter] = x0;
             ball_coordinates_y[counter] = y0;
+            ball_coordinates_z[counter] = h(x0,y0);
             counter++;
         }
         return newV;
@@ -384,11 +389,31 @@ public class physicsEngine {
      * acelerationX and acelerationY calculate the acceleration according to their param
      */
     public double acelerationX(double x, double y, double vx, double vy, double m) {
-        return -g * hxderivated(x, y) - m * g * vx / (Math.sqrt(vx * vx + vy * vy));
+        if(improvedPhysics==false)
+            return -g * hxderivated(x, y) - m * g * vx / (Math.sqrt(vx * vx + vy * vy));
+        else{
+            return acelerationXimproved(x, y, vx, vy, m);
+        }
     }
 
     public double acelerationY(double x, double y, double vx, double vy, double m) {
-        return -g * hyderivated(x, y) - m * g * vy / (Math.sqrt(vx * vx + vy * vy));
+        if(improvedPhysics==false)
+            return -g * hyderivated(x, y) - m * g * vy / (Math.sqrt(vx * vx + vy * vy));
+        else{
+            return acelerationYimproved(x, y, vx, vy, m);
+        }
+    }
+
+    public double acelerationXimproved(double x, double y, double vx, double vy, double m) {
+        double coef1 = 1+Math.pow(hxderivated(x, y),2)+Math.pow(hyderivated(x, y),2);
+        double coef2 = Math.pow(hxderivated(x, y)*vx+hyderivated(x, y)*vy,2);
+        return -g * hxderivated(x, y)/coef1 - m * g * vx / (Math.sqrt(coef1*(vx * vx + vy * vy+coef2)));
+    }
+
+    public double acelerationYimproved(double x, double y, double vx, double vy, double m) {
+        double coef1 = 1+Math.pow(hxderivated(x, y),2)+Math.pow(hyderivated(x, y),2);
+        double coef2 = Math.pow(hxderivated(x, y)*vx+hyderivated(x, y)*vy,2);
+        return -g * hyderivated(x, y)/coef1 - m * g * vy / (Math.sqrt(coef1*(vx * vx + vy * vy+coef2)));
     }
 
     /**
@@ -412,6 +437,7 @@ public class physicsEngine {
                 if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
+                    ball_coordinates_z[counter] = h(x,y);
                     counter++;
                 }
                 speedCounter++;
@@ -440,6 +466,7 @@ public class physicsEngine {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
+                    ball_coordinates_z[counter] = h(x,y);
                     counter++;
                 }
                 return null;
@@ -453,6 +480,7 @@ public class physicsEngine {
                     if (!botPlays) {
                         ball_coordinates_x[counter] = x;
                         ball_coordinates_y[counter] = y;
+                        ball_coordinates_z[counter] = h(x,y);
                         counter++;
                     }
                     return v;
@@ -462,6 +490,7 @@ public class physicsEngine {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
+                    ball_coordinates_z[counter] = h(x,y);
                     counter++;
                 }
                 v.setVX(h);
@@ -474,6 +503,7 @@ public class physicsEngine {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
+                    ball_coordinates_z[counter] = h(x,y);
                     counter++;
                 }
                 v.setVX(h);
@@ -487,6 +517,7 @@ public class physicsEngine {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
+                    ball_coordinates_z[counter] = h(x,y);
                     counter++;
                 }
                 v.setVX(h);
@@ -547,6 +578,26 @@ public class physicsEngine {
         float[] temp_FINAL = new float[words_y.size()];
         for (int s = 0; s < temp_FINAL.length; s++) {
             double d = words_y.get(s);
+            temp_FINAL[s] = (float) d;
+        }
+        return temp_FINAL;
+    }
+    /**
+     * get_ball_coordinatesZ() stores all z coordinates of the ball from start to
+     * end to be retrieved by game3d.
+     * returns float[] array of all ball z-coordinates.
+     */
+
+    public float[] get_ball_coordinatesZ() {
+        ArrayList<Double> words_z = new ArrayList<>();
+        for (int i = 0; i < ball_coordinates_z.length; i++) {
+            if (ball_coordinates_z[i] != null) {
+                words_z.add(ball_coordinates_z[i]);
+            }
+        }
+        float[] temp_FINAL = new float[words_z.size()];
+        for (int s = 0; s < temp_FINAL.length; s++) {
+            double d = words_z.get(s);
             temp_FINAL[s] = (float) d;
         }
         return temp_FINAL;
@@ -651,4 +702,8 @@ public class physicsEngine {
         }
         return v;
     }
+    public boolean flyOff(){
+        return false;
+    }
+    
 }

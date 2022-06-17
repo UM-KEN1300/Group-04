@@ -14,8 +14,6 @@ public class FunctionReader {
      * since   2022-05-11
      */
 
-    protected static int i;
-
     public static void writeCSV(int level) throws IOException {
         //Get the path file and create a Search object
         try (PrintWriter writer = new PrintWriter(new File("3dcrazyputting\\desktop\\src\\com\\crazyputting3d\\InputReader\\Function.java"))) {
@@ -43,9 +41,7 @@ public class FunctionReader {
     }
 
     public static void main(String[] args) throws IOException {
-        FunctionReader fr = new FunctionReader();
-        int level=1;
-        fr.writeCSV(level);
+        FunctionReader.writeCSV(1);
     }
     
 }

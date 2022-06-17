@@ -25,10 +25,8 @@ public class LevelScreenBot implements Screen {
     private Skin skin;
     private Texture texture;
     private Texture texture2;
-    private Texture texture3;
     private Image image;
     private Image image2;
-    private Image image3;
     private MenuScreen screen;
     public Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
     public LevelScreenBot(MenuScreen screen){

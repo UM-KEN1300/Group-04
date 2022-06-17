@@ -55,7 +55,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private float terrainZ2;
     private double ballX;
     private double ballY;
-    private float ballZ;
+    private double ballZ;
     private double holeX;
     private double holeY;
     private double holeRad;
@@ -99,6 +99,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private double ballArrowY;
     private float[] ballcoordsX = {0};
     private float[] ballcoordsY = {0};
+    private float[] ballcoordsZ = {0};
     private float timeSeconds = 0f;
     private int index=-1;
     private int fallFrames=-1;
@@ -199,7 +200,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         else if(botInt==1){
             this.gameBot = new NewtonRaphsonBot(engine);
         }
-
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
         this.screenHeight = Gdx.graphics.getHeight();
@@ -228,7 +228,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         renderTrees(radius);
         renderWallMaze();
     }
-
     //The render() method is fired 60 times per second and is used to update locations and logic variables
     public void render() {
         if(ballCam) {
@@ -261,7 +260,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                  * to be showed and exit the current game screen
                  */
                 //VictoryScreen VScreen = new VictoryScreen();
-                System.out.println(bot);
                 if (bot) {
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
@@ -338,9 +336,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         modelBatch.end();
 
         //Render the ball and the stick (if the game is played as the user)
-        renderBall((float) ballX, (float) ballY, ballZ, 0.05f);
+        renderBall((float) ballX, (float) ballY, (float)ballZ, 0.05f);
         if((game)||(!game&&!bot)) {
-            renderStick1((float) ballX, (float) ballY, ballZ);
+            renderStick1((float) ballX, (float) ballY, (float)ballZ);
         }
 
         //Render the text on the screen
@@ -385,7 +383,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     public void animateBall(int index) {
         ballX = ballcoordsX[index];
         ballY = ballcoordsY[index];
-        ballZ = h(ballX,ballY);
+        ballZ = ballcoordsZ[index];
     }
 
     //Animation of the ball when it is falling and trigger the sound when it goes in the hole
@@ -542,9 +540,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
 
                 }
-
-
-
 
             }
         }
@@ -731,6 +726,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             arrowFlag = false;
             ballcoordsX = engine.get_ball_coordinatesX();
             ballcoordsY = engine.get_ball_coordinatesY();
+            ballcoordsZ = engine.get_ball_coordinatesZ();
             index=-1;
             treeHitted = true;
             isInWater = false;
@@ -740,7 +736,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             /*
                 When SPACE is pressed, the stick is rendered for the animation
              */
-            renderStick((float) ballX, (float) ballY, ballZ);
+            renderStick((float) ballX, (float) ballY, (float)ballZ);
         }
         if(input.isKeyJustPressed(Input.Keys.SPACE)&&!game&&!bot&&playFlag==false){
             /*
@@ -774,6 +770,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             arrowFlag = false;
             ballcoordsX = engine.get_ball_coordinatesX();
             ballcoordsY = engine.get_ball_coordinatesY();
+            ballcoordsZ = engine.get_ball_coordinatesZ();
             index=-1;
             treeHitted = true;
             isInWater = false;
@@ -792,6 +789,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             arrowFlag = false;
             ballcoordsX = engine.get_ball_coordinatesX();
             ballcoordsY = engine.get_ball_coordinatesY();
+            ballcoordsZ = engine.get_ball_coordinatesZ();
             index=-1;
             treeHitted = true;
             isInWater = false;

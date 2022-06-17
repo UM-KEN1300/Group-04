@@ -135,7 +135,7 @@ public class MazeScreen implements Screen{
         if(Gdx.input.getX()>488 && Gdx.input.getX()<557 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 try {
-                    FunctionReader.writeCSV(11);
+                    FunctionReader.writeCSV(15);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -144,7 +144,7 @@ public class MazeScreen implements Screen{
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),11), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),15), config2);
 
             }
         }

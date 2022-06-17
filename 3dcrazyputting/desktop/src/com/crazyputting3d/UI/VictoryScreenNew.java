@@ -96,6 +96,7 @@ public class VictoryScreenNew implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
+                System.exit(0);
             }
         });
         playAgainButton.addListener(new ChangeListener() {

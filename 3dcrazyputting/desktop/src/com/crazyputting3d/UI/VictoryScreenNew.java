@@ -59,19 +59,21 @@ public class VictoryScreenNew implements Screen {
         stage.addActor(label);
 
         if(bot!=null){
-            numberOfIterations = bot.getNumberOfIteretions();
-            runtime = bot.getRuntime();
-            label2 = new Label("Number of iterations: " + numberOfIterations, skin);
-            label2.setPosition(0,180);
-            stage.addActor(label2);
-
-            label3 = new Label("Runtime: " + runtime + " ms",skin);
-            label3.setPosition(0,160);
-            stage.addActor(label3);
-
-            label4 = new Label("Vx: " + bot.get_v0x() + "   Vy: " +bot.get_v0y(), skin);
-            label4.setPosition(0,140);
-            stage.addActor(label4);
+            if(bot.getRuntime()!=0) {
+                numberOfIterations = bot.getNumberOfIteretions();
+                runtime = bot.getRuntime();
+                label2 = new Label("Number of iterations: " + numberOfIterations, skin);
+                label2.setPosition(0,180);
+                stage.addActor(label2);
+    
+                label3 = new Label("Runtime: " + runtime + " ms",skin);
+                label3.setPosition(0,160);
+                stage.addActor(label3);
+    
+                label4 = new Label("Vx: " + bot.get_v0x() + "   Vy: " +bot.get_v0y(), skin);
+                label4.setPosition(0,140);
+                stage.addActor(label4);
+            }
         }
 
         if(game.botInt==5) {

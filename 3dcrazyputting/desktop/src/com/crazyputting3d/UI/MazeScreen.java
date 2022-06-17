@@ -35,10 +35,10 @@ public class MazeScreen implements Screen{
     @Override
     public void show() {
         stage = new Stage();
-        texture = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/levelBot.jpeg");
+        texture = new Texture("3dcrazyputting/assets/levelBot.jpeg");
         image = new Image(texture);
         image.setPosition(-25,100);
-        texture2 = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/LevelBot background.png");
+        texture2 = new Texture("3dcrazyputting/assets/LevelBot background.png");
         image2 = new Image(texture2);
 
         final MenuScreen menuScreen = new MenuScreen();
@@ -80,14 +80,14 @@ public class MazeScreen implements Screen{
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),13), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),11), config2);
             }
         }
 
         if(Gdx.input.getX()>165 && Gdx.input.getX()<237 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 try {
-                    FunctionReader.writeCSV(11);
+                    FunctionReader.writeCSV(12);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -96,7 +96,7 @@ public class MazeScreen implements Screen{
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),11), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),12), config2);
 
             }
         }
@@ -112,7 +112,7 @@ public class MazeScreen implements Screen{
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),12), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),13), config2);
             }
         }
         if(Gdx.input.getX()>381 && Gdx.input.getX()<457 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
@@ -133,7 +133,7 @@ public class MazeScreen implements Screen{
         if(Gdx.input.getX()>488 && Gdx.input.getX()<557 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 try {
-                    FunctionReader.writeCSV(11);
+                    FunctionReader.writeCSV(15);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -142,7 +142,7 @@ public class MazeScreen implements Screen{
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),11), config2);
+                new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),15), config2);
 
             }
         }

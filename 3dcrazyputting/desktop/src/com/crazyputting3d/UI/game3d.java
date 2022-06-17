@@ -19,6 +19,7 @@ import com.crazyputting3d.Bots.BruteForceBot;
 import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
 import com.crazyputting3d.Bots.RandomBot;
+import com.crazyputting3d.Bots.Astar.AstarBot;
 import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.Network.Client;
 import com.crazyputting3d.Network.ClientThread;
@@ -131,6 +132,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private ClientThread clientthread;
     private boolean waitingroom;
     private boolean ballCam;
+    private AstarBot astarbot;
 
 
     /**
@@ -200,6 +202,10 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         else if(botInt==1){
             this.gameBot = new NewtonRaphsonBot(engine);
         }
+        else if(botInt==5){
+            astarbot = new AstarBot(engine, level);
+        }
+
         //Create the camera and set variables to the length and the width of the camera
         this.screenWidth = Gdx.graphics.getWidth();
         this.screenHeight = Gdx.graphics.getHeight();
@@ -517,8 +523,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         for(float x=terrainX2; x>=terrainX1;x=x-0.2f) {
             for(float z=terrainZ2; z>=terrainZ1; z=z-0.2f) {
 
-
-
                 if (h(x, z) < 0) {
                     color = Color.NAVY;
                 } else {
@@ -537,10 +541,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     ModelInstance model = new ModelInstance(arrow1);
                     model.transform.setToTranslation(x,h(x,z),z);
                     terrain3d.add(model);
-
-
                 }
-
             }
         }
     }
@@ -783,7 +784,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 When SPACE is pressed and the game is in Bot mode, visualise the next
                 move of the bot.
              */
-            gameBot.makeMove();
+            if(botInt==5) {
+                astarbot.calculateMove();
+            } else gameBot.makeMove();
+
+
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;

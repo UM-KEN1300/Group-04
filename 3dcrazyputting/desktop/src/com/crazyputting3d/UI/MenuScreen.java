@@ -101,7 +101,7 @@ public class MenuScreen implements Screen {
        // dialogBot = new Dialog("Select Bot and Solver", skin);
         //dialogBot.setSize(250,150);
         botSelect = new SelectBox<String>(skinNeutralizer);
-        botSelect.setItems("Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force");
+        botSelect.setItems("Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force", "A* Maze");
         //dialogBot.getContentTable().add(botSelect);
         //dialogBot.getContentTable().row();
         solverSelect = new SelectBox<String>(skinNeutralizer);
@@ -136,12 +136,16 @@ public class MenuScreen implements Screen {
         playBot.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                selectedSolver = solverSelect.getSelectedIndex();
+                selectedBot = botSelect.getSelectedIndex();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(levelScreenBot);
             }
         });
         playMaze.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                selectedSolver = solverSelect.getSelectedIndex();
+                selectedBot = botSelect.getSelectedIndex();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(mazeScreen);
             }
         });

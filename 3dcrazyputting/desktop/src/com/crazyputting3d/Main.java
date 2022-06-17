@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.crazyputting3d.InputReader.FunctionReader;
 import com.crazyputting3d.UI.MenuTest;
 
 /**
@@ -18,16 +17,10 @@ import com.crazyputting3d.UI.MenuTest;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        try{
-        FunctionReader.writeCSV(2);
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("Crazy Putting!");
         config.setWindowedMode(600,360);
         new Lwjgl3Application(new MenuTest(), config);
-        }
-        catch(NullPointerException e){
-
-        };
     }
 }

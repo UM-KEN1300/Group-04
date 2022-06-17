@@ -37,10 +37,10 @@ public class MazeScreen implements Screen{
     @Override
     public void show() {
         stage = new Stage();
-        texture = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/levelBot.jpeg");
+        texture = new Texture("3dcrazyputting/assets/levelBot.jpeg");
         image = new Image(texture);
         image.setPosition(-25,100);
-        texture2 = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/LevelBot background.png");
+        texture2 = new Texture("3dcrazyputting/assets/LevelBot background.png");
         image2 = new Image(texture2);
 
         final MenuScreen menuScreen = new MenuScreen();

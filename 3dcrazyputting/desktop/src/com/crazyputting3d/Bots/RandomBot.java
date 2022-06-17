@@ -82,6 +82,8 @@ public class RandomBot extends Bot{
             if(tempEuclidianDistance<radius){
                 min.setVX(speedX);
                 min.setVY(speedY);
+                vx0 = speedX;
+                vy0 = speedY;
                 flag=false;
                 return min;
             }
@@ -94,6 +96,8 @@ public class RandomBot extends Bot{
             counter++;
             if(counter>=5000) {
                 flag=false;
+                vx0 = speedX;
+                vy0 = speedY;
                 return min;
             }
         }

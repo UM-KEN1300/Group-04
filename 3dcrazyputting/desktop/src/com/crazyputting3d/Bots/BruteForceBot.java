@@ -50,6 +50,8 @@ public class BruteForceBot extends Bot{
                     if (tempEuclidianDistance < radius) {
                         min.setVX(vx);
                         min.setVY(vy);
+                        vx0 = vx;
+                        vy0 = vy;
                         return min;
                     }
                     if (tempEuclidianDistance < euklidianDistance) {
@@ -61,6 +63,8 @@ public class BruteForceBot extends Bot{
                 }
             }
         }
+        vx0 = min.getVX();
+        vy0 = min.getVY();
         return min;
     }
 }

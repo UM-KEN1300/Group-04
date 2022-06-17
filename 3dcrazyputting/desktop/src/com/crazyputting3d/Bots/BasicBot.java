@@ -65,7 +65,8 @@ public class BasicBot extends Bot{
          speedY = speedY+slopey;
 
         StateVector min = new StateVector(x0,y0,speedX,speedY);
-
+        vx0 = speedX;
+        vy0 = speedY;
         return min;
     }
 }

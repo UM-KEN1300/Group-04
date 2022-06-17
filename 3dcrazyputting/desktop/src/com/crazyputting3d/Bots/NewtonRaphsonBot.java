@@ -89,6 +89,8 @@ public class NewtonRaphsonBot extends Bot{
                 closestDistance=tempEuclidianDistance3;
             }
         }
+        vx0 =  minVx;
+        vy0 =  minVy;
         min = new StateVector(x0, y0, minVx, minVy);
 
         return min;

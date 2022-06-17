@@ -26,6 +26,8 @@ public abstract class Bot {
     protected int i = 1;
     protected int numberOfIterations;
     protected double runtime;
+    protected double vx0;
+    protected double vy0;
 
 
     /**
@@ -75,5 +77,12 @@ public abstract class Bot {
      */
     public double getRuntime(){
         return runtime;
+    }
+
+    public double get_v0x(){
+        return vx0;
+    }
+    public double get_v0y(){
+        return vy0;
     }
 }

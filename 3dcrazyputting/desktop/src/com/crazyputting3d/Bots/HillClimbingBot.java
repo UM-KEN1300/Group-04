@@ -116,12 +116,16 @@ public class HillClimbingBot extends Bot {
                     i=2*i;
                     v=5;
                     if(angle_step>=pi){
+                        vx0 = vx;
+                        vy0 = vy;
                         return new StateVector(x0, y0, vx, vy);
                     }
                 }
             }
 
         }
+        vx0 =  Math.cos(angle) * v;
+        vy0 =  Math.sin(angle) * v;
         min = new StateVector(x0, y0, Math.cos(angle) * v, Math.sin(angle) * v);
         return min;
     }

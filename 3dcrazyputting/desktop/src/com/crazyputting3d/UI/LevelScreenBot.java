@@ -37,10 +37,10 @@ public class LevelScreenBot implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-        texture = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/levelBot.jpeg");
+        texture = new Texture("3dcrazyputting\\assets\\levelBot.jpeg");
         image = new Image(texture);
         image.setPosition(-25,100);
-        texture2 = new Texture("/Users/arjenvangelder/Documents/GitHub/Group-04/3dcrazyputting/assets/LevelBot background.png");
+        texture2 = new Texture("3dcrazyputting\\assets\\LevelBot background.png");
         image2 = new Image(texture2);
 
         final MenuScreen menuScreen = new MenuScreen();
@@ -71,28 +71,17 @@ public class LevelScreenBot implements Screen {
 
         if(Gdx.input.getX()>59 && Gdx.input.getX()<131 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(1);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
+                System.out.println(screen.getSelectedBot());
                 new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),1), config2);
             }
         }
 
         if(Gdx.input.getX()>165 && Gdx.input.getX()<237 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(2);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -103,12 +92,6 @@ public class LevelScreenBot implements Screen {
         }
         if(Gdx.input.getX()>272 && Gdx.input.getX()<343 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(3);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -118,12 +101,6 @@ public class LevelScreenBot implements Screen {
         }
         if(Gdx.input.getX()>381 && Gdx.input.getX()<457 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(4);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -133,12 +110,6 @@ public class LevelScreenBot implements Screen {
         }
         if(Gdx.input.getX()>488 && Gdx.input.getX()<557 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(5);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");

@@ -189,7 +189,7 @@ public class AstarBot {
                     }
                 }
                 //Set dead node for water
-                if(function.getHeightFunction((x-Math.abs(terrainX1)*10)/10, (y-Math.abs(terrainZ1)*10)/10)<0) {
+                if(function.getHeightFunction(level,(x-Math.abs(terrainX1)*10)/10, (y-Math.abs(terrainZ1)*10)/10)<0) {
                     //System.out.println(x+" "+y);
                     astar.setDeadNode(x, y);
                 }

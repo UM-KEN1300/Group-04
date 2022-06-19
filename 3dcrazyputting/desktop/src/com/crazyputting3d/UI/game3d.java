@@ -408,7 +408,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     //Get the function of the terrain from cheat.java
     public float h(double x, double y){
         Function cheat = new Function();
-        return (float) cheat.getHeightFunction(x, y);
+        return (float) cheat.getHeightFunction(level,x, y);
     }
 
     //Get all the values from search.java and put them into the appropriate variables

@@ -62,7 +62,8 @@ public class physicsEngine {
     private Solver solver;
     public static int solvernum;
     private StateVector tempV;
-    private boolean improvedPhysics=true;
+    private boolean improvedPhysics=false;
+    private int level;
 
 
     /**
@@ -107,7 +108,7 @@ public class physicsEngine {
             coords.add(wall_storage[i].getXStart());
             coords.add(wall_storage[i].getYStart());
         }
-        
+        this.level = level;
         setTerrainCoords();
         initialDistance = Math.hypot(x0-xt, y0-yt);
     }
@@ -220,7 +221,7 @@ public class physicsEngine {
 
     public double h(double x, double y) {
         Function function = new Function();
-        return function.getHeightFunction(x, y);
+        return function.getHeightFunction(level,x, y);
     }
 
     /**

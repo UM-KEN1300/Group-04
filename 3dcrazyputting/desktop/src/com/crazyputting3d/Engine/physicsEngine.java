@@ -62,8 +62,10 @@ public class physicsEngine {
     protected Solver solver;
     public static int solvernum;
     protected StateVector tempV;
-    protected boolean improvedPhysics=true;
+    public static boolean improvedPhysics = false;
     protected int level;
+    public static boolean fly = false;
+    public static boolean bouncing = false;
 
 
     /**

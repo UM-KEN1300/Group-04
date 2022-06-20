@@ -3,8 +3,6 @@ package com.crazyputting3d.Bots.Astar;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.stream.StreamSupport;
-
 import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.InputReader.Function;
 import com.crazyputting3d.InputReader.Search;
@@ -31,6 +29,7 @@ public class AstarBot {
     private double[] zvaluesT;
     private double[] xvaluesW;
     private double[] zvaluesW;
+    private double runtime;
 
     private ArrayList<Double> coords = new ArrayList<>();
     private ArrayList<Node> path = new ArrayList<>();
@@ -57,6 +56,7 @@ public class AstarBot {
         function = new Function();
         getValues();
         setTerrainCoords();
+        long startTime = System.nanoTime();
         Node start = getStart();
         Node end = getEnd();
         astar = new Astar(start, end, (int) terrainX2, (int) terrainZ2, (int) terrainX1, (int) terrainZ1);
@@ -76,6 +76,9 @@ public class AstarBot {
         }
         crucialPoints.add(end);
         panel.run();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        runtime += duration/1000000;
     }
 
     public void calculateMove() {
@@ -115,6 +118,9 @@ public class AstarBot {
             coordsz[i] = allZCoords.get(i);
         }
         return coordsz;
+    }
+    public double getRuntime(){
+        return runtime;
     }
 
     public void setDead(Astar astar) {
@@ -244,12 +250,5 @@ public class AstarBot {
         terrainX2 = (int) (biggestX + offset);
         terrainZ1 = (int) (smallestY - offset);
         terrainZ2 = (int) (biggestY + offset);
-    }
-
-    public static void main(String[] args) throws IOException {
-        physicsEngine testEngine = new physicsEngine(11);
-        AstarBot abot = new AstarBot(testEngine, 11);
-        abot.calculateMove();
-
     }
 }

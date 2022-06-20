@@ -58,7 +58,18 @@ public class physicsEngineForFlying extends physicsEngine{
             double velocity = Math.sqrt(vx * vx + vy * vy);
             double z = h(x,y);
             if(!flying){
-                if(acelerationX(x, y, vx, vy, m)<=0&&acelerationY(x, y, vx, vy, m)<=0){
+                if (isFinish(x, y)) {
+                    return v;
+                }
+                else if (isInSandPit(x, y)) {
+                    m = muks;
+                    ms = muss;
+                } else {
+                    m = muk;
+                    ms = mus;
+                }
+                StateVector newv = solver.run(v,m);
+                if(h(newv.getX(),newv.getY())-h(x,y)>=0){
                     angle = Math.tanh(Math.hypot(hxderivated(v.getX(), v.getY()), hyderivated(v.getX(), v.getY())));
                     double potentialz =  h*velocity * Math.tan(angle)
                              - g / 2 * Math.pow(h*velocity, 2) / Math.pow(velocity * Math.cos(angle), 2);

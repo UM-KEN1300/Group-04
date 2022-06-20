@@ -135,7 +135,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean waitingroom;
     private boolean ballCam;
     private AstarBot astarbot;
-    public long astarduration;
+    public double astarduration;
 
 
     /**
@@ -694,7 +694,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         }
         if(input.isKeyPressed(Input.Keys.UP)&&((game)||(!game&&!bot))) {
             //Increase the velocity of the next shot when pressing the UP arrow
-            if(velocity<=4.9) {
+            if(velocity<=9.9) {
                 velocity += 0.1;
             }
         }
@@ -796,7 +796,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
              */
             if(botInt==5) {
                 astarbot.makeMove();
-                
+                astarduration = astarbot.getRuntime();
             } else gameBot.makeMove();
 
             ballcoordsX = engine.get_ball_coordinatesX();

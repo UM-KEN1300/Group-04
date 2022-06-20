@@ -47,7 +47,7 @@ public class physicsEngine {
     protected double boundYEnd;
     public int counter = 0;
     public int speedCounter = 0;
-    public final double g = 9.81;
+    public final static double g = 9.81;
     protected Search search;
     public Tree[] tree_storage;
     public Sandpit[] sand_storage;
@@ -63,6 +63,7 @@ public class physicsEngine {
     protected double initialDistance;
     protected Solver solver;
     public static int solvernum;
+    public static int botNum;
     protected StateVector tempV;
     public static boolean improvedPhysics = false;
     protected int level;
@@ -128,10 +129,12 @@ public class physicsEngine {
      */
 
     public void setVelocities(double v0x, double v0y) {
-        ball_coordinates_x = new Double[500000];
-        ball_coordinates_y = new Double[500000];
-        ball_coordinates_z = new Double[500000];
-        counter = 0;
+        if(botNum!=5){
+            ball_coordinates_x = new Double[500000];
+            ball_coordinates_y = new Double[500000];
+            ball_coordinates_z = new Double[500000];
+            counter = 0;
+        }
         StateVector newv = new StateVector(x0, y0, v0x, v0y);
         start(newv, false);
     }

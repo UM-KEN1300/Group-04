@@ -32,7 +32,6 @@ public class MenuScreen implements Screen {
     private CheckBox improvedPhysics;
     private CheckBox flyingBall;
     private CheckBox bouncing;
-    private CheckBox mazeAlgorithm;
     private CheckBox aDiagonal;
     private TextButton quitButton;
     private Lwjgl3ApplicationConfiguration config2 = new Lwjgl3ApplicationConfiguration();
@@ -125,15 +124,12 @@ public class MenuScreen implements Screen {
         flyingBall.setPosition(250, 10);
         bouncing = new CheckBox("Bouncing", skinNeutralizer);
         bouncing.setPosition(350, 10);
-        mazeAlgorithm = new CheckBox("MazeAlgorithm", skinNeutralizer);
-        mazeAlgorithm.setPosition(450,10);
         aDiagonal = new CheckBox("A*Diagonal", skinNeutralizer);
         aDiagonal.setPosition(100,30);
 
         stage.addActor(improvedPhysics);
         stage.addActor(flyingBall);
         stage.addActor(bouncing);
-        stage.addActor(mazeAlgorithm);
         stage.addActor(aDiagonal);
 
         table.add(play).fillX().uniformX();
@@ -243,15 +239,6 @@ public class MenuScreen implements Screen {
                 }
                    
               
-            }
-        });
-
-        mazeAlgorithm.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(mazeAlgorithm.isChecked()){
-                    game3d.animtoggle = true;
-                 } else game3d.animtoggle = false;
             }
         });
         aDiagonal.addListener(new ChangeListener() {

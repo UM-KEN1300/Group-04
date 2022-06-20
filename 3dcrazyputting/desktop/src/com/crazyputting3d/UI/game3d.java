@@ -136,7 +136,6 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean ballCam;
     private AstarBot astarbot;
     public long astarduration;
-    public static boolean animtoggle = false;
 
 
     /**
@@ -211,7 +210,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
             this.gameBot = new NewtonRaphsonBot(engine);
         }
         else if(botInt==5){
-            astarbot = new AstarBot(engine, level);
+            this.astarbot = new AstarBot(engine, level);
         }
         else if(botInt==6){
             this.gameBot = new SimulatedAnnealing(engine);
@@ -282,7 +281,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                     config.setTitle("Crazy Putting 3D!");
                     config.setWindowedMode(600, 360);
                     new Lwjgl3Application(new VictoryScreenGame(this), config);
-                } if(!bot&&!game) {
+                } else if(!bot&&!game) {
                     clientthread.getClient().deletePlayer(playerid);
                     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                     config.setTitle("Crazy Putting 3D!");
@@ -796,26 +795,17 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
                 move of the bot.
              */
             if(botInt==5) {
-                long startTime = System.nanoTime();
-                astarbot.calculateMove();
-                long stopTime = System.nanoTime();
-                astarduration = (stopTime - startTime)/1000000;
-                if(animtoggle) {
-                    ballcoordsX = astarbot.getCoordsx();
-                    ballcoordsY = astarbot.getCoordsy();
-                    ballcoordsZ = astarbot.getCoordsz();
-                }
+                astarbot.makeMove();
+                
             } else gameBot.makeMove();
+
+            ballcoordsX = engine.get_ball_coordinatesX();
+            ballcoordsY = engine.get_ball_coordinatesY();
+            ballcoordsZ = engine.get_ball_coordinatesZ();
 
             numShotsTaken++;
             playFlag = true;
             arrowFlag = false;
-
-            if(!animtoggle || botInt!=5) {
-                ballcoordsX = engine.get_ball_coordinatesX();
-                ballcoordsY = engine.get_ball_coordinatesY();
-                ballcoordsZ = engine.get_ball_coordinatesZ();
-            }
             index=-1;
             treeHitted = true;
             isInWater = false;

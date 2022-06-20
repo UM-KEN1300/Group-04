@@ -1,7 +1,4 @@
 package com.crazyputting3d.UI;
-
-import java.io.IOException;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.crazyputting3d.Engine.physicsEngine;
-import com.crazyputting3d.InputReader.FunctionReader;
 
 public class LevelScreen implements Screen {
     private Stage stage;
@@ -75,12 +71,6 @@ public class LevelScreen implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         if(Gdx.input.getX()>81 && Gdx.input.getX()<150 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(1);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -90,12 +80,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>186 && Gdx.input.getX()<247 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(2);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -105,12 +89,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>285 && Gdx.input.getX()<351 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(3);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -120,12 +98,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>388 && Gdx.input.getX()<456 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(4);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -135,12 +107,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>491 && Gdx.input.getX()<556 && Gdx.input.getY() > 110 && Gdx.input.getY() <175 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(5);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -150,12 +116,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>81 && Gdx.input.getX()<150 && Gdx.input.getY() > 222 && Gdx.input.getY() <280 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(6);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -165,12 +125,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>186 && Gdx.input.getX()<247 && Gdx.input.getY() > 222 && Gdx.input.getY() <280 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(7);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -180,12 +134,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>285 && Gdx.input.getX()<351 && Gdx.input.getY() > 222 && Gdx.input.getY() <280){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(8);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -195,12 +143,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>388 && Gdx.input.getX()<456 && Gdx.input.getY() > 222 && Gdx.input.getY() < 280 ){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(9);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
@@ -210,11 +152,6 @@ public class LevelScreen implements Screen {
         }
         if(Gdx.input.getX()>491 && Gdx.input.getX()<556 && Gdx.input.getY() > 222 && Gdx.input.getY() < 280){
             if(Gdx.input.isTouched()) {
-                try {
-                    FunctionReader.writeCSV(10);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 physicsEngine.solvernum = screen.getSelectedSolver();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");

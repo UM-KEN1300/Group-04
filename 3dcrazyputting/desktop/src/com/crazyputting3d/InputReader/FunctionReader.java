@@ -16,7 +16,7 @@ public class FunctionReader {
 
     public static void writeCSV(int level) throws IOException {
         //Get the path file and create a Search object
-        try (PrintWriter writer = new PrintWriter(new File("desktop/src/com/crazyputting3d/InputReader/Function.java"))) {
+        try (PrintWriter writer = new PrintWriter(new File("3dcrazyputting\\desktop\\src\\com\\crazyputting3d\\InputReader\\Function.java"))) {
             Search search = new Search("inputFile"+level+".txt");
 
             //Create a stringbuilder and create the cheat.java file line by line
@@ -33,7 +33,7 @@ public class FunctionReader {
             sb.append('\n');
             sb.append("case 2: return 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));");
             sb.append('\n');
-            sb.append("case 3: 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));");
+            sb.append("case 3: return 0.4*(0.9-Math.exp(-(Math.pow(x,2)+Math.pow(y,2))/8));");
             sb.append('\n');
             sb.append("case 4: return Math.cos(Math.cos(x*y/3)-8);");
             sb.append('\n');

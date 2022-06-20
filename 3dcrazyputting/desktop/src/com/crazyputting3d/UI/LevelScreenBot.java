@@ -66,6 +66,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>59 && Gdx.input.getX()<131 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 physicsEngine.solvernum = screen.getSelectedSolver();
+                physicsEngine.botNum = screen.getSelectedBot();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -77,6 +78,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>165 && Gdx.input.getX()<237 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 physicsEngine.solvernum = screen.getSelectedSolver();
+                physicsEngine.botNum = screen.getSelectedBot();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -87,6 +89,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>272 && Gdx.input.getX()<343 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 physicsEngine.solvernum = screen.getSelectedSolver();
+                physicsEngine.botNum = screen.getSelectedBot();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -96,6 +99,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>381 && Gdx.input.getX()<457 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 physicsEngine.solvernum = screen.getSelectedSolver();
+                physicsEngine.botNum = screen.getSelectedBot();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
@@ -105,6 +109,7 @@ public class LevelScreenBot implements Screen {
         if(Gdx.input.getX()>488 && Gdx.input.getX()<557 && Gdx.input.getY() > 160 && Gdx.input.getY() <230 ){
             if(Gdx.input.isTouched()) {
                 physicsEngine.solvernum = screen.getSelectedSolver();
+                physicsEngine.botNum = screen.getSelectedBot();
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);

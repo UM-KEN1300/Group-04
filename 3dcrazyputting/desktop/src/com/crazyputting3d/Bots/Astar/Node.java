@@ -36,6 +36,9 @@ public class Node {
     public void setEnd() {
         state=Color.RED;
     }
+    public String toString(){
+        return x+"|"+y;
+    }
 
 
 

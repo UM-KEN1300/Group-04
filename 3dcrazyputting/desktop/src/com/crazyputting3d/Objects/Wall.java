@@ -45,7 +45,7 @@ public class Wall {
     }
 
     public boolean isInWall(double x, double y){
-        if(x>=xStart&&x<=xEnd&&y>=yStart&&y<=yEnd){
+        if(x>xStart&&x<xEnd&&y>yStart&&y<yEnd){
             return true;
         }
         return false;

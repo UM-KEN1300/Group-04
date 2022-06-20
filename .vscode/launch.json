@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch AstarBot",
+            "request": "launch",
+            "mainClass": "com.crazyputting3d.Bots.Astar.AstarBot",
+            "projectName": "CrazyPutting3D-desktop"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

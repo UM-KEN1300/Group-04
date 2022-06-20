@@ -78,7 +78,6 @@ public class LevelScreenBot implements Screen {
                 config2.setForegroundFPS(60);
                 config2.setTitle("Crazy Putting!");
                 config2.setWindowedMode(1280,720);
-                System.out.println(screen.getSelectedBot());
                 new Lwjgl3Application(new game3d(false,true,screen.getSelectedBot(),1), config2);
             }
         }

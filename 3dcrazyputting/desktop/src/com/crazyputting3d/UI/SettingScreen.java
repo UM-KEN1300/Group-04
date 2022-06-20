@@ -110,7 +110,6 @@ public class SettingScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(!fieldHoleXt.getText().equals("")) {
-                    System.out.println("test");
                     contentXt = fieldHoleXt.getText();
                 }
                 if(!fieldHoleYt.getText().equals("")) {

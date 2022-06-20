@@ -115,11 +115,9 @@ public class SimulatedAnnealing extends Bot{
                 angle_step = pi/180;
                 v -= 0.01;
                 if(v<=0 && counter == 5){
-                    System.out.println("returned because v = 0");
                     return new StateVector(x0, y0, vx, vy);
                 }else if(v<=0) {
                     v = 5;
-                    System.out.println("changed ");
                     angle_step = initial_angle_step - initial_angle_step/5;
                     initial_angle_step = initial_angle_step - initial_angle_step/5;
                     angle = Math.acos(Math.abs(xt - x0) / Math.sqrt(Math.pow(x0 - xt, 2) + Math.pow(y0 - yt, 2)));

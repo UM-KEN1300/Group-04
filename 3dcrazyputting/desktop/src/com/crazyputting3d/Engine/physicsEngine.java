@@ -30,23 +30,23 @@ public class physicsEngine {
      * The instance field which creates all of the variables which the physics engine uses
      */
     public static double h = 0.0001; 
-    private double x0; 
-    private double y0;
-    private double xt;
-    private double yt;
-    private double r;
-    private double muk;
-    private double mus;
-    private double muks;
-    private double muss;
-    private double boundXStart;
-    private double boundXEnd;
-    private double boundYStart;
-    private double boundYEnd;
+    protected double x0; 
+    protected double y0;
+    protected double xt;
+    protected double yt;
+    protected double r;
+    protected double muk;
+    protected double mus;
+    protected double muks;
+    protected double muss;
+    protected double boundXStart;
+    protected double boundXEnd;
+    protected double boundYStart;
+    protected double boundYEnd;
     public int counter = 0;
     public int speedCounter = 0;
     public final double g = 9.81;
-    private Search search;
+    protected Search search;
     public Tree[] tree_storage;
     public Sandpit[] sand_storage;
     public Wall[] wall_storage;
@@ -54,16 +54,16 @@ public class physicsEngine {
     public Double[] ball_coordinates_x = new Double[500000];
     public Double[] ball_coordinates_y = new Double[500000];
     public Double[] ball_coordinates_z = new Double[500000];
-    private boolean flag = false;
-    private double slopex;
-    private double slopey;
-    private double closestEuklidiandistance = Double.MAX_VALUE;
-    private double initialDistance;
-    private Solver solver;
+    protected boolean flag = false;
+    protected double slopex;
+    protected double slopey;
+    protected double closestEuklidiandistance = Double.MAX_VALUE;
+    protected double initialDistance;
+    protected Solver solver;
     public static int solvernum;
-    private StateVector tempV;
-    private boolean improvedPhysics=false;
-    private int level;
+    protected StateVector tempV;
+    protected boolean improvedPhysics=true;
+    protected int level;
 
 
     /**
@@ -76,6 +76,7 @@ public class physicsEngine {
 
     public physicsEngine(int level) throws IOException {
         search = new Search("inputFile"+level+".txt");
+        this.level = level;
         this.x0 = search.get_x0();
         this.y0 = search.get_y0();
         coords.add(x0);
@@ -108,7 +109,7 @@ public class physicsEngine {
             coords.add(wall_storage[i].getXStart());
             coords.add(wall_storage[i].getYStart());
         }
-        this.level = level;
+        
         setTerrainCoords();
         initialDistance = Math.hypot(x0-xt, y0-yt);
     }
@@ -221,7 +222,7 @@ public class physicsEngine {
 
     public double h(double x, double y) {
         Function function = new Function();
-        return function.getHeightFunction(level,x, y);
+        return function.getHeightFunction(level, x, y);
     }
 
     /**
@@ -703,8 +704,4 @@ public class physicsEngine {
         }
         return v;
     }
-    public boolean flyOff(){
-        return false;
-    }
-    
 }

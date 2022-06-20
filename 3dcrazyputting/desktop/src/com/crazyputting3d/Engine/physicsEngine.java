@@ -1,4 +1,5 @@
 package com.crazyputting3d.Engine;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import com.crazyputting3d.Objects.Sandpit;
@@ -27,10 +28,11 @@ import com.crazyputting3d.Objects.Wall;
 
 public class physicsEngine {
     /**
-     * The instance field which creates all of the variables which the physics engine uses
+     * The instance field which creates all of the variables which the physics
+     * engine uses
      */
-    public static double h = 0.0001; 
-    protected double x0; 
+    public static double h = 0.0001;
+    protected double x0;
     protected double y0;
     protected double xt;
     protected double yt;
@@ -67,7 +69,6 @@ public class physicsEngine {
     public static boolean fly = false;
     public static boolean bouncing = false;
 
-
     /**
      * Constructor initiates variables according to input file data. These include:
      * x and y starting position of the ball and hole, kinetic and static friction
@@ -77,7 +78,7 @@ public class physicsEngine {
      */
 
     public physicsEngine(int level) throws IOException {
-        search = new Search("inputFile"+level+".txt");
+        search = new Search("inputFile" + level + ".txt");
         this.level = level;
         this.x0 = search.get_x0();
         this.y0 = search.get_y0();
@@ -111,9 +112,9 @@ public class physicsEngine {
             coords.add(wall_storage[i].getXStart());
             coords.add(wall_storage[i].getYStart());
         }
-        
+
         setTerrainCoords();
-        initialDistance = Math.hypot(x0-xt, y0-yt);
+        initialDistance = Math.hypot(x0 - xt, y0 - yt);
     }
 
     /**
@@ -121,8 +122,9 @@ public class physicsEngine {
      * engine over again.
      * param new velocities v0x and v0y the ball will have once it is hit with the
      * stick.
-     * The setVelocitiesForBot() method essentially does the same thing but instead it runs 
-     * the start() method with true in the parameter. 
+     * The setVelocitiesForBot() method essentially does the same thing but instead
+     * it runs
+     * the start() method with true in the parameter.
      */
 
     public void setVelocities(double v0x, double v0y) {
@@ -136,33 +138,39 @@ public class physicsEngine {
 
     public StateVector setVelocitiesForBot(double x, double y, double v0x, double v0y) {
         StateVector newv = new StateVector(x, y, v0x, v0y);
-        closestEuklidiandistance = Math.hypot(x-xt, y-yt);
+        closestEuklidiandistance = Math.hypot(x - xt, y - yt);
         return start(newv, true);
     }
 
     /**
-     * Below are multiple getters for the input variables and a getter for the closest euklidian distance.
+     * Below are multiple getters for the input variables and a getter for the
+     * closest euklidian distance.
      */
-    public double get_muk(){
+    public double get_muk() {
         return muk;
     }
 
-    public double getXt(){
+    public double getXt() {
         return xt;
     }
-    public double getYt(){
+
+    public double getYt() {
         return yt;
     }
-    public double getrOfHole(){
+
+    public double getrOfHole() {
         return r;
     }
-    public double getX0(){
+
+    public double getX0() {
         return x0;
     }
-    public double getY0(){
+
+    public double getY0() {
         return y0;
     }
-    public double get_closestEuclideanDistance(){
+
+    public double get_closestEuclideanDistance() {
         return closestEuklidiandistance;
     }
 
@@ -203,13 +211,13 @@ public class physicsEngine {
         return sand_storage;
     }
 
-    public Wall[] wall_builder() throws IOException{
+    public Wall[] wall_builder() throws IOException {
         double[] x = search.get_wallX();
-        double [] y = search.get_wallY();
-        Wall[] wall_storage = new Wall[x.length/2];
+        double[] y = search.get_wallY();
+        Wall[] wall_storage = new Wall[x.length / 2];
         int cnt = 0;
-        for (int i = 0; i < x.length; i +=2) {
-            wall_storage[cnt] = new Wall(x[i], x[i + 1], y[i], y[i +1]);
+        for (int i = 0; i < x.length; i += 2) {
+            wall_storage[cnt] = new Wall(x[i], x[i + 1], y[i], y[i + 1]);
             cnt++;
         }
         return wall_storage;
@@ -217,7 +225,8 @@ public class physicsEngine {
 
     /**
      * h() is used to get the height function value.
-     * param values for x and y, to be input once calling function.getHeightFunction(x,
+     * param values for x and y, to be input once calling
+     * function.getHeightFunction(x,
      * y).
      * returns the height function value according to x and y.
      */
@@ -288,10 +297,10 @@ public class physicsEngine {
         return false;
     }
 
-    public boolean isInWall(double x, double y){
+    public boolean isInWall(double x, double y) {
         for (int i = 0; i < wall_storage.length; i++) {
             Wall wall = wall_storage[i];
-            if(wall.isInWall(x,y)){
+            if (wall.isInWall(x, y)) {
                 return true;
             }
         }
@@ -350,9 +359,9 @@ public class physicsEngine {
         return false;
     }
 
-    //getTempV() method returns the variable tempV
+    // getTempV() method returns the variable tempV
 
-    public StateVector getTempV(){
+    public StateVector getTempV() {
         return tempV;
     }
 
@@ -360,7 +369,8 @@ public class physicsEngine {
      * start() used to return the ball to initial position once it hits the water
      * param current vector state
      * returns initial vector state if in water, or current vector state otherwise.
-     * Other param is a boolean which tells the start method if the bot is playing or not.
+     * Other param is a boolean which tells the start method if the bot is playing
+     * or not.
      */
 
     public StateVector start(StateVector v, boolean botPlays) {
@@ -373,7 +383,7 @@ public class physicsEngine {
             if (!botPlays) {
                 ball_coordinates_x[counter] = x0;
                 ball_coordinates_y[counter] = y0;
-                ball_coordinates_z[counter] = h(x0,y0);
+                ball_coordinates_z[counter] = h(x0, y0);
                 counter++;
             }
             return v;
@@ -383,52 +393,54 @@ public class physicsEngine {
             y0 = newV.getY();
             ball_coordinates_x[counter] = x0;
             ball_coordinates_y[counter] = y0;
-            ball_coordinates_z[counter] = h(x0,y0);
+            ball_coordinates_z[counter] = h(x0, y0);
             counter++;
         }
         return newV;
     }
 
     /**
-     * acelerationX and acelerationY calculate the acceleration according to their param
+     * acelerationX and acelerationY calculate the acceleration according to their
+     * param
      */
     public double acelerationX(double x, double y, double vx, double vy, double m) {
-        if(improvedPhysics==false)
+        if (improvedPhysics == false)
             return -g * hxderivated(x, y) - m * g * vx / (Math.sqrt(vx * vx + vy * vy));
-        else{
+        else {
             return acelerationXimproved(x, y, vx, vy, m);
         }
     }
 
     public double acelerationY(double x, double y, double vx, double vy, double m) {
-        if(improvedPhysics==false)
+        if (improvedPhysics == false)
             return -g * hyderivated(x, y) - m * g * vy / (Math.sqrt(vx * vx + vy * vy));
-        else{
+        else {
             return acelerationYimproved(x, y, vx, vy, m);
         }
     }
 
     public double acelerationXimproved(double x, double y, double vx, double vy, double m) {
-        double coef1 = 1+Math.pow(hxderivated(x, y),2)+Math.pow(hyderivated(x, y),2);
-        double coef2 = Math.pow(hxderivated(x, y)*vx+hyderivated(x, y)*vy,2);
-        return -g * hxderivated(x, y)/coef1 - m * g * vx / (Math.sqrt(coef1*(vx * vx + vy * vy+coef2)));
+        double coef1 = 1 + Math.pow(hxderivated(x, y), 2) + Math.pow(hyderivated(x, y), 2);
+        double coef2 = Math.pow(hxderivated(x, y) * vx + hyderivated(x, y) * vy, 2);
+        return -g * hxderivated(x, y) / coef1 - m * g * vx / (Math.sqrt(coef1 * (vx * vx + vy * vy + coef2)));
     }
 
     public double acelerationYimproved(double x, double y, double vx, double vy, double m) {
-        double coef1 = 1+Math.pow(hxderivated(x, y),2)+Math.pow(hyderivated(x, y),2);
-        double coef2 = Math.pow(hxderivated(x, y)*vx+hyderivated(x, y)*vy,2);
-        return -g * hyderivated(x, y)/coef1 - m * g * vy / (Math.sqrt(coef1*(vx * vx + vy * vy+coef2)));
+        double coef1 = 1 + Math.pow(hxderivated(x, y), 2) + Math.pow(hyderivated(x, y), 2);
+        double coef2 = Math.pow(hxderivated(x, y) * vx + hyderivated(x, y) * vy, 2);
+        return -g * hyderivated(x, y) / coef1 - m * g * vy / (Math.sqrt(coef1 * (vx * vx + vy * vy + coef2)));
     }
 
     /**
-     * Trajectory(Statevector, boolean) calculates the final position of the ball by using
+     * Trajectory(Statevector, boolean) calculates the final position of the ball by
+     * using
      * the selected ODE solver. The parameter is the current vector and the boolean
      * to let it now if the bot is playing or not. This method will return the
-     * final vector. 
+     * final vector.
      */
 
     public StateVector trajectory(StateVector v, boolean botPlays) {
-        while(true) {
+        while (true) {
             double m = 0;
             double ms = 0;
             double x = v.getX();
@@ -441,7 +453,7 @@ public class physicsEngine {
                 if (speedCounter % ((0.005 / h) * (velocity + 5)) == 0) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
-                    ball_coordinates_z[counter] = h(x,y);
+                    ball_coordinates_z[counter] = h(x, y);
                     counter++;
                 }
                 speedCounter++;
@@ -455,28 +467,29 @@ public class physicsEngine {
                 m = muk;
                 ms = mus;
             }
-            v = solver.run(v,m);
-            if(botPlays){
-                slopex = slopex + hxderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
-                slopey = slopey + hyderivated(v.getX(), v.getY()) * h/(m*g)+h/2;
+            v = solver.run(v, m);
+            if (botPlays) {
+                slopex = slopex + hxderivated(v.getX(), v.getY()) * h / (m * g) + h / 2;
+                slopey = slopey + hyderivated(v.getX(), v.getY()) * h / (m * g) + h / 2;
             }
-            if(botPlays&&(closestEuklidiandistance>Math.hypot(v.getX()-xt,v.getY()-yt))){
-                closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt);
+            if (botPlays && (closestEuklidiandistance > Math.hypot(v.getX() - xt, v.getY() - yt))) {
+                closestEuklidiandistance = Math.hypot(v.getX() - xt, v.getY() - yt);
             }
-            if(botPlays&&(closestEuklidiandistance==initialDistance)){
-                closestEuklidiandistance = Math.hypot(v.getX()-xt,v.getY()-yt)+Math.hypot(x-xt,y-yt);
+            if (botPlays && (closestEuklidiandistance == initialDistance)) {
+                closestEuklidiandistance = Math.hypot(v.getX() - xt, v.getY() - yt) + Math.hypot(x - xt, y - yt);
             }
             if (isInWater(v.getX(), v.getY())) {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
-                    ball_coordinates_z[counter] = h(x,y);
+                    ball_coordinates_z[counter] = h(x, y);
                     counter++;
                 }
                 return null;
             }
 
-            double staticFriction = Math.sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
+            double staticFriction = Math
+                    .sqrt(Math.pow(hxderivated(v.getX(), v.getY()), 2) + Math.pow(hyderivated(v.getX(), v.getY()), 2));
             if (terminates(vx, vy, m)) {
                 v.setX(x + v.getVX() * h);
                 v.setY(y + v.getVY() * h);
@@ -484,7 +497,7 @@ public class physicsEngine {
                     if (!botPlays) {
                         ball_coordinates_x[counter] = x;
                         ball_coordinates_y[counter] = y;
-                        ball_coordinates_z[counter] = h(x,y);
+                        ball_coordinates_z[counter] = h(x, y);
                         counter++;
                     }
                     return v;
@@ -494,52 +507,91 @@ public class physicsEngine {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
-                    ball_coordinates_z[counter] = h(x,y);
+                    ball_coordinates_z[counter] = h(x, y);
                     counter++;
                 }
-                v.setVX(h);
-                v.setVY(h);
-                v.setX(x);
-                v.setY(y);
-                return v;
+                if (bouncing == false) {
+                    v.setVX(h);
+                    v.setVY(h);
+                    v.setX(x);
+                    v.setY(y);
+                    return v;
+                } else {
+                    v.setVX(-v.getVX());
+                    v.setVY(-v.getVY());
+                    v.setX(x);
+                    v.setY(y);
+                }
             }
             if (isInWall(v.getX(), v.getY())) {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
-                    ball_coordinates_z[counter] = h(x,y);
+                    ball_coordinates_z[counter] = h(x, y);
                     counter++;
                 }
-                v.setVX(h);
-                v.setVY(h);
-                v.setX(x);
-                v.setY(y);
-                return v;
+                if (bouncing==false) {
+                    v.setVX(h);
+                    v.setVY(h);
+                    v.setX(x);
+                    v.setY(y);
+                    return v;
+                }
+                else{
+                    v.setVX(v.getVX());
+                    v.setVY(-v.getVY());
+                    v.setX(x);
+                    v.setY(y);
+                    StateVector newv = solver.run(v,m);
+                    if(isInWall(newv.getX(), newv.getY())){
+                        v.setVX(-v.getVX());
+                        v.setVY(-v.getVY());
+                        v.setX(x);
+                        v.setY(y);
+                    }
+
+                }
             }
 
             if (!isInTerrain(v.getX(), v.getY())) {
                 if (!botPlays) {
                     ball_coordinates_x[counter] = x;
                     ball_coordinates_y[counter] = y;
-                    ball_coordinates_z[counter] = h(x,y);
+                    ball_coordinates_z[counter] = h(x, y);
                     counter++;
                 }
-                v.setVX(h);
-                v.setVY(h);
-                v.setX(x);
-                v.setY(y);
-                return v;
+                if (bouncing==false) {
+                    v.setVX(h);
+                    v.setVY(h);
+                    v.setX(x);
+                    v.setY(y);
+                    return v;
+                }
+                else{
+                    v.setVX(v.getVX());
+                    v.setVY(-v.getVY());
+                    v.setX(x);
+                    v.setY(y);
+                    StateVector newv = solver.run(v,m);
+                    if(!isInTerrain(newv.getX(), newv.getY())){
+                        v.setVX(-v.getVX());
+                        v.setVY(-v.getVY());
+                        v.setX(x);
+                        v.setY(y);
+                    }
+
+                }
             }
 
         }
     }
 
     /**
-     * The terminates(vx,vx,m) method checks to see if the current speed is 
-     * almost 0. If it is, return true, else return false. 
+     * The terminates(vx,vx,m) method checks to see if the current speed is
+     * almost 0. If it is, return true, else return false.
      */
     public boolean terminates(double vx, double vy, double m) {
-        if ((vx < h && vx > -h ) && (vy < h && vy > -h )){
+        if ((vx < h && vx > -h) && (vy < h && vy > -h)) {
             return true;
         }
         return false;
@@ -586,6 +638,7 @@ public class physicsEngine {
         }
         return temp_FINAL;
     }
+
     /**
      * get_ball_coordinatesZ() stores all z coordinates of the ball from start to
      * end to be retrieved by game3d.
@@ -606,7 +659,7 @@ public class physicsEngine {
         }
         return temp_FINAL;
     }
- 
+
     /**
      * isInHole() determines whether the ball is in the hole or not.
      * returns flag.
@@ -628,7 +681,7 @@ public class physicsEngine {
     /**
      * setTerrainCoords() calculates the boundries of the terrain.
      * This method is used to see if the ball is outside the boundries
-     * or not. 
+     * or not.
      */
 
     public void setTerrainCoords() {
@@ -673,36 +726,36 @@ public class physicsEngine {
         return slopey;
     }
 
-
     /**
-     * selectedSolver uses its parameter integer to determine which solver 
-     * will be returned. 
+     * selectedSolver uses its parameter integer to determine which solver
+     * will be returned.
      */
     public Solver selectedSolver(int num) {
-        if (num==0) {
+        if (num == 0) {
             return new EulersMethod(this);
-        }else if (num==1) {
+        } else if (num == 1) {
             return new RungeKutta2(this);
-        }else if (num==2) {
+        } else if (num == 2) {
             return new RungeKutta4(this);
-        }else if (num==3) {
+        } else if (num == 3) {
             return new DormandPrince(this);
-        }else if (num==4) {
+        } else if (num == 4) {
             return new VerletsMethod(this);
-        }else if (num==5) {
+        } else if (num == 5) {
             return new PredictorCorrector(this);
         }
         return null;
     }
-    /** 
+
+    /**
      * trajectory calculator for experiments loop
-    */
+     */
     public StateVector experimentloop(StateVector v) {
         solver = selectedSolver(solvernum);
         x0 = v.getX();
         y0 = v.getY();
-        for(int g = 0; g < 1.0/h;g++) {
-            v = solver.run(v,0.1);
+        for (int g = 0; g < 1.0 / h; g++) {
+            v = solver.run(v, 0.1);
         }
         return v;
     }

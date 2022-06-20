@@ -1,5 +1,4 @@
 package com.crazyputting3d.Bots;
-import java.io.IOException;
 import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.Objects.StateVector;
 

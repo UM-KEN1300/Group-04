@@ -65,7 +65,7 @@ public class AstarBot {
         int iteration=0;
         int sight = 10;
         StateVector min = new StateVector(ballX, ballY, 0, 0);
-        System.out.println("Astar bot active");
+       //System.out.println("Astar bot active");
 
         while(iteration<1000) {
             Node start = getStart();
@@ -105,7 +105,7 @@ public class AstarBot {
             spdy = spdy + changev;
 
             engine.setVelocities(spdx, spdy);
-            System.out.println("Run with: " + spdx+" "+spdy+" on iteration number: "+iteration);
+            //System.out.println("Run with: " + spdx+" "+spdy+" on iteration number: "+iteration);
             
             for(int i=0; i<engine.get_ball_coordinatesX().length; i++) {
                 allXCoords.add(engine.get_ball_coordinatesX()[i]);
@@ -115,7 +115,7 @@ public class AstarBot {
 
             if(engine.isInHole()) {
                 min = new StateVector(ballX,ballY,spdx,spdy);
-                System.out.println("went in");
+                //System.out.println("went in");
                 return min;
             } else iteration++;
 
@@ -126,7 +126,6 @@ public class AstarBot {
             ballY = engine.get_ball_coordinatesY()[engine.get_ball_coordinatesY().length-1];
 
             if(prevBallx == ballX && prevBally == ballY) {
-                System.out.println("not moving");
                 if(notMoving) {
                     sight=1;
                 } else { 

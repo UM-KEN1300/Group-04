@@ -17,10 +17,14 @@ import com.crazyputting3d.UI.MenuTest;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setForegroundFPS(60);
-        config.setTitle("Crazy Putting!");
-        config.setWindowedMode(600,360);
-        new Lwjgl3Application(new MenuTest(), config);
+        try {
+            Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+            config.setForegroundFPS(60);
+            config.setTitle("Crazy Putting!");
+            config.setWindowedMode(600,360);
+            new Lwjgl3Application(new MenuTest(), config);
+        } catch (Exception e) {
+            System.out.println("Re-Run (LibGDX issue)");
+        }
     }
 }

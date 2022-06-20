@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.crazyputting3d.Engine.physicsEngine;
+import com.crazyputting3d.Engine.physicsEngineForFlying;
 import com.crazyputting3d.Bots.BasicBot;
 import com.crazyputting3d.Bots.Bot;
 import com.crazyputting3d.Bots.BruteForceBot;
@@ -185,7 +186,11 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
          */
 
         try {
-            engine = new physicsEngine(level);
+            if(physicsEngine.fly==false)
+                engine = new physicsEngine(level);
+            else{
+                engine =  new physicsEngineForFlying(level);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

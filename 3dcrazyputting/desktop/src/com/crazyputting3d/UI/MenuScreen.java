@@ -242,12 +242,9 @@ public class MenuScreen implements Screen {
         mazeAlgorithm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //if(mazeAlgorithm.isChecked()){
-
-                // }
-                // else
-
-
+                if(mazeAlgorithm.isChecked()){
+                    game3d.animtoggle = true;
+                 } else game3d.animtoggle = false;
             }
         });
 

@@ -134,7 +134,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private boolean ballCam;
     private AstarBot astarbot;
     public long astarduration;
-    public boolean animtoggle = false;
+    public static boolean animtoggle = false;
 
 
     /**

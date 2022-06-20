@@ -196,7 +196,6 @@ public class MenuScreen implements Screen {
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 ((Game)Gdx.app.getApplicationListener()).setScreen(settingScreen);
             }
         });
@@ -204,32 +203,36 @@ public class MenuScreen implements Screen {
         improvedPhysics.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-             //  if(improvedPhysics.isChecked()){
-                   
-            //     }
-            //     else
+                if(improvedPhysics.isChecked()){
+                   physicsEngine.improvedPhysics=true;
+                }
+                else{
+                    physicsEngine.improvedPhysics=false;
+                }
             }
     });
 
         flyingBall.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // if(flyingBall.isChecked()){
-                   
-                // }
-                // else
-                   
-              
+                if(flyingBall.isChecked()){
+                   physicsEngine.fly  = true;
+                }
+                else{
+                    physicsEngine.fly  = false;
+                }
             }
         });
 
         bouncing.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                 //if(bouncing.isChecked()){
-                   
-                // }
-                // else
+                if(bouncing.isChecked()){
+                   physicsEngine.bouncing = true;
+                }
+                else{
+                    physicsEngine.bouncing = false;
+                }
                    
               
             }

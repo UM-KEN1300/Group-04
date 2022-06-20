@@ -20,6 +20,7 @@ import com.crazyputting3d.Bots.BruteForceBot;
 import com.crazyputting3d.Bots.HillClimbingBot;
 import com.crazyputting3d.Bots.NewtonRaphsonBot;
 import com.crazyputting3d.Bots.RandomBot;
+import com.crazyputting3d.Bots.SimulatedAnnealing;
 import com.crazyputting3d.Bots.Astar.AstarBot;
 import com.crazyputting3d.InputReader.Search;
 import com.crazyputting3d.Network.Client;
@@ -211,6 +212,9 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
         }
         else if(botInt==5){
             astarbot = new AstarBot(engine, level);
+        }
+        else if(botInt==6){
+            this.gameBot = new SimulatedAnnealing(engine);
         }
 
         //Create the camera and set variables to the length and the width of the camera

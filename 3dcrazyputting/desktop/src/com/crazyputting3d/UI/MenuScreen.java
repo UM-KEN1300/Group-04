@@ -106,7 +106,7 @@ public class MenuScreen implements Screen {
        // dialogBot = new Dialog("Select Bot and Solver", skin);
         //dialogBot.setSize(250,150);
         botSelect = new SelectBox<String>(skinNeutralizer);
-        botSelect.setItems("Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force", "A* Maze");
+        botSelect.setItems("Hill Climbing", "Newton Raphson", "Random Based", "Rule Based", "Brute Force", "A* Maze","simulated anealing");
         //dialogBot.getContentTable().add(botSelect);
         //dialogBot.getContentTable().row();
         solverSelect = new SelectBox<String>(skinNeutralizer);

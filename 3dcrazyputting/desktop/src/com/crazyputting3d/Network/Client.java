@@ -5,6 +5,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+/**
+ * Authors: Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
+ * Gelder, Trinh Le, Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since 2022-05-11
+ */
+
 public class Client {
 
     private final String url = "https://111c-2001-1c05-483-44f0-7594-a5e-efd7-8ad2.eu.ngrok.io";

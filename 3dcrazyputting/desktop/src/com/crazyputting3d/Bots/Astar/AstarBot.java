@@ -7,6 +7,13 @@ import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.InputReader.Function;
 import com.crazyputting3d.InputReader.Search;
 
+/**
+ * Author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ * Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since   2022-05-11
+ */
+
 public class AstarBot {
 
     protected physicsEngine engine;

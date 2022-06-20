@@ -8,6 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+/**
+ * Authors: Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
+ * Gelder, Trinh Le, Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since 2022-05-11
+ */
+
 public class SplashScreen implements Screen {
     private Texture texture;
     private Image splashImage;

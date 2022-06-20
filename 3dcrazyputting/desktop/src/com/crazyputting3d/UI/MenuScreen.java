@@ -14,6 +14,12 @@ import com.crazyputting3d.Engine.physicsEngine;
 import com.crazyputting3d.Network.Client;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+/**
+ * Authors: Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
+ * Gelder, Trinh Le, Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since 2022-05-11
+ */
 
 public class MenuScreen implements Screen {
     private Skin skin;

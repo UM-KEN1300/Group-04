@@ -13,6 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.crazyputting3d.Bots.Bot;
 import com.crazyputting3d.Sounds.Sounds;
 
+/**
+ * Authors: Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
+ * Gelder, Trinh Le, Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since 2022-05-11
+ */
+
 public class VictoryScreenNew implements Screen {
     private game3d game;
     private Bot bot;

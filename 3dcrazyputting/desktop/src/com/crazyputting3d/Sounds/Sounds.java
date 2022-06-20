@@ -8,7 +8,7 @@ import javax.sound.sampled.Clip;
  * The Sounds class is used for sound outputs during game play and simulations.
  * author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
  * Gabrijel Radovčić, Elza Strazda
- * version 2.0
+ * version 3.0
  * since   2022-05-11
  */
 

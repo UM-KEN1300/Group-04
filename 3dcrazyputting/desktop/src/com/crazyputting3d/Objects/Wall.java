@@ -1,10 +1,17 @@
 package com.crazyputting3d.Objects;
 
+/**
+ * Authors: Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van
+ * Gelder, Trinh Le, Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since 2022-05-11
+ */
+
 public class Wall {
-    double xStart; //x starting coordinate for wall
-    double xEnd; //x ending coordinate for wall
-    double yStart; //y starting coordinate for wall
-    double yEnd; //y ending coordinate for wall
+    double xStart;
+    double xEnd; 
+    double yStart; 
+    double yEnd; 
 
 
     public Wall(double xStart, double xEnd, double yStart, double yEnd){

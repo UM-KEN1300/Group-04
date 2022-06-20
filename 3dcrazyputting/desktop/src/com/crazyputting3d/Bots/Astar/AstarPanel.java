@@ -1,8 +1,14 @@
 package com.crazyputting3d.Bots.Astar;
 
 import java.awt.*;
-
 import javax.swing.*;
+
+/**
+ * Author Casper Bröcheler, Guilherme Pereira Sequeira, Alina Gavrish, Arjen van Gelder, Trinh Le,
+ * Gabrijel Radovčić, Elza Strazda
+ * version 3.0
+ * since   2022-05-11
+ */
 
 public class AstarPanel extends JPanel {
     Astar astar;

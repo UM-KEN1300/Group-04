@@ -46,19 +46,13 @@ public class BasicBot extends Bot{
         speedX = v*directionX/length;
         speedY = v*directionY/length;
 
-        try {
-            physicsEngine enginetest;
-            enginetest = new physicsEngine(1);
-            enginetest.setVelocities(speedX, speedX);
-            if(engine.isInHole()) {
-                slopex=0;
-                slopey=0;
-            } else {
-                slopex = enginetest.getSlopex();
-                slopey = enginetest.getSlopey();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        engine.setVelocitiesForBot(x0,y0,speedX, speedX);
+        if(engine.isInHole()) {
+            slopex=0;
+            slopey=0;
+        } else {
+            slopex = engine.getSlopex();
+            slopey = engine.getSlopey();
         }
         
          speedX = speedX+slopex;

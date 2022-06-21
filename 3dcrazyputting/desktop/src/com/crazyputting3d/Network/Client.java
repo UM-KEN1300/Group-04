@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Client {
 
-    private final String url = "https://22a8-137-120-131-50.eu.ngrok.io";
+    private final String url = "https://f981-137-120-131-50.eu.ngrok.io";
 
     public static ArrayList<ArrayList<Integer>> playerdata;
     private String playable;

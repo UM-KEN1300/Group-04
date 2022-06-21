@@ -130,7 +130,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
     private Bot gameBot;
     public int botInt;
     private int level;
-    private int playerid;
+    private int playerid=2;
     private ClientThread clientthread;
     private boolean waitingroom;
     private boolean ballCam;
@@ -376,7 +376,7 @@ public class game3d extends ApplicationAdapter implements InputProcessor {
 
         if(!game&&!bot) {
             for(int k=0; k<Client.playerdata.size(); k++) {
-                font.draw(batch, "Player "+Client.playerdata.get(k).get(0)+" has score: "+Client.playerdata.get(k).get(1), 5, camera.viewportHeight-205-(k*20));
+                font.draw(batch, "Player "+Client.playerdata.get(k).get(1)+" has score: "+Client.playerdata.get(k).get(0), 5, camera.viewportHeight-205-(k*20));
             }
         }
 
